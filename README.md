@@ -1,0 +1,3 @@
+# ArduAfternoon
+scrapbook del gruppo ArduinoAfternoon
+...
