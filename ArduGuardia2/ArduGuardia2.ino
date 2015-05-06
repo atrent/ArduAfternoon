@@ -1,4 +1,4 @@
-#include <IRremote.h>
+//#include <IRremote.h>
 
 #define FORWARD LOW
 #define BRAKE HIGH
@@ -13,10 +13,14 @@ int speedB = 0;
 int brakeB = BRAKE;
 int directionB = FORWARD;
 
+/*
 int RECV_PIN = 10;
 IRrecv irrecv(RECV_PIN);
 decode_results results;
+*/
 
+int BUTTON_TEST = 4;
+int DIRECTION = 7;
 
 void setup(){
 	pinMode(12, OUTPUT); //Initiates Motor Channel A pin
@@ -28,7 +32,10 @@ void setup(){
     pinMode(8, OUTPUT);  //Initiates Brake Channel B pin
     pinMode(11, OUTPUT); //Initiates motor Channel B pin (half speed)
 
-    irrecv.enableIRIn(); // 
+    pinMode(7, INPUT);
+    pinMode(4, INPUT);
+
+ //   irrecv.enableIRIn(); // 
 
 
     Serial.begin(115200);
@@ -37,9 +44,11 @@ void setup(){
 void loop(){
     delay(500);
 
+	int b10 = digitalRead(BUTTON_TEST);
+	int b7 = digitalRead(DIRECTION);
 
     //RANGE CHECK A AND B
-/*	if(speedA>MAX_SPEED){
+	if(speedA>MAX_SPEED){
 		speedA = MAX_SPEED;
 	}
 
@@ -54,7 +63,7 @@ void loop(){
 	if(speedB<0){
 		speedB = 0;
 	}
-*/
+
 
 	//Motor A velocita'
 	digitalWrite(12, directionA); //Establishes forward direction of Channel A
@@ -66,17 +75,33 @@ void loop(){
 	digitalWrite(8, brakeB);   //Disengage the Brake for Channel B
 	analogWrite(11, speedB);    //Spins the motor on Channel B at half speed
 
-/*	brakeA = NO_BRAKE;
+	brakeA = NO_BRAKE;
 	brakeB = NO_BRAKE;
 
-	speedA-=5;
-	speedB+=5;
-*/	//Serial.println(speedB);
+	//Serial.println(speedB);
 
-	if (irrecv.decode(&results)) {
+
+	if(b10 == HIGH){
+		speedA+=5;
+	}
+	if(b7 == HIGH){
+		speedB+=5;
+	}
+	if(b10 == HIGH && b7 == HIGH){
+		speedA = 0;
+		speedB = 0;
+	}
+
+	Serial.print("speedA: ");
+	Serial.print(speedA);
+	Serial.print("  speedB: ");
+	Serial.print(speedB);
+	Serial.println();
+
+/*	if (irrecv.decode(&results)) {
 		Serial.println(results.value, HEX);
 		irrecv.resume(); // Receive the next value
 	}
-
+*/
     delay(100);
 }
