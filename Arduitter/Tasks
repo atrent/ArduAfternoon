@@ -1,4 +1,6 @@
 - Batterie (atrent)
+- Tinc network (atrent)
+- Login Guest Eduroam (atrent)
 
 - Test Webcam (openWrt)  http://www.8devices.com/wiki/openwrt:recipes:usb_webcam
 
@@ -9,8 +11,6 @@
 - "Motore" esecuzione comandi [Policy]
 
 - Led RGB
-
-- Login Guest Eduroam (atrent)
 
 - Comunicazione NUY - Arduino [Trovare documentazione]
 
