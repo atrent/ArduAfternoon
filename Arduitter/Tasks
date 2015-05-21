@@ -1,3 +1,6 @@
+====
+TODO
+
 - Batterie (atrent)
 - Tinc network (atrent)
 - Login Guest Eduroam (atrent)
@@ -21,3 +24,9 @@
 - Solar Panel
 
 - Foto Mattoncino (chi ha rubato le ruote?)
+
+
+====
+DONE
+
+- rendere persistente SSID, fatto (bisognava editare /etc/config/wireless)
