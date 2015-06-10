@@ -1,0 +1,22 @@
+hashtag #arduitter
+$ inizio comando
+$ fine comando o a fine tweet
+: separa il comando dai parametri
+, separa i parametri
+
+testo $CMD:PAR,PAR,..$ testo
+testo $CMD:PAR,PAR,...
+
+
+COMANDI (case insensitive)
+
+forward
+backward
+leftwheelforward
+leftwheelbackward
+rightwheelforward
+rightwheelbackward
+snapshot
+play
+
+
