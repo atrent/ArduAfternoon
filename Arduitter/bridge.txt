@@ -1,0 +1,5 @@
+NOTA BENE
+
+- mettere jumper per seriale
+
+- alimentare da jack e non da usb
