@@ -1,0 +1,10 @@
+/search (da ttytter) ogni 70s circa.
+	-> txt Inbox con il risultato della query search
+		echo "/search #arduittercommand" | ./ttytter
+		(da aggiungere il timestamp, ecc..)
+
+	-> altro txt con i comandi eseguiti (DONE)
+
+for sulle righe
+	if in DONE cancello
+	else eseguo e sposto su DONE
