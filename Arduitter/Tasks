@@ -1,21 +1,23 @@
 ====
 TODO
 
-- Batterie (atrent)
-- Tinc network (atrent)
-- Login Guest Eduroam (atrent)
 
-- Test Webcam (openWrt)  http://www.8devices.com/wiki/openwrt:recipes:usb_webcam
+- [*] check porte per tunnel vari (ad es. webcam), cfr. http://www.unimi.it/personale/servizi/71714.htm
 
-- Sintassi Twitter (tutti)
+- Tinc network (atrent, POSTPONED)
 
-- Access Twitter Command Line (marco)
+- Login Guest Eduroam (atrent, chiesto a Giorgio, basta andare da lui)
 
-- "Motore" esecuzione comandi [Policy]
+
+- Sintassi Twitter (tutti, qualcosa fatto)
+
+- Access Twitter Command Line (marco, piu' o meno ok)
+
+- "Motore" esecuzione comandi [Policy] (vedi note in motore.txt)
 
 - Led RGB
 
-- Comunicazione NUY - Arduino [Trovare documentazione]
+- Comunicazione NUY - Arduino [Trovare documentazione, segnalare a Brianza] (Bridge ora funziona con nuova scheda, Alberto testimone!!!)
 
 - Pensare a cosa far fare all'Arduino, es. led rgb o lcd...???
 
@@ -25,8 +27,13 @@ TODO
 
 - Foto Mattoncino (chi ha rubato le ruote?)
 
+- riportare config su nuova board (atrent)
 
 ====
 DONE
 
 - rendere persistente SSID, fatto (bisognava editare /etc/config/wireless)
+
+- Batterie (atrent, ORDINATA)
+
+- Test Webcam (openWrt)  http://www.8devices.com/wiki/openwrt:recipes:usb_webcam (DONE) [*]
