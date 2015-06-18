@@ -1,3 +1,6 @@
+si puo' fare in shell! ;)
+
+
 /search (da ttytter) ogni 70s circa.
 	-> txt Inbox con il risultato della query search
 		echo "/search #arduittercommand" | ./ttytter
