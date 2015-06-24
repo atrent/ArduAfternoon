@@ -1,5 +1,16 @@
+http://www.arduino.cc/en/Tutorial/Bridge
+
+
+
 NOTA BENE
 
 - mettere jumper per seriale
 
 - alimentare da jack e non da usb
+
+
+
+REST
+
+	hostname/arduino/digital/PIN/status
+	...
