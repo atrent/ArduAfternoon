@@ -10,13 +10,20 @@ testo $CMD:PAR,PAR,...
 
 COMANDI (case insensitive)
 
+#Utente
+
 forward
 backward
 leftwheelforward
 leftwheelbackward
 rightwheelforward
 rightwheelbackward
-snapshot
+snapshot   ---- ???? ( verificare motion con più utenti - uso dello streaming )
 play
 
 
+#Admin
+
+sleep
+wakeup
+...

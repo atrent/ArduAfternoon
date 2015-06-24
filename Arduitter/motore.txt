@@ -8,3 +8,18 @@
 for sulle righe
 	if in DONE cancello
 	else eseguo e sposto su DONE
+
+Due livelli
+
+	- Linux
+		- twitter, shell...
+		-> Cattura i tweet
+		-> cerca hashtag
+		-> verifica i comandi ( la sintassi )
+		-> genera i CURL
+
+	- Arduino
+		- bridge e REST
+		-> riceve i CURL
+		-> trasforma i CURL nei digitalWrite validi
+			-> Aggiunta di comandi di Admin ( uso interno )
