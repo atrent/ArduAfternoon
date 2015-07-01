@@ -4,6 +4,7 @@
 
 
 #define FORWARD LOW
+#define BACKWARD HIGH
 #define BRAKE HIGH
 #define NO_BRAKE LOW
 #define MAX_SPEED 100
@@ -14,6 +15,7 @@
 // Listen to the default port 5555, the Yún webserver
 // will forward there all the HTTP requests you send
 YunServer server;
+YunClient client;
 
 
 // status
@@ -26,16 +28,18 @@ int brakeB = BRAKE;
 int directionB = FORWARD;
 
 void setup() {
-    pinMode(12, OUTPUT); //Initiates Motor Channel A pin
-    pinMode(9, OUTPUT); //Initiates Brake Channel A pin
-    pinMode(3, OUTPUT); //Initiates motor Channel A pin (full speed)
+    pinMode(12, OUTPUT); //direction
+    pinMode(9, OUTPUT); //Brake
+    pinMode(3, OUTPUT); //speed
 
     //Setup Channel B
-    pinMode(13, OUTPUT); //Initiates Motor Channel B pin
-    pinMode(8, OUTPUT);  //Initiates Brake Channel B pin
-    pinMode(11, OUTPUT); //Initiates motor Channel B pin (half speed)
+    pinMode(13, OUTPUT); //direction
+    pinMode(8, OUTPUT);  //brake
+    pinMode(11, OUTPUT); //speed
+    
+    reset();
 
-    Serial.begin(9600);
+    //Serial.begin(9600);
 
     // Bridge startup
     pinMode(13, OUTPUT);
@@ -51,26 +55,26 @@ void setup() {
 
 void loop() {
     // Get clients coming from server
-    YunClient client = server.accept();
+    client = server.accept();
 
     // There is a new client?
     if (client) {
         // Process request
-        process(client);
+        process();
 
         // Close connection and free resources.
         client.stop();
     }
 
-
-
+    /*
     Serial.print("speedA: ");
     Serial.print(speedA);
     Serial.print("  speedB: ");
     Serial.print(speedB);
     Serial.println();
+    */
 
-    delay(1000); // Poll every 50ms
+    delay(200); // Poll every...
 }
 
 
@@ -85,7 +89,7 @@ void loop() {
 
 /** avanti per DURATION secondi
 */
-void forward(YunClient client) {
+void forward() {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
@@ -98,12 +102,50 @@ void forward(YunClient client) {
 }
 
 
+void backward() {
+    speedA=50;
+    brakeA = NO_BRAKE;
+    directionA = BACKWARD;
 
-void backward(YunClient client) {}
-void leftwheelforward(YunClient client) {}
-void leftwheelbackward(YunClient client) {}
-void rightwheelforward(YunClient client) {}
-void rightwheelbackward(YunClient client) {}
+    speedB=-50;
+    brakeB = NO_BRAKE;
+    directionB = BACKWARD;
+
+    apply();
+}
+
+// TODO: verificare lato motore
+void leftwheelforward() {
+    speedA=50;
+    brakeA = NO_BRAKE;
+    directionA = FORWARD;
+	apply();
+}
+
+
+// TODO: verificare lato motore
+void leftwheelbackward() {
+    speedA=50;
+    brakeA = NO_BRAKE;
+    directionA = BACKWARD;
+    apply();
+}
+
+// TODO: verificare lato motore
+void rightwheelforward() {
+    speedB=50;
+    brakeB = NO_BRAKE;
+    directionB = FORWARD;
+    apply();
+}
+
+// TODO: verificare lato motore
+void rightwheelbackward() {
+    speedB=50;
+    brakeB = NO_BRAKE;
+    directionB = BACKWARD;
+    apply();
+}
 
 
 /** riporta tutto allo stato di quiete
@@ -121,14 +163,16 @@ void reset() {
 /** applica lo stato per DURATION secondi
 */
 void apply() {
-    digitalWrite(12, directionA); //Establishes forward direction of Channel A
-    digitalWrite(9, brakeA);   //Disengage the Brake for Channel A
-    analogWrite(3, speedA);   //Spins the motor on Channel A at full speed
+    client.println(F("applying..."));
+
+    digitalWrite(12, directionA); //Establishes direction of Channel A
+    digitalWrite(9, brakeA);   //Brake for Channel A
+    analogWrite(3, speedA);   //Spins the motor on Channel A
 
     //Motor B velocita'
-    digitalWrite(13, directionB);  //Establishes forward direction of Channel B
-    digitalWrite(8, brakeB);   //Disengage the Brake for Channel B
-    analogWrite(11, speedB);    //Spins the motor on Channel B at half speed
+    digitalWrite(13, directionB);  //Establishes direction of Channel B
+    digitalWrite(8, brakeB);   //Brake for Channel B
+    analogWrite(11, speedB);    //Spins the motor on Channel B
 
     delay(DURATION);
     reset();
@@ -177,32 +221,32 @@ void play(){}
 
 
 
-void process(YunClient client) {
+void process() {
     // read the command
     String command = client.readStringUntil('/');
 
     if (command == "forward") {
-        forward(client);
+        forward();
     }
 
     if (command == "backward") {
-        backward(client);
+        backward();
     }
 
     if (command == "leftwheelforward") {
-        leftwheelforward(client);
+        leftwheelforward();
     }
 
     if (command == "leftwheelbackward") {
-        leftwheelbackward(client);
+        leftwheelbackward();
     }
 
     if (command == "rightwheelforward") {
-        rightwheelforward(client);
+        rightwheelforward();
     }
 
     if (command == "rightwheelbackward") {
-        rightwheelbackward(client);
+        rightwheelbackward();
     }
 
 }
