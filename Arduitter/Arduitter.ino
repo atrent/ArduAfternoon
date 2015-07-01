@@ -37,30 +37,30 @@ void setup() {
 
     Serial.begin(9600);
 
-  // Bridge startup
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
-  Bridge.begin();
-  digitalWrite(13, HIGH);
+    // Bridge startup
+    pinMode(13, OUTPUT);
+    digitalWrite(13, LOW);
+    Bridge.begin();
+    digitalWrite(13, HIGH);
 
-  // Listen for incoming connection only from localhost
-  // (no one from the external network could connect)
-  server.listenOnLocalhost();
-  server.begin();
+    // Listen for incoming connection only from localhost
+    // (no one from the external network could connect)
+    server.listenOnLocalhost();
+    server.begin();
 }
 
 void loop() {
-	// Get clients coming from server
-	YunClient client = server.accept();
+    // Get clients coming from server
+    YunClient client = server.accept();
 
-	// There is a new client?
-	if (client) {
-		// Process request
-		process(client);
+    // There is a new client?
+    if (client) {
+        // Process request
+        process(client);
 
-		// Close connection and free resources.
-		client.stop();
-	}
+        // Close connection and free resources.
+        client.stop();
+    }
 
 
 
@@ -70,7 +70,7 @@ void loop() {
     Serial.print(speedB);
     Serial.println();
 
-	delay(1000); // Poll every 50ms
+    delay(1000); // Poll every 50ms
 }
 
 
@@ -85,53 +85,53 @@ void loop() {
 
 /** avanti per DURATION secondi
 */
-void forward(YunClient client){
-	speedA=50;
-	brakeA = NO_BRAKE;
-	directionA = FORWARD;
+void forward(YunClient client) {
+    speedA=50;
+    brakeA = NO_BRAKE;
+    directionA = FORWARD;
 
-	speedB=50;
-	brakeB = NO_BRAKE;
-	directionB = FORWARD;
-	
-	apply();
+    speedB=50;
+    brakeB = NO_BRAKE;
+    directionB = FORWARD;
+
+    apply();
 }
 
 
 
-void backward(YunClient client){}
-void leftwheelforward(YunClient client){}
-void leftwheelbackward(YunClient client){}
-void rightwheelforward(YunClient client){}
-void rightwheelbackward(YunClient client){}
+void backward(YunClient client) {}
+void leftwheelforward(YunClient client) {}
+void leftwheelbackward(YunClient client) {}
+void rightwheelforward(YunClient client) {}
+void rightwheelbackward(YunClient client) {}
 
 
 /** riporta tutto allo stato di quiete
 */
-void reset(){
-	speedA = 0;
-	brakeA = BRAKE;
-	directionA = FORWARD;
+void reset() {
+    speedA = 0;
+    brakeA = BRAKE;
+    directionA = FORWARD;
 
-	speedB = 0;
-	brakeB = BRAKE;
-	directionB = FORWARD;
+    speedB = 0;
+    brakeB = BRAKE;
+    directionB = FORWARD;
 }
 
 /** applica lo stato per DURATION secondi
 */
-void apply(){
-	digitalWrite(12, directionA); //Establishes forward direction of Channel A
-	digitalWrite(9, brakeA);   //Disengage the Brake for Channel A
-	analogWrite(3, speedA);   //Spins the motor on Channel A at full speed
+void apply() {
+    digitalWrite(12, directionA); //Establishes forward direction of Channel A
+    digitalWrite(9, brakeA);   //Disengage the Brake for Channel A
+    analogWrite(3, speedA);   //Spins the motor on Channel A at full speed
 
-	//Motor B velocita'
-	digitalWrite(13, directionB);  //Establishes forward direction of Channel B
-	digitalWrite(8, brakeB);   //Disengage the Brake for Channel B
-	analogWrite(11, speedB);    //Spins the motor on Channel B at half speed
+    //Motor B velocita'
+    digitalWrite(13, directionB);  //Establishes forward direction of Channel B
+    digitalWrite(8, brakeB);   //Disengage the Brake for Channel B
+    analogWrite(11, speedB);    //Spins the motor on Channel B at half speed
 
-	delay(DURATION);
-	reset();
+    delay(DURATION);
+    reset();
 }
 
 
@@ -178,32 +178,32 @@ void play(){}
 
 
 void process(YunClient client) {
-  // read the command
-  String command = client.readStringUntil('/');
+    // read the command
+    String command = client.readStringUntil('/');
 
-  if (command == "forward") {
-    forward(client);
-  }
+    if (command == "forward") {
+        forward(client);
+    }
 
-  if (command == "backward") {
-    backward(client);
-  }
+    if (command == "backward") {
+        backward(client);
+    }
 
-  if (command == "leftwheelforward") {
-    leftwheelforward(client);
-  }
+    if (command == "leftwheelforward") {
+        leftwheelforward(client);
+    }
 
-  if (command == "leftwheelbackward") {
-    leftwheelbackward(client);
-  }
+    if (command == "leftwheelbackward") {
+        leftwheelbackward(client);
+    }
 
-  if (command == "rightwheelforward") {
-    rightwheelforward(client);
-  }
+    if (command == "rightwheelforward") {
+        rightwheelforward(client);
+    }
 
-  if (command == "rightwheelbackward") {
-    rightwheelbackward(client);
-  }
+    if (command == "rightwheelbackward") {
+        rightwheelbackward(client);
+    }
 
 }
 
