@@ -60,7 +60,7 @@ void loop() {
     // There is a new client?
     if (client) {
         // Process request
-        process();
+        process(client);
 
         // Close connection and free resources.
         client.stop();
@@ -89,7 +89,7 @@ void loop() {
 
 /** avanti per DURATION secondi
 */
-void forward() {
+void forward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
@@ -97,12 +97,18 @@ void forward() {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
-
-    apply();
+	pinMode(13, OUTPUT);
+	for(int i=0;i<5;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+    apply(client);
 }
 
 
-void backward() {
+void backward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
@@ -110,41 +116,75 @@ void backward() {
     speedB=-50;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
-
-    apply();
+	pinMode(13, OUTPUT);
+	for(int i=0;i<3;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+    apply(client);
 }
 
 // TODO: verificare lato motore
-void leftwheelforward() {
+void leftwheelforward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
-	apply();
+    pinMode(13, OUTPUT);
+	for(int i=0;i<7;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+	apply(client);
 }
 
 
 // TODO: verificare lato motore
-void leftwheelbackward() {
+void leftwheelbackward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
-    apply();
+    pinMode(13, OUTPUT);
+	for(int i=0;i<9;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+    apply(client);
 }
 
 // TODO: verificare lato motore
-void rightwheelforward() {
+void rightwheelforward(YunClient client) {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
-    apply();
+    pinMode(13, OUTPUT);
+	for(int i=0;i<11;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+    apply(client);
 }
 
 // TODO: verificare lato motore
-void rightwheelbackward() {
+void rightwheelbackward(YunClient client) {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
-    apply();
+    pinMode(13, OUTPUT);
+	for(int i=0;i<13;i++){
+		digitalWrite(13, LOW);
+		delay(10000);
+		digitalWrite(13, HIGH);
+		delay(100);
+	}
+    apply(client);
 }
 
 
@@ -162,9 +202,9 @@ void reset() {
 
 /** applica lo stato per DURATION secondi
 */
-void apply() {
+void apply(YunClient client) {
     client.println(F("applying..."));
-
+	
     digitalWrite(12, directionA); //Establishes direction of Channel A
     digitalWrite(9, brakeA);   //Brake for Channel A
     analogWrite(3, speedA);   //Spins the motor on Channel A
@@ -221,32 +261,32 @@ void play(){}
 
 
 
-void process() {
+void process(YunClient client) {
     // read the command
     String command = client.readStringUntil('/');
 
     if (command == "forward") {
-        forward();
+        forward(client);
     }
 
     if (command == "backward") {
-        backward();
+        backward(client);
     }
 
     if (command == "leftwheelforward") {
-        leftwheelforward();
+        leftwheelforward(client);
     }
 
     if (command == "leftwheelbackward") {
-        leftwheelbackward();
+        leftwheelbackward(client);
     }
 
     if (command == "rightwheelforward") {
-        rightwheelforward();
+        rightwheelforward(client);
     }
 
     if (command == "rightwheelbackward") {
-        rightwheelbackward();
+        rightwheelbackward(client);
     }
 
 }
