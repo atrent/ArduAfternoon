@@ -1,12 +1,9 @@
 ====
 TODO
 
-
-- [*] check porte per tunnel vari (ad es. webcam), cfr. http://www.unimi.it/personale/servizi/71714.htm
+- ALIMENTATORE!!!
 
 - Tinc network (atrent, POSTPONED)
-
-- Sintassi Twitter (tutti, qualcosa fatto)
 
 - "Motore" esecuzione comandi [Policy] (vedi note in motore.txt)
 
@@ -20,7 +17,6 @@ TODO
 
 - Foto Mattoncino (chi ha rubato le ruote?)
 
-- riportare config su nuova board (atrent)
 
 ====
 DONE
@@ -36,3 +32,9 @@ DONE
 - Access Twitter Command Line (marco, piu' o meno ok)
 
 - BRIDGE - Comunicazione NUY - Arduino [Trovare documentazione, segnalare a Brianza] (Bridge ora funziona con nuova scheda, Alberto testimone!!!)
+
+- [*] check porte per tunnel vari (ad es. webcam), cfr. http://www.unimi.it/personale/servizi/71714.htm
+
+- Sintassi Twitter (tutti, qualcosa fatto)
+
+- riportare config su nuova board (atrent)

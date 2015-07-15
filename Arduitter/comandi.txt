@@ -18,12 +18,16 @@ leftwheelforward
 leftwheelbackward
 rightwheelforward
 rightwheelbackward
+
+/* non c'e' bisogno
 snapshot   ---- ???? ( verificare motion con più utenti - uso dello streaming )
 play
+*/
 
 
+
+// TODO:
 #Admin
-
 sleep
 wakeup
 ...
