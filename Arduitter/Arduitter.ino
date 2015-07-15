@@ -43,9 +43,9 @@ void setup() {
 
     // Bridge startup
     pinMode(13, OUTPUT);
-    digitalWrite(13, LOW);
+    blink();
     Bridge.begin();
-    digitalWrite(13, HIGH);
+    blink();
 
     // Listen for incoming connection only from localhost
     // (no one from the external network could connect)
@@ -74,7 +74,7 @@ void loop() {
     Serial.println();
     */
 
-    delay(200); // Poll every...
+	blink();
 }
 
 
@@ -97,13 +97,9 @@ void forward(YunClient client) {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
-	pinMode(13, OUTPUT);
-	for(int i=0;i<5;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
+
     apply(client);
 }
 
@@ -116,13 +112,8 @@ void backward(YunClient client) {
     speedB=-50;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
-	pinMode(13, OUTPUT);
-	for(int i=0;i<3;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
     apply(client);
 }
 
@@ -131,13 +122,8 @@ void leftwheelforward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
-    pinMode(13, OUTPUT);
-	for(int i=0;i<7;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
 	apply(client);
 }
 
@@ -147,13 +133,8 @@ void leftwheelbackward(YunClient client) {
     speedA=50;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
-    pinMode(13, OUTPUT);
-	for(int i=0;i<9;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
     apply(client);
 }
 
@@ -162,13 +143,8 @@ void rightwheelforward(YunClient client) {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
-    pinMode(13, OUTPUT);
-	for(int i=0;i<11;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
     apply(client);
 }
 
@@ -177,13 +153,8 @@ void rightwheelbackward(YunClient client) {
     speedB=50;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
-    pinMode(13, OUTPUT);
-	for(int i=0;i<13;i++){
-		digitalWrite(13, LOW);
-		delay(10000);
-		digitalWrite(13, HIGH);
-		delay(100);
-	}
+
+	blink();
     apply(client);
 }
 
@@ -290,6 +261,14 @@ void process(YunClient client) {
     }
 
 }
+
+
+void blink(){
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+}
+
 
 /*
 void digitalCommand(YunClient client) {
