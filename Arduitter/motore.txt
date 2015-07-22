@@ -6,6 +6,21 @@ si puo' fare in shell! ;)
 		echo "/search #arduittercommand" | ./ttytter
 		(da aggiungere il timestamp, ecc..)
 
+l'output e' nella forma:
+...
+za6> <adadnc> Remote control #Bluetooth knobs, 3D printed, sanded, primed, sanded, painted. #arduino https://pbs.twimg.com/media/CKgPhY6UEAE_Bgw.jpg
+za7> (x2) <%rutego> RT @GeekyTheory: Primeros pasos con #Arduino Yún: http://ow.ly/PQED7
+za8> <CaribeMesh> Cómo hacer un Hoverboard de Regreso al Futuro http://dlvr.it/Bbs8NL #Arduino
+za9> <robertore62> Temp 33C/92F-RHum 45%-Press 1000mb\n #Milano #ITA 22-07-15 10am\n#arduino #Meteo #TweetMI #E015 https://pbs.twimg.com/media/CKgTC8gWsAAmDx1.jpg
+zb0> <deficio_bot> The light level has increased by 100.00%.  It is currently dark. #arduino
+zb1> (x68) <%VonGomben> RT @arduino: Explore #Arduino and #Genuino brand refresh: design insights from @todotoit https://pbs.twimg.com/media/CKX8wbKWwAIsrWY.jpg
+zb2> <%jo_garris> RT @robertore62: Temp 33C/92F-RHum 45%-Press 1000mb\n #Milano #ITA 22-07-15 10am\n#arduino #Meteo #TweetMI #E015 https://pbs.twimg.com/media/CKgTC8gWsAAmDx1.jpg
+zb3> (x4) <%jo_garris> RT @planetarduino: Self-Driving R/C Car Parks Itself Just Like a Lexus - #arduino http://makezine.com/2015/07/10/self-driving-rc-car-parks-just-like-lexus/
+zb4> (x68) <%techlabtl> RT @arduino: Explore #Arduino and #Genuino brand refresh: design insights from @todotoit https://pbs.twimg.com/media/CKX8wbKWwAIsrWY.jpg
+...
+
+
+
 	-> altro txt con i comandi eseguiti (DONE)
 
 for sulle righe

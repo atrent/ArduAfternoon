@@ -10,7 +10,7 @@ testo $CMD:PAR,PAR,...
 
 COMANDI (case insensitive)
 
-#Utente
+#Utente (da twitter)
 
 forward
 backward
