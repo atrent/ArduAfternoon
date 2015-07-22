@@ -12,14 +12,27 @@ echo '/search #arduittercommand' | ./ttytter -script | while
  read tweet
 do
  if
-        grep -qv "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
+        ! grep -qe "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
  then
 	# TODO: check validita' comando
-        echo doing... $tweet
-        echo $tweet >> $DONEFILE
-        COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:])
-        echo curl http://$HOST/arduino/$COMMAND
+		echo doing... $tweet
+		echo $tweet >> $DONEFILE
+		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -d " ")
+	if
+		grep -q $(echo $COMMAND|cut -f1 -d/) << HERE
+		forward
+		backward
+		leftwheelforward
+		leftwheelbackward
+		rightwheelforward
+		rightwheelbackward
+HERE
+	then
+		curl http://$HOST/arduino/$COMMAND/EOC
+	else
+		echo COMANDO NON PERMESSO
+	fi
  else
-        echo NOT doing... $tweet
+	echo NOT doing... $tweet
  fi
 done

@@ -9,7 +9,13 @@
 #define NO_BRAKE LOW
 #define MAX_SPEED 100
 
-#define DURATION 2000
+
+#define SPEED 50
+
+#define TEMPOPARI 1000
+#define TEMPOASIMMETRICO 500
+
+//#define DURATION 3000
 
 
 // Listen to the default port 5555, the Yún webserver
@@ -37,23 +43,27 @@ void setup() {
     pinMode(8, OUTPUT);  //brake
     pinMode(11, OUTPUT); //speed
     
-    reset();
+    resetStatus();
 
     //Serial.begin(9600);
 
     // Bridge startup
     pinMode(13, OUTPUT);
-    blink();
+    //blink();
     Bridge.begin();
-    blink();
+    //blink();
 
     // Listen for incoming connection only from localhost
     // (no one from the external network could connect)
     server.listenOnLocalhost();
     server.begin();
+    
+    
+    //for(int i=0;i<20;i++) blink();
 }
 
 void loop() {
+	//blink();
     // Get clients coming from server
     client = server.accept();
 
@@ -74,7 +84,7 @@ void loop() {
     Serial.println();
     */
 
-	blink();
+	//blink();
 }
 
 
@@ -90,78 +100,78 @@ void loop() {
 /** avanti per DURATION secondi
 */
 void forward(YunClient client) {
-    speedA=50;
+    speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
 
-    speedB=50;
+    speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
 
-	blink();
+	//blink();
 
-    apply(client);
+    apply(client,TEMPOPARI);
 }
 
 
 void backward(YunClient client) {
-    speedA=50;
+    speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
 
-    speedB=-50;
+    speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
 
-	blink();
-    apply(client);
+	////blink();
+    apply(client,TEMPOPARI);
 }
 
 // TODO: verificare lato motore
 void leftwheelforward(YunClient client) {
-    speedA=50;
+    speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
 
-	blink();
-	apply(client);
+	//blink();
+	apply(client,TEMPOASIMMETRICO);
 }
 
 
 // TODO: verificare lato motore
 void leftwheelbackward(YunClient client) {
-    speedA=50;
+    speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
 
-	blink();
-    apply(client);
+	//blink();
+    apply(client,TEMPOASIMMETRICO);
 }
 
 // TODO: verificare lato motore
 void rightwheelforward(YunClient client) {
-    speedB=50;
+    speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
 
-	blink();
-    apply(client);
+	//blink();
+    apply(client,TEMPOASIMMETRICO);
 }
 
 // TODO: verificare lato motore
 void rightwheelbackward(YunClient client) {
-    speedB=50;
+    speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
 
-	blink();
-    apply(client);
+	//blink();
+    apply(client,TEMPOASIMMETRICO);
 }
 
 
 /** riporta tutto allo stato di quiete
 */
-void reset() {
+void resetStatus() {
     speedA = 0;
     brakeA = BRAKE;
     directionA = FORWARD;
@@ -173,9 +183,16 @@ void reset() {
 
 /** applica lo stato per DURATION secondi
 */
-void apply(YunClient client) {
+void apply(YunClient client, int duration) {
     client.println(F("applying..."));
-	
+	writeStatus();
+    delay(duration);
+    resetStatus();
+    writeStatus();
+}
+
+
+void writeStatus(){
     digitalWrite(12, directionA); //Establishes direction of Channel A
     digitalWrite(9, brakeA);   //Brake for Channel A
     analogWrite(3, speedA);   //Spins the motor on Channel A
@@ -184,12 +201,7 @@ void apply(YunClient client) {
     digitalWrite(13, directionB);  //Establishes direction of Channel B
     digitalWrite(8, brakeB);   //Brake for Channel B
     analogWrite(11, speedB);    //Spins the motor on Channel B
-
-    delay(DURATION);
-    reset();
 }
-
-
 
 /* no perche' sono gestiti dallo script su openwrt
 void snapshot(){}
@@ -262,12 +274,13 @@ void process(YunClient client) {
 
 }
 
-
+/*
 void blink(){
     digitalWrite(13, HIGH);
-    delay(100);
+    delay(200);
     digitalWrite(13, LOW);
 }
+*/
 
 
 /*
