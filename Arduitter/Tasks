@@ -1,18 +1,24 @@
 ====
 TODO
 
-- ALIMENTATORE!!!
+- COMANDI ADMIN!!!
+
+- wiki page (iniziata)
+
+- feedback twitter, ogni tanto mandare un tweet con "ho eseguito i comandi di ... (lista utenti)"
+
+- makerfaire rimini!!! (alberto, http://www.makerfairerimini.it/)
+
+- ALIMENTATORE da riparare!!!
+
+- collegamenti batteria, risaldare riduttore di tensione (atrent)
+
+- alimentare hub usb?
 
 - Tinc network (atrent, POSTPONED)
-
-- "Motore" esecuzione comandi [Policy] (vedi note in motore.txt)
-
-- Led RGB
-
+- Led RGB?
 - Pensare a cosa far fare all'Arduino, es. led rgb o lcd...???
-
 - LCD Tweet? Comando attuale, km percorsi, etc. ?
-
 - Solar Panel
 
 - Foto Mattoncino (chi ha rubato le ruote?)
@@ -20,6 +26,8 @@ TODO
 
 ====
 DONE
+
+- "Motore" esecuzione comandi [Policy] (vedi note in motore.txt)
 
 - rendere persistente SSID, fatto (bisognava editare /etc/config/wireless)
 
