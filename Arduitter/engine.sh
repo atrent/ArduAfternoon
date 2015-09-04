@@ -31,7 +31,7 @@ do
 		
 		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -d " ")
 	if
-		grep -q $(echo $COMMAND|cut -f1 -d/) << HERE
+		grep -q $(echo $COMMAND|tr -s " " "/"|cut -f1 -d/) << HERE
 		forward
 		backward
 		leftwheelforward
