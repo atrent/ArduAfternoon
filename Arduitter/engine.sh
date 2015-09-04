@@ -10,18 +10,24 @@ HOST=localhost
 
 touch $DONEFILE  # ne assicuro l'esistenza, attenzione che deve essere NON vuoto altrimenti grep fallisce!
 
+# TODO: ripulire meglio grep in caso di < > etc.
+
 echo '/search #arduittercommand' | ./ttytter -script | while
- read tweet
+ read raw_tweet
 do
+ tweet=$(echo $raw_tweet|tr "<" "@"|tr ">" "@")
+ #echo ===
+ #echo searching $tweet
+  
  if
-    grep -qe "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
+    grep "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
  then
 	echo NOT doing... $tweet
  else
 	# TODO: check validita' comando
 		echo doing... $tweet
 		
-		echo $(date +%Y%m%d%H%M) $tweet >> $DONEFILE
+		echo $(date +%Y%m%d%H%M%S) $tweet >> $DONEFILE
 		
 		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -d " ")
 	if
@@ -35,6 +41,7 @@ do
 HERE
 	then
 		curl http://$HOST/arduino/$COMMAND/EOC
+		# TODO: feedback su twitter (ho eseguito i comandi di ....)
 	else
 		echo COMANDO NON PERMESSO
 	fi
