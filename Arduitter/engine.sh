@@ -29,9 +29,9 @@ do
 		
 		echo $(date +%Y%m%d%H%M%S) $tweet >> $DONEFILE
 		
-		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -d " ")
+		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -s " " "/")
 	if
-		grep -q $(echo $COMMAND|tr -s " " "/"|cut -f1 -d/) << HERE
+		grep -q $(echo $COMMAND|cut -f1 -d/) << HERE
 		forward
 		backward
 		leftwheelforward
