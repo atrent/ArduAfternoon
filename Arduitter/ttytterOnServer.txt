@@ -1,0 +1,16 @@
+# script sul server per delegare ttytter dal openwrt
+
+# da openwrt viene invocato cosi':
+# ssh arduitter@sl-lab.it ttytter $*
+
+
+$ cat ttytter
+#!/bin/bash
+
+if
+ echo $SSH_ORIGINAL_COMMAND | grep -q ^ttytter
+then
+ $SSH_ORIGINAL_COMMAND
+else
+ echo COMANDO NON VALIDO
+fi
