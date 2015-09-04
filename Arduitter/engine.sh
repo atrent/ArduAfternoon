@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd $0
+
 # da lanciare ogni poco piu' di un minuto (causa API twitter)
 
 #TODOFILE=todo.tweets
