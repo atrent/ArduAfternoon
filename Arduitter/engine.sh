@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $0
+cd $(dirname $0)
 
 # da lanciare ogni poco piu' di un minuto (causa API twitter)
 
