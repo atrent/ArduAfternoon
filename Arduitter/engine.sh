@@ -14,8 +14,10 @@ echo '/search #arduittercommand' | ./ttytter -script | while
  read tweet
 do
  if
-        ! grep -qe "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
+    grep -qe "$tweet" $DONEFILE  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
  then
+	echo NOT doing... $tweet
+ else
 	# TODO: check validita' comando
 		echo doing... $tweet
 		echo $tweet >> $DONEFILE
@@ -34,7 +36,5 @@ HERE
 	else
 		echo COMANDO NON PERMESSO
 	fi
- else
-	echo NOT doing... $tweet
  fi
 done
