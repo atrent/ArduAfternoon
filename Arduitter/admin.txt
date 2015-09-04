@@ -2,6 +2,8 @@ GUIDA ADMIN (setup & run)
 
 NOTA BENE: non va 'git pull', usare 'git fetch' e poi merge a mano (es. git merge origin)
 
+NOTA BENE2: ttytter.sh su server atrent serve per far funzionare il passaggio dell'opzione '-script'
+
 Componenti da attivare sono:
 
 - motion
