@@ -1,0 +1,21 @@
+GUIDA ADMIN (setup & run)
+
+NOTA BENE: non va 'git pull', usare 'git fetch' e poi merge a mano (es. git merge origin)
+
+Componenti da attivare sono:
+
+- motion
+
+- (check che siano in funzione) sshtunnel (2222 ssh, 10000 motion)
+
+- interfacce di rete (wlan per guest eduroam, eth0 se si vuole attaccarlo anche al routerino)
+
+- crontab ???   (eventualmente mettere engine)
+
+- non disabilitare porta 5700 (python) e 6571 (python) sono del bridge, in generale non togliere python!!!
+
+- abbiamo lasciato sia dropbear (2222) che sshd (22), si sa mai
+
+- la password di root e' "lavagna................." (noi ce la ricordiamo! tie'!)
+
+- !!! engine.sh !!! si puo' lanciare in un ciclo o metterlo nel crontab

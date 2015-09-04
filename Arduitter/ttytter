@@ -1,1 +1,1 @@
-ssh arduitter@sl-lab.it ttytter $*
+ssh arduitter@sl-lab.it ttytter.sh $*
