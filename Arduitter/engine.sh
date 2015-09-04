@@ -20,7 +20,7 @@ do
  else
 	# TODO: check validita' comando
 		echo doing... $tweet
-		echo $tweet >> $DONEFILE
+		echo $(date +%Y%m%d%H%M) $tweet >> $DONEFILE
 		COMMAND=$(echo $tweet| sed -n -e 's/^.*#arduittercommand //p'|tr [:upper:] [:lower:] | tr -d " ")
 	if
 		grep -q $(echo $COMMAND|cut -f1 -d/) << HERE
