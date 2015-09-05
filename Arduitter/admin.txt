@@ -1,8 +1,12 @@
 GUIDA ADMIN (setup & run)
 
-NOTA BENE: non va 'git pull', usare 'git fetch' e poi merge a mano (es. git merge origin)
+NOTA BENE1: non va 'git pull', usare 'git fetch' e poi merge a mano (es. git merge origin)
 
 NOTA BENE2: ttytter.sh su server atrent serve per far funzionare il passaggio dell'opzione '-script'
+
+NOTA BENE3: attenzione al grep e ai meta caratteri (< >)
+
+NOTA BENE4: non c'e' bisogno di avere un done.tweets perfetto (nel senso di univocita' dei tweet) perche' tanto twitter non permette tweet identici per cui ti tocca COMUNQUE crearne di nuovi, es. "#arduittercommand forward ..."
 
 Componenti da attivare sono:
 
