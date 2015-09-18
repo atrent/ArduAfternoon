@@ -54,7 +54,7 @@ do
 		rightwheelbackward
 HERE
 	then
-		curl http://$HOST/arduino/$COMMAND/EOC
+		curl -s http://$HOST/arduino/$COMMAND/EOC
 	else
 		echo Comando "$COMMAND" NON PERMESSO
 	fi
@@ -67,5 +67,5 @@ if
 	test -s $NAMESFILE
 then
 	# TODO: feedback su twitter (ho eseguito i comandi di ....)
-	echo $(date +%Y%m%d%H%M%S) - Eseguiti: $(cat $NAMESFILE) |tr -s "\n" " " | ./ttytter
+	echo $(date +%Y%m%d%H%M%S), eseguiti: $(cat $NAMESFILE) |tr -s "\n" " " | ./ttytter
 fi
