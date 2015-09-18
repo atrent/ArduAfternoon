@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo $(date +%Y%m%d%H%M%S) getting tweets...
+
 cd $(dirname $0)
 
 # da lanciare ogni poco piu' di un minuto (causa API twitter)
@@ -24,7 +26,7 @@ do
  #echo searching $tweet
   
  if
-    grep "$tweet" "$DONEFILE"  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
+    grep -q "$tweet" "$DONEFILE"  # se e' gia' stato fatto non farlo (pero' urge ogni tanto svuotare DONEFILE)
  then
 	echo NOT doing... $tweet
  else
