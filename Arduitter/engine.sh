@@ -8,6 +8,7 @@ cd $(dirname $0)
 DONEFILE=done.tweets
 HOST=localhost
 NAMESFILE=names.list
+ESEGUITI=0
 
 rm $NAMESFILE
 touch $DONEFILE $NAMESFILE # ne assicuro l'esistenza, attenzione che deve essere NON vuoto altrimenti grep fallisce!
@@ -55,6 +56,7 @@ do
 HERE
 	then
 		curl -s http://$HOST/arduino/$COMMAND/EOC
+		ESEGUITI=1
 	else
 		echo Comando "$COMMAND" NON PERMESSO
 	fi
@@ -64,7 +66,7 @@ done
 	#echo DEBUG eseguiti: $(cat $NAMESFILE)
 
 if
-	test -s $NAMESFILE
+	test $ESEGUITI -eq 1
 then
 	# TODO: feedback su twitter (ho eseguito i comandi di ....)
 	echo $(date +%Y%m%d%H%M%S), ho accettato cmd da: $(cat $NAMESFILE) |tr -s "\n" " " |cut -c-140 | ./ttytter
