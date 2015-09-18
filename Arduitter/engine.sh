@@ -31,7 +31,7 @@ do
 	echo NOT doing... $tweet
  else
 	# TODO: check validita' comando
-	echo '===>' doing... $tweet
+	echo trying... $tweet
 
 	echo $(date +%Y%m%d%H%M%S) $tweet >> $DONEFILE
 
@@ -48,7 +48,8 @@ HERE
 	then
 		# esegue
 		curl -s http://$HOST/arduino/$COMMAND/EOC
-		
+		echo "done!"
+
 		# e quindi registra il nome
 		if
 			grep -q $NAME $NAMESFILE
