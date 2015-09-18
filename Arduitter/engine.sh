@@ -8,7 +8,6 @@ cd $(dirname $0)
 DONEFILE=done.tweets
 HOST=localhost
 NAMESFILE=names.list
-ESEGUITI=0
 
 rm $NAMESFILE
 touch $DONEFILE $NAMESFILE # ne assicuro l'esistenza, attenzione che deve essere NON vuoto altrimenti grep fallisce!
@@ -16,18 +15,8 @@ touch $DONEFILE $NAMESFILE # ne assicuro l'esistenza, attenzione che deve essere
 echo '/search #arduittercommand' | ./ttytter -script | while
  read raw_tweet
 do
-
  NAME=$(echo $raw_tweet|cut -f2 -d'<'|cut -f1 -d'>')
- if
-  grep -q $NAME $NAMESFILE
- then
-  echo "Nome $NAME gia' presente"
- else
-  echo Nuovo nome: $NAME
-  echo $NAME >> $NAMESFILE
- fi
- 
- 
+  
  # TODO: ripulire meglio grep in caso di < > etc.
  tweet=$(echo $raw_tweet|tr "<" "@"|tr ">" "@")
 
@@ -55,18 +44,28 @@ do
 		rightwheelbackward
 HERE
 	then
+		# esegue
 		curl -s http://$HOST/arduino/$COMMAND/EOC
-		ESEGUITI=1
+		
+		# e quindi registra il nome
+		if
+			grep -q $NAME $NAMESFILE
+		then
+			echo "Nome $NAME gia' presente"
+		else
+			echo Nuovo nome: $NAME
+			echo $NAME >> $NAMESFILE
+		fi
 	else
 		echo Comando "$COMMAND" NON PERMESSO
 	fi
  fi
 done
 
-	#echo DEBUG eseguiti: $(cat $NAMESFILE)
+#echo DEBUG eseguiti: $(cat $NAMESFILE)
 
 if
-	test $ESEGUITI -eq 1
+	test -s $NAMESFILE
 then
 	# TODO: feedback su twitter (ho eseguito i comandi di ....)
 	echo $(date +%Y%m%d%H%M%S), ho accettato cmd da: $(cat $NAMESFILE) |tr -s "\n" " " |cut -c-140 | ./ttytter
