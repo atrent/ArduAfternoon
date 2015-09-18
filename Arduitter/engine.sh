@@ -67,5 +67,5 @@ if
 	test -s $NAMESFILE
 then
 	# TODO: feedback su twitter (ho eseguito i comandi di ....)
-	echo $(date +%Y%m%d%H%M%S), eseguiti: $(cat $NAMESFILE) |tr -s "\n" " " | ./ttytter
+	echo $(date +%Y%m%d%H%M%S), ho accettato cmd da: $(cat $NAMESFILE) |tr -s "\n" " " |cut -c-140 | ./ttytter
 fi
