@@ -1,0 +1,13 @@
+- provare a tweettare lo screenshot
+
+- tarare direzioni
+	-> forward un filo a dx
+	-> backward pesante a sx
+	-> aggiunta comando ruota (left, right)
+
+- aumentare durata rotazioni
+	- aggiunta parametro per ripetizione comando
+
+- sospensioni o tre punti (per aderenza terreno)
+
+- aumentare il delay per tirare giù i comandi da twitter
