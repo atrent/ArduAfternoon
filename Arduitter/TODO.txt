@@ -1,13 +1,14 @@
 - provare a tweettare lo screenshot
 
 - tarare direzioni
-	-> forward un filo a dx
-	-> backward pesante a sx
-	-> aggiunta comando ruota (left, right)
+	-> forward va un filo a dx
+	-> backward va pesantemente a sx (sempre guardando verso avanti)
+	-> aggiungere comando "ruota" (left, right)
 
 - aumentare durata rotazioni
-	- aggiunta parametro per ripetizione comando
+
+- aggiunta parametro per ripetizione comando
 
 - sospensioni o tre punti (per aderenza terreno)
 
-- aumentare il delay per tirare giù i comandi da twitter
+- aumentare il delay per tirare giù i comandi da twitter (FATTO, messo a DUE minuti)
