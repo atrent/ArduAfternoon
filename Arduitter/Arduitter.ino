@@ -99,7 +99,7 @@ void loop() {
 
 /** avanti per DURATION secondi
 */
-void forward(YunClient client) {
+void forward(YunClient client, int repeat) {
     speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
@@ -110,11 +110,11 @@ void forward(YunClient client) {
 
 	//blink();
 
-    apply(client,TEMPOPARI);
+    apply(client,TEMPOPARI*repeat);
 }
 
 
-void backward(YunClient client) {
+void backward(YunClient client, int repeat) {
     speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
@@ -124,48 +124,48 @@ void backward(YunClient client) {
     directionB = BACKWARD;
 
 	////blink();
-    apply(client,TEMPOPARI);
+    apply(client,TEMPOPARI*repeat);
 }
 
 // TODO: verificare lato motore
-void leftwheelforward(YunClient client) {
+void leftwheelforward(YunClient client, int repeat) {
     speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = FORWARD;
 
 	//blink();
-	apply(client,TEMPOASIMMETRICO);
+	apply(client,TEMPOASIMMETRICO*repeat);
 }
 
 
 // TODO: verificare lato motore
-void leftwheelbackward(YunClient client) {
+void leftwheelbackward(YunClient client, int repeat) {
     speedA=SPEED;
     brakeA = NO_BRAKE;
     directionA = BACKWARD;
 
 	//blink();
-    apply(client,TEMPOASIMMETRICO);
+    apply(client,TEMPOASIMMETRICO*repeat);
 }
 
 // TODO: verificare lato motore
-void rightwheelforward(YunClient client) {
+void rightwheelforward(YunClient client, int repeat) {
     speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = FORWARD;
 
 	//blink();
-    apply(client,TEMPOASIMMETRICO);
+    apply(client,TEMPOASIMMETRICO*repeat);
 }
 
 // TODO: verificare lato motore
-void rightwheelbackward(YunClient client) {
+void rightwheelbackward(YunClient client, int repeat) {
     speedB=SPEED;
     brakeB = NO_BRAKE;
     directionB = BACKWARD;
 
 	//blink();
-    apply(client,TEMPOASIMMETRICO);
+    apply(client,TEMPOASIMMETRICO*repeat);
 }
 
 
@@ -247,29 +247,30 @@ void play(){}
 void process(YunClient client) {
     // read the command
     String command = client.readStringUntil('/');
+    int param=(client.parseInt()%10)+1;
 
     if (command == "forward") {
-        forward(client);
+        forward(client,param);
     }
 
     if (command == "backward") {
-        backward(client);
+        backward(client,param);
     }
 
     if (command == "leftwheelforward") {
-        leftwheelforward(client);
+        leftwheelforward(client,param);
     }
 
     if (command == "leftwheelbackward") {
-        leftwheelbackward(client);
+        leftwheelbackward(client,param);
     }
 
     if (command == "rightwheelforward") {
-        rightwheelforward(client);
+        rightwheelforward(client,param);
     }
 
     if (command == "rightwheelbackward") {
-        rightwheelbackward(client);
+        rightwheelbackward(client,param);
     }
 
 }
