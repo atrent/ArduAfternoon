@@ -8,13 +8,7 @@ TODO
 	-> backward va pesantemente a sx (sempre guardando verso avanti)
 	-> aggiungere comando "ruota" (left, right)
 
-- aumentare durata rotazioni
-
-- aggiunta parametro per ripetizione comando
-
 - sospensioni o tre punti (per aderenza terreno)
-
-- aumentare il delay per tirare giù i comandi da twitter (FATTO, messo a DUE minuti)
 
 - guida per admin (setup & run)
 
@@ -71,3 +65,9 @@ DONE
 - ALIMENTATORE da riparare!!!
 
 - makerfaire rimini!!! (alberto, http://www.makerfairerimini.it/)
+
+- aumentare durata rotazioni (in realta' aggiunto "repeat")
+
+- aggiunta parametro per ripetizione comando
+
+- aumentare il delay per tirare giù i comandi da twitter (FATTO, messo a DUE minuti)
