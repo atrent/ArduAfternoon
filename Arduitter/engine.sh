@@ -57,7 +57,7 @@ HERE
 			echo "Nome $NAME gia' presente"
 		else
 			echo Nuovo nome: $NAME
-			echo $NAME >> $NAMESFILE
+			echo @"$NAME" >> $NAMESFILE
 		fi
 	else
 		echo Comando "$COMMAND" NON PERMESSO
