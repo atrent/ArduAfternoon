@@ -184,7 +184,7 @@ void resetStatus() {
 /** applica lo stato per DURATION secondi
 */
 void apply(YunClient client, int duration) {
-    client.println(F("applying..."));
+    client.println(F("V1.2 applying..."));
 	writeStatus();
     delay(duration);
     resetStatus();
