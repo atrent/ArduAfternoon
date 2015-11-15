@@ -1,5 +1,3 @@
-#!/bin/bash
-
 WIFI="ArduinoAfternoon"
 LIMIT="10"
 
