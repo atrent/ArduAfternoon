@@ -6,7 +6,13 @@ LIMIT="10"
 muovi(){
  # direzione random (rotate gradi)
  # forward 1
- # $RANDOM
+	if [ $(($RANDOM%2)) -eq 1 ]
+	then
+		curl http://localhost/arduino/rotateleft/1
+	else
+		curl http://localhost/arduino/rotateright/1
+	fi
+	curl http://localhost/arduino/forward/1
 }
 
 scan()
@@ -23,6 +29,7 @@ do
 	if [ $previous -le $LIMIT ]
 	then
 		echo girotondo
+		# curl http://localhost/arduino/rotate/4
 		echo $previous
 		echo $LIMIT
 		sleep 1
@@ -35,9 +42,11 @@ do
 		then
 			# ci stiamo allontanando ergo back
 			echo backward 1
+			curl http://localhost/arduino/backward/1
 		else
 			# ci stiamo avvicinando
 			echo muovi
+			muovi
 		fi
 		previous=$curr
 	fi
