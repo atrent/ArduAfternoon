@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WIFI="ArduinoAfternoon"
-LIMIT="25"
+LIMIT="40"
 
 muovi(){
  echo in muovi
@@ -15,6 +15,7 @@ muovi(){
 	else
 		curl http://localhost/arduino/rotateright/1
 	fi
+	sleep 1
 	curl http://localhost/arduino/backward/1
 }
 
@@ -29,10 +30,13 @@ previous="100"
 
 while true
 do
+	curr="0$(scan $WIFI | head -n 1 | cut -d " " -f 12 | tr -d '-')"
+		
 	if [ $previous -le $LIMIT ]
 	then
 		echo girotondo
-		# curl http://localhost/arduino/rotate/4
+		curl http://localhost/arduino/rotateleft/4
+		curl http://localhost/arduino/rotateright/4
 		echo previous: $previous
 		#echo $LIMIT
 		sleep 1
@@ -40,7 +44,6 @@ do
 		echo not yet
 		echo previous: $previous
 		#echo $LIMIT
-		curr="0$(scan $WIFI | head -n 1 | cut -d " " -f 12 | tr -d '-')"
 		
 		if [ $curr -eq 0 ]
 		then
@@ -58,6 +61,6 @@ do
 			
 			muovi
 		fi
-		previous=$curr
 	fi
+	previous=$curr
 done
