@@ -4,7 +4,7 @@ LIMIT="10"
 muovi(){
  # direzione random (rotate gradi)
  # forward 1
-	if [ $(($RANDOM%2)) -eq 1 ]
+	if [ $((($RANDOM%2))) -eq 1 ]
 	then
 		curl http://localhost/arduino/rotateleft/1
 	else
