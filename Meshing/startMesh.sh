@@ -1,7 +1,7 @@
 #!/bin/bash
 set -o verbose
 
-WLAN=wlan1
+WLAN=wlan2
 
 #modprobe batman-adv
 
