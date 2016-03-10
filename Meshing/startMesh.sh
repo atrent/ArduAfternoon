@@ -1,8 +1,11 @@
 #!/bin/bash
 set -o verbose
 
-WLAN=wlan2
+### Inserire l'interfaccia corretta
+WLAN=wlan1
 
+#### modprobe IF moduli kernel non vengono caricati al boot
+#### Controllare con "sudo batctl -v"
 #modprobe batman-adv
 
 ifconfig bat0 down
@@ -30,8 +33,12 @@ batctl if add $WLAN
 batctl if
 
 ifconfig $WLAN up
+sleep 3
 ifconfig bat0 up
-ifconfig bat0 192.168.2.42 netmask 255.255.255.0 up
+sleep 3
+
+# Al posto di <IP> aggiungere l'indirizzo
+ifconfig bat0 192.168.2."<IP>" netmask 255.255.255.0 up
 
 #ip link set up dev $WLAN
 
