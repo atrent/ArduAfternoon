@@ -8,6 +8,7 @@
 #define BRAKE HIGH
 #define NO_BRAKE LOW
 #define MAX_SPEED 100
+#define SHIFT 30
 
 
 #define SPEED 50
@@ -168,6 +169,30 @@ void rightwheelbackward(YunClient client, int repeat) {
     apply(client,TEMPOASIMMETRICO*repeat);
 }
 
+void rotateLeft(YunClient client, int repeat) {
+    speedA=SPEED;
+    brakeA = NO_BRAKE;
+    directionA = BACKWARD;
+    speedB=SPEED;
+    brakeB = NO_BRAKE;
+    directionB = FORWARD;
+
+	//blink();
+    apply(client,TEMPOASIMMETRICO*repeat);
+}
+
+void rotateRight(YunClient client, int repeat) {
+    speedA=SPEED;
+    brakeA = NO_BRAKE;
+    directionA = FORWARD;
+    speedB=SPEED;
+    brakeB = NO_BRAKE;
+    directionB = BACKWARD;
+
+	//blink();
+    apply(client,TEMPOASIMMETRICO*repeat);
+}
+
 
 /** riporta tutto allo stato di quiete
 */
@@ -271,6 +296,14 @@ void process(YunClient client) {
 
     if (command == "rightwheelbackward") {
         rightwheelbackward(client,param);
+    }
+
+    if (command == "rotateleft") {
+        rotateLeft(client,param);
+    }
+
+    if (command == "rotateright") {
+        rotateRight(client,param);
     }
 
 }
