@@ -13,12 +13,10 @@ ifconfig $WLAN down
 
 ifconfig $WLAN mtu 1528
 
+#iwconfig sarebbe obsoleto... TODO: aggiornare a iw
 iwconfig $WLAN mode ad-hoc
-
 iwconfig $WLAN channel 1
-
 iwconfig $WLAN enc off
-
 iwconfig $WLAN essid prova_mesh
 
 #ip link set up dev $WLAN
