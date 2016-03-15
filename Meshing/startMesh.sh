@@ -1,19 +1,24 @@
 #!/bin/bash
 set -o verbose
 
-### Inserire l'interfaccia corretta
+#### Inserire l'interfaccia corretta
+#### TODO
+#### Si potrebbe fare uno script dove si inserisce l'interfaccia
+#### quando si esegue lo script (controllando la correttezza)
+
 WLAN=wlan1
 
 #### modprobe IF moduli kernel non vengono caricati al boot
 #### Controllare con "sudo batctl -v"
-#modprobe batman-adv
+#### modprobe batman-adv
 
+#### ifconfig sarebbe obsoleto... TODO: aggiornare a ip
 ifconfig bat0 down
 ifconfig $WLAN down
 
 ifconfig $WLAN mtu 1528
 
-#iwconfig sarebbe obsoleto... TODO: aggiornare a iw
+#### iwconfig sarebbe obsoleto... TODO: aggiornare a iw
 iwconfig $WLAN mode ad-hoc
 iwconfig $WLAN channel 1
 iwconfig $WLAN enc off
@@ -29,6 +34,8 @@ iwconfig $WLAN essid prova_mesh
 batctl if add $WLAN
 
 batctl if
+
+#### TODO provare a modificare le sleep
 
 ifconfig $WLAN up
 sleep 3
