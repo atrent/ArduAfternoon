@@ -6,7 +6,17 @@ set -o verbose
 #### Si potrebbe fare uno script dove si inserisce l'interfaccia
 #### quando si esegue lo script (controllando la correttezza)
 
-WLAN=wlan1
+WLAN=wlan1		## Interfaccia WLAN
+NOME_RETE=super_mesh	## Nome Rete
+IP_WLAN=192.168.2.
+
+if [ $# -lt 1 ]
+then
+	echo "Inserire l'ultimo ottetto dell'indirizzo IP"
+	exit 1
+fi
+
+IP=$1
 
 #### modprobe IF moduli kernel non vengono caricati al boot
 #### Controllare con "sudo batctl -v"
@@ -22,7 +32,7 @@ ifconfig $WLAN mtu 1528
 iwconfig $WLAN mode ad-hoc
 iwconfig $WLAN channel 1
 iwconfig $WLAN enc off
-iwconfig $WLAN essid prova_mesh
+iwconfig $WLAN essid $NOME_RETE
 
 #ip link set up dev $WLAN
 #ip link set mtu 1532 dev $WLAN
@@ -43,7 +53,7 @@ ifconfig bat0 up
 sleep 3
 
 # Al posto di <IP> aggiungere l'indirizzo
-ifconfig bat0 192.168.2."<IP>" netmask 255.255.255.0 up
+ifconfig bat0 192.168.2.$IP netmask 255.255.255.0 up
 
 #ip link set up dev $WLAN
 
