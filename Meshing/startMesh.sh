@@ -25,6 +25,9 @@ IP=$1
 #### ifconfig sarebbe obsoleto... TODO: aggiornare a ip
 ifconfig bat0 down
 ifconfig $WLAN down
+batctl if del $WLAN
+
+sleep 3
 
 ifconfig $WLAN mtu 1528
 
@@ -42,7 +45,6 @@ iwconfig $WLAN essid $NOME_RETE
 #iwconfig $WLAN mode ad-hoc essid my-mesh-network any channel 1
 
 batctl if add $WLAN
-
 batctl if
 
 #### TODO provare a modificare le sleep
@@ -53,12 +55,12 @@ ifconfig bat0 up
 sleep 3
 
 # Al posto di <IP> aggiungere l'indirizzo
-ifconfig bat0 192.168.2.$IP netmask 255.255.255.0 up
+#ifconfig bat0 192.168.2.$IP netmask 255.255.255.0 up
 
 #ip link set up dev $WLAN
-
 #ip link set up dev bat0
 
-#avahi-autoipd bat0
+avahi-autoipd --no-drop-root bat0 &
+#avahi-autoipd --debug bat0 &
 
 batctl o
