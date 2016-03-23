@@ -33,3 +33,6 @@ http://lists.netfilter.org/pipermail/netfilter/2002-January/030360.html
 http://serverfault.com/questions/244767/enable-iptables-on-one-interface
 https://help.ubuntu.com/community/IptablesHowTo
 
+- internet via batman
+https://www.open-mesh.org/projects/batman-adv/wiki/Tweaking
+http://askubuntu.com/questions/228012/how-can-i-bridge-my-lan-port-to-batman-adv
