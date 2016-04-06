@@ -6,7 +6,7 @@ set -o verbose
 #### Si potrebbe fare uno script dove si inserisce l'interfaccia
 #### quando si esegue lo script (controllando la correttezza)
 
-WLAN=wlan1		## Interfaccia WLAN
+WLAN=wlan3		## Interfaccia WLAN
 NOME_RETE=super_mesh	## Nome Rete
 IP_WLAN=192.168.2.
 
@@ -60,7 +60,10 @@ sleep 3
 #ip link set up dev $WLAN
 #ip link set up dev bat0
 
-avahi-autoipd --no-drop-root bat0 &
-#avahi-autoipd --debug bat0 &
+#avahi-autoipd --no-drop-root bat0 &
+##avahi-autoipd --debug bat0 &
 
+batctl o
+batctl gw_mode client
+#dhclient -v bat0 &
 batctl o
