@@ -1,22 +1,41 @@
 #!/bin/bash
 set -o verbose
 
-WLAN=wlp0s29u1u3
+#### Inserire l'interfaccia corretta
+#### TODO
+#### Si potrebbe fare uno script dove si inserisce l'interfaccia
+#### quando si esegue lo script (controllando la correttezza)
 
-modprobe batman-adv
+WLAN=wlp0s29u1u3		## Interfaccia WLAN
+NOME_RETE=super_mesh	## Nome Rete
+IP_WLAN=192.168.2.
 
-ifdown bat0
-ifdown $WLAN
+if [ $# -lt 1 ]
+then
+	echo "Inserire l'ultimo ottetto dell'indirizzo IP"
+	exit 1
+fi
+
+IP=$1
+
+#### modprobe IF moduli kernel non vengono caricati al boot
+#### Controllare con "sudo batctl -v"
+#### modprobe batman-adv
+
+#### ifconfig sarebbe obsoleto... TODO: aggiornare a ip
+ifconfig bat0 down
+ifconfig $WLAN down
+batctl if del $WLAN
+
+sleep 3
 
 ifconfig $WLAN mtu 1528
 
+#### iwconfig sarebbe obsoleto... TODO: aggiornare a iw
 iwconfig $WLAN mode ad-hoc
-
 iwconfig $WLAN channel 1
-
 iwconfig $WLAN enc off
-
-iwconfig $WLAN essid prova_mesh
+iwconfig $WLAN essid $NOME_RETE
 
 #ip link set up dev $WLAN
 #ip link set mtu 1532 dev $WLAN
@@ -26,17 +45,22 @@ iwconfig $WLAN essid prova_mesh
 #iwconfig $WLAN mode ad-hoc essid my-mesh-network any channel 1
 
 batctl if add $WLAN
-
 batctl if
 
-ifconfig $WLAN up 
-ifconfig bat0 up 
-ifconfig bat0 192.168.2.41 netmask 255.255.255.0 up
+#### TODO provare a modificare le sleep
+
+ifconfig $WLAN up
+sleep 3
+ifconfig bat0 up
+sleep 3
+
+# Al posto di <IP> aggiungere l'indirizzo
+#ifconfig bat0 192.168.2.$IP netmask 255.255.255.0 up
 
 #ip link set up dev $WLAN
-
 #ip link set up dev bat0
 
-#sudo avahi-autoipd bat0
+#avahi-autoipd --no-drop-root bat0 &
+avahi-autoipd bat0 &
 
 batctl o
