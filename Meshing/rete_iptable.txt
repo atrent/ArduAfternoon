@@ -1,0 +1,28 @@
+COMANDI UTILIZZATI
+
+    TUTTI
+	sudo systemctl stop NetworkManager.service            (Da vedere)
+	sudo ip addr add 192.168.2.2/24 brd 192.168.2.255 dev eth0
+	sudo ip link set eth0 up    OR    sudo ifconfig eth0 up
+
+	CLIENT
+	sudo ip route add default via <IP>
+
+	PER IL FORWARD
+	echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+	IPTABLES
+	sudo iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
+	sudo iptables -A FORWARD -o eth0 -i wlan0 -j ACCEPT
+
+	NAT
+	sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
+
+Il client NON avrà più i DNSnameserver perchè è il NetworkManager a generarli.
+Scrivere in /etc/resolv.conf “nameserver <IP>” utilizzati come DNS
+http://www.cyberciti.biz/faq/howto-linux-bsd-unix-set-dns-nameserver/
+- Esempio
+    nameserver 8.8.8.8 #DNS di Google
+
+Migliorie
+DNSmasq con DHCP
