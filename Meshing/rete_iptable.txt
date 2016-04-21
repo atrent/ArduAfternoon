@@ -1,21 +1,28 @@
 COMANDI UTILIZZATI
 
     TUTTI
+	# Per essere sicuri di non perdere l'ip ---> Da rivedere
 	sudo systemctl stop NetworkManager.service            (Da vedere)
+	# Assegnamento statico di un indirizzo ip
 	sudo ip addr add 192.168.2.2/24 brd 192.168.2.255 dev eth0
+	# s
 	sudo ip link set eth0 up    OR    sudo ifconfig eth0 up
 
 	CLIENT
+	# redirige traffico ip
 	sudo ip route add default via <IP>
 
 	PER IL FORWARD
+	# Abilita il forward
 	echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 
 	IPTABLES
+	# scrittura rotte in iptables
 	sudo iptables -A FORWARD -i eth0 -o wlan0 -j ACCEPT
 	sudo iptables -A FORWARD -o eth0 -i wlan0 -j ACCEPT
 
 	NAT
+	# NAT indirizzo -> in uni
 	sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE
 
 Il client NON avrà più i DNSnameserver perchè è il NetworkManager a generarli.
