@@ -6,9 +6,17 @@
 #### Si potrebbe fare uno script dove si inserisce l'interfaccia
 #### quando si esegue lo script (controllando la correttezza)
 
-WLAN=wlan3		## Interfaccia WLAN
-NOME_RETE=super_mesh	## Nome Rete
-IP_WLAN=192.168.2.
+# "source" di un file config
+CFG=$(hostname).cfg
+if
+ test -f $CFG
+then
+ . $CFG
+ echo $CFG config used
+else
+ . mesh.cfg
+ echo Default mesh.cfg used
+fi
 
 # VARIABILI
 
