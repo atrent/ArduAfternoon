@@ -5,7 +5,7 @@ COMANDI UTILIZZATI
 	sudo systemctl stop NetworkManager.service            (Da vedere)
 	# Assegnamento statico di un indirizzo ip
 	sudo ip addr add 192.168.2.2/24 brd 192.168.2.255 dev eth0
-	# s
+	# set UP link
 	sudo ip link set eth0 up    OR    sudo ifconfig eth0 up
 
 	CLIENT
