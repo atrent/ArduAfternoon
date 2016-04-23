@@ -1,12 +1,8 @@
 #!/bin/bash
-#set -o verbose
 
-#### Inserire l'interfaccia corretta
-#### TODO
-#### Si potrebbe fare uno script dove si inserisce l'interfaccia
-#### quando si esegue lo script (controllando la correttezza)
+#set -o verbose  # solo per debug
 
-# "source" di un file config
+# "source" di un file config (parametri di avvio)
 CFG=$(hostname).cfg
 if
  test -f $CFG
@@ -18,10 +14,6 @@ else
  echo Default mesh.cfg used
 fi
 
-# VARIABILI
-
-BAT=bat0
-
 
 #if [ $# -lt 1 ]
 #then
@@ -29,16 +21,15 @@ BAT=bat0
 #	exit 1
 #fi
 
-IP=40
-
 #### modprobe IF moduli kernel non vengono caricati al boot
 #### Controllare con "sudo batctl -v"
 #### modprobe batman-adv
 
 #### ifconfig sarebbe obsoleto... TODO: aggiornare a ip
 
-# Selezione Wlan
-#if [ $(ip a | grep -wc 'wlan[0-9]:') -eq 1 ]
+# Selezione Wlan (o usiamo CFG?)
+#if
+# [ $(ip a | grep -wc 'wlan[0-9]:') -eq 1 ]
 #then 
 #	WLAN=$(ip a | grep -w 'wlan[0-9]:' | tr -s ' ' ' ' | cut -d' ' -f 2 | cut -d':' -f 1)
 #	echo $WLAN
@@ -48,7 +39,8 @@ IP=40
 
 
 ##################################################################################
-#if ip a | grep -iq '$BAT'
+#if
+# ip a | grep -iq '$BAT'
 #then
 #	ip link set $BAT down
 #	ip link set $WLAN down
@@ -59,7 +51,7 @@ IP=40
 #### iwconfig sarebbe obsoleto... TODO: aggiornare a iw
 
 ##################################################################################
-#sleep 3
+#sleep $SLEEP
 #ip link set $WLAN mtu 1528
 
 ##### iwconfig wlan0 mode ad-hoc #####
@@ -68,16 +60,16 @@ IP=40
 #iwconfig $WLAN channel 1
 #iwconfig $WLAN enc off
 
-##### iwconfig $WLAN essid $NOME_RETE #####
-#iw $WLAN connect $NOME_RETE
+##### iwconfig $WLAN essid $MESH_NAME #####
+#iw $WLAN connect $MESH_NAME
 ##################################################################################
 
 #ip link set up dev $WLAN
 #ip link set mtu 1532 dev $WLAN
 
-#iwconfig $WLAN mode ad-hoc essid my-mesh-network ap 84:c9:b2:72:f1:08 channel 1
-#iwconfig $WLAN mode ad-hoc essid my-mesh-network ap  02:12:34:56:78:9A channel 1
-#iwconfig $WLAN mode ad-hoc essid my-mesh-network any channel 1
+#iwconfig $WLAN mode ad-hoc essid $MESH_NAME ap $MAC channel 1
+#iwconfig $WLAN mode ad-hoc essid $MESH_NAME ap  $MAC channel 1
+#iwconfig $WLAN mode ad-hoc essid $MESH_NAME any channel 1
 
 ##################################################################################
 #batctl if add $WLAN
@@ -88,23 +80,23 @@ IP=40
 
 ##################################################################################
 #ifconfig $WLAN up
-#sleep 3
+#sleep $SLEEP
 #ifconfig bat0 up
-#sleep 3
+#sleep $SLEEP
 ##################################################################################
 
 # Al posto di <IP> aggiungere l'indirizzo
-#ifconfig bat0 192.168.2.$IP netmask 255.255.255.0 up
+#ifconfig bat0 $IP_WLAN.$IP netmask 255.255.255.0 up
 
 #ip link set up dev $WLAN
-#ip link set up dev bat0
+#ip link set up dev $BAT
 
-#avahi-autoipd --no-drop-root bat0 &
-##avahi-autoipd --debug bat0 &
+#avahi-autoipd --no-drop-root $BAT &
+##avahi-autoipd --debug $BAT &
 
 ##################################################################################
 #batctl o
 #batctl gw_mode client
-#######dhclient -v bat0 &
+#######dhclient -v $BAT &
 #batctl o
 ##################################################################################
