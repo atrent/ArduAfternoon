@@ -1,0 +1,13 @@
+Quick Mesh Project QMP: http://qmp.cat/Home
+	Distro basata su OpenWRT per permettere a quasi chiunque di creare una rete mesh in pochi minuti.  Routing basato su BMX6, una fork di BATMAN.
+
+Wireless Battle Mesh: http://battlemesh.org
+	Evento comunitario nel quale si mettono a confronto su un testbet vari protocolli di routing per mesh
+
+Libre-Mesh: http://libre-mesh.org
+	Distro basata su OpenWRT che si pone come obiettivo l'espansione di QMP (Guifi), AlterMesh (AlterMundi) e eigenNet (Ninux).  Usa contemporaneamente BMX6 e BATMAN-Adv in modo interessante.
+
+http://muniwireless.com/2010/04/06/wireless-isp-experience-building-large-wifi-networks/
+
+LaserWAN: http://www.lastampa.it/2016/04/24/edizioni/asti/lo-studente-di-asti-che-porta-la-banda-larga-nei-paesini-grazie-alla-tecnologia-laser-b2vtYpctOKteXpy8wfHCKN/pagina.html
+	Nuova idea di uno studente italiano...trasmissione a 500Mbps usando laser al posto della fibra ottica
