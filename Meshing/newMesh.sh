@@ -54,9 +54,8 @@ iw $WLAN set type ibss
 #### iwconfig $WLAN essid $MESH_NAME #####
 #### iw $WLAN connect $MESH_NAME
 #### No encryption
-#iw dev $WLAN set channel 1
-#iw dev $WLAN connect $MESH_NAME
-iw $WLAN connect $MESH_NAME
+iw dev $WLAN set channel 1
+iw dev $WLAN connect $MESH_NAME
 
 ##################################################################################
 
@@ -80,7 +79,7 @@ sleep $SLEEP
 
 batctl o
 batctl gw_mode client
-avahi-autoipd --no-drop-root bat0 &
+#avahi-autoipd --no-drop-root bat0 &
 #dhclient -v $BAT &	#DA MODIFICARE
 batctl o
 ##################################################################################
