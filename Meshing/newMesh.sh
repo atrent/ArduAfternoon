@@ -32,8 +32,9 @@ fi
 
 
 ##################################################################################
+
 if
- ip a | grep -iq '$BAT'
+ ip a | grep -iq "$BAT:"
 then
 	ip link set $BAT down
 	ip link set $WLAN down
