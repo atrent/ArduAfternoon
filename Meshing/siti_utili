@@ -22,6 +22,7 @@ https://help.ubuntu.com/community/IptablesHowTo
 
 === Man iw
 http://linuxwireless.org/en/users/Documentation/iw/
+http://wiki.linuxquestions.org/wiki/Connect_to_a_wireless_local_area_network
 
 === Open-Mesh
 http://www.linuxplanet.com/linuxplanet/tutorials/6758/1
@@ -35,6 +36,9 @@ https://www.open-mesh.org/issues/220
 https://wireless.wiki.kernel.org/en/users/documentation/iw
 https://wireless.wiki.kernel.org/en/users/documentation/iw/replace-iwconfig
 https://wiki.archlinux.org/index.php/Wireless_network_configuration_%28Italiano%29
+https://donnutcompute.wordpress.com/2014/04/20/connect-to-wi-fi-via-command-line/
+https://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements/
+http://linuxwireless.org/en/users/Documentation/iw/replace-iwconfig/
 
 === Set enc off
 http://www.linuxquestions.org/questions/linux-wireless-networking-41/iwconfig-encryption-key-off-818878/
