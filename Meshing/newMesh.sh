@@ -1,16 +1,18 @@
 #!/bin/bash
 
-set -o verbose  # solo per debug
+#set -o verbose  # solo per debug
 
+
+echo CFG file
 # "source" di un file config (parametri di avvio)
 CFG=$(hostname).cfg
 if
  test -f $CFG
 then
- . $(pwd)/$CFG
+ . $(dirname $0)/$CFG
  echo $CFG config used
 else
- . $(pwd)/mesh.cfg
+ . $(dirname $0)/mesh.cfg
  echo Default mesh.cfg used
 fi
 
@@ -33,6 +35,7 @@ fi
 
 ##################################################################################
 
+echo GREP bat
 if
  ip a | grep -iq "$BAT:"
 then
@@ -44,8 +47,10 @@ then
 fi
 
 sleep $SLEEP
+echo LINK SET
 ip link set $WLAN mtu 1528
 
+echo SET TYPE
 #### iwconfig wlan0 mode ad-hoc #####
 iw $WLAN set type ibss
 
@@ -57,6 +62,7 @@ iw $WLAN set type ibss
 iw dev $WLAN set channel 1
 iw dev $WLAN connect $MESH_NAME
 
+echo LINK CHANNEL
 ##################################################################################
 
 ##################################################################################
@@ -77,7 +83,7 @@ ip link set $BAT up
 
 sleep $SLEEP
 
-batctl o
+#batctl o
 batctl gw_mode client
 #avahi-autoipd --no-drop-root bat0 &
 #dhclient -v $BAT &	#DA MODIFICARE
