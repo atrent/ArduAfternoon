@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 set -o verbose  # solo per debug
 
@@ -7,10 +7,10 @@ CFG=$(hostname).cfg
 if
  test -f $CFG
 then
- . ./$CFG
+ . $(pwd)/$CFG
  echo $CFG config used
 else
- . mesh.cfg
+ . $(pwd)/mesh.cfg
  echo Default mesh.cfg used
 fi
 
@@ -44,7 +44,7 @@ sleep $SLEEP
 ip link set $WLAN mtu 1528
 
 #### iwconfig wlan0 mode ad-hoc #####
-iw $WLAN set type ibss
+ iw $WLAN set type ibss
 
 
 ####iwconfig $WLAN channel 1
@@ -57,14 +57,14 @@ iw $WLAN set type ibss
 ##################################################################################
 
 ##################################################################################
-batctl if add $WLAN
-batctl if
+ batctl if add $WLAN
+ batctl if
 ##################################################################################
 
 #### TODO provare a modificare le sleep
 
 ##################################################################################
-####ifconfig $WLAN up
+#####ifconfig $WLAN up
 ip link set $WLAN up
 
 sleep $SLEEP
