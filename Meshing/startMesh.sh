@@ -60,7 +60,7 @@ sleep 3
 #ip link set up dev $WLAN
 #ip link set up dev bat0
 
-#avahi-autoipd --no-drop-root bat0 &
+avahi-autoipd --no-drop-root bat0 &
 ##avahi-autoipd --debug bat0 &
 
 batctl o

@@ -38,44 +38,48 @@ then
 	ip link set $BAT down
 	ip link set $WLAN down
 	batctl if del $WLAN
+	sleep $SLEEP
+	ip link set $WLAN up
 fi
 
 sleep $SLEEP
 ip link set $WLAN mtu 1528
 
 #### iwconfig wlan0 mode ad-hoc #####
- iw $WLAN set type ibss
-
+iw $WLAN set type ibss
 
 ####iwconfig $WLAN channel 1
 #### iwconfig $WLAN enc off
 #### iwconfig $WLAN essid $MESH_NAME #####
 #### iw $WLAN connect $MESH_NAME
 #### No encryption
- iw dev $WLAN set channel 1
- iw dev $WLAN connect $MESH_NAME
+#iw dev $WLAN set channel 1
+#iw dev $WLAN connect $MESH_NAME
+iw $WLAN connect $MESH_NAME
+
 ##################################################################################
 
 ##################################################################################
- batctl if add $WLAN
- batctl if
+batctl if add $WLAN
+batctl if
 ##################################################################################
 
 #### TODO provare a modificare le sleep
 
 ##################################################################################
 #####ifconfig $WLAN up
-ip link set $WLAN up
+#ip link set $WLAN up
 
 sleep $SLEEP
 
 ####ifconfig bat0 up
-ip link set $WLAN up
+ip link set $BAT up
 
 sleep $SLEEP
 
 batctl o
 batctl gw_mode client
-######dhclient -v $BAT &	DA MODIFICARE
+avahi-autoipd --no-drop-root bat0 &
+#dhclient -v $BAT &	#DA MODIFICARE
 batctl o
 ##################################################################################
