@@ -6,7 +6,7 @@ set -o verbose
 #### Si potrebbe fare uno script dove si inserisce l'interfaccia
 #### quando si esegue lo script (controllando la correttezza)
 
-WLAN=wlan0		## Interfaccia WLAN
+WLAN=wlan1		## Interfaccia WLAN
 NOME_RETE=super_mesh	## Nome Rete
 IP_WLAN=192.168.2.
 

@@ -1,16 +1,18 @@
 #!/bin/bash
 
-set -o verbose  # solo per debug
+#set -o verbose  # solo per debug
 
+
+echo CFG file
 # "source" di un file config (parametri di avvio)
 CFG=$(hostname).cfg
 if
  test -f $CFG
 then
- . $(pwd)/$CFG
+ . $(dirname $0)/$CFG
  echo $CFG config used
 else
- . $(pwd)/mesh.cfg
+ . $(dirname $0)/mesh.cfg
  echo Default mesh.cfg used
 fi
 
@@ -33,22 +35,23 @@ fi
 
 ##################################################################################
 
+echo GREP bat
+ip link set $WLAN down
 if
  ip a | grep -iq "$BAT:"
 then
+	# se c'e' lo cancella
 	ip link set $BAT down
-	ip link set $WLAN down
 	batctl if del $WLAN
-	sleep $SLEEP
-	ip link set $WLAN up
 fi
 
 sleep $SLEEP
+echo LINK SET
 ip link set $WLAN mtu 1528
 
+echo SET TYPE
 #### iwconfig wlan0 mode ad-hoc #####
 iw $WLAN set type ibss
-
 ####iwconfig $WLAN channel 1
 #### iwconfig $WLAN enc off
 #### iwconfig $WLAN essid $MESH_NAME #####
@@ -56,7 +59,9 @@ iw $WLAN set type ibss
 #### No encryption
 iw dev $WLAN set channel 1
 iw dev $WLAN connect $MESH_NAME
+ip link set $WLAN up
 
+echo LINK CHANNEL
 ##################################################################################
 
 ##################################################################################
@@ -77,7 +82,7 @@ ip link set $BAT up
 
 sleep $SLEEP
 
-batctl o
+#batctl o
 batctl gw_mode client
 #avahi-autoipd --no-drop-root bat0 &
 #dhclient -v $BAT &	#DA MODIFICARE
