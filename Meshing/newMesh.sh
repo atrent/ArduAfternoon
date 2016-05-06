@@ -36,14 +36,12 @@ fi
 ##################################################################################
 
 echo GREP bat
+ip link set $WLAN down
 if
  ip a | grep -iq "$BAT:"
 then
 	ip link set $BAT down
-	ip link set $WLAN down
 	batctl if del $WLAN
-	sleep $SLEEP
-	ip link set $WLAN up
 fi
 
 sleep $SLEEP
@@ -52,8 +50,9 @@ ip link set $WLAN mtu 1528
 
 echo SET TYPE
 #### iwconfig wlan0 mode ad-hoc #####
-iw $WLAN set type ibss
 
+iw $WLAN set type ibss
+ip link set $WLAN up
 ####iwconfig $WLAN channel 1
 #### iwconfig $WLAN enc off
 #### iwconfig $WLAN essid $MESH_NAME #####
