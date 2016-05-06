@@ -40,6 +40,7 @@ ip link set $WLAN down
 if
  ip a | grep -iq "$BAT:"
 then
+	# se c'e' lo cancella
 	ip link set $BAT down
 	batctl if del $WLAN
 fi
@@ -53,6 +54,7 @@ echo SET TYPE
 
 iw $WLAN set type ibss
 ip link set $WLAN up
+
 ####iwconfig $WLAN channel 1
 #### iwconfig $WLAN enc off
 #### iwconfig $WLAN essid $MESH_NAME #####
@@ -60,6 +62,7 @@ ip link set $WLAN up
 #### No encryption
 iw dev $WLAN set channel 1
 iw dev $WLAN connect $MESH_NAME
+ip link set $WLAN up
 
 echo LINK CHANNEL
 ##################################################################################
