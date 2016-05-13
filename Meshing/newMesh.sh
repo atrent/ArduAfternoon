@@ -41,28 +41,37 @@ if
  ip a | grep -iq "$BAT:"
 then
 	# se c'e' lo cancella
+#	iw $WLAN ibss leave
 	ip link set $BAT down
 	batctl if del $WLAN
 fi
 
 sleep $SLEEP
 echo LINK SET
-ip link set $WLAN mtu 1528
+# SET MTU 1560, PROBLEM 1528 in /var/log/messages
+ip link set $WLAN mtu 1560
 
 echo SET TYPE
 #### iwconfig wlan0 mode ad-hoc #####
 
-iw $WLAN set type ibss
-ip link set $WLAN up
+# SET LINK DOWN BEFORE SET TYPE IBSS/AD-HOC
+ip link set $WLAN down
 
 ####iwconfig $WLAN channel 1
 #### iwconfig $WLAN enc off
 #### iwconfig $WLAN essid $MESH_NAME #####
 #### iw $WLAN connect $MESH_NAME
 #### No encryption
-iw dev $WLAN set channel 1
-iw dev $WLAN connect $MESH_NAME
+#iw dev $WLAN connect $MESH_NAME
+
+# SET LINK IBSS/AD-HOC
+iw dev $WLAN set type ibss
 ip link set $WLAN up
+iw $WLAN ibss join $MESH_NAME 2412
+
+
+#iw dev $WLAN set channel 1
+#ip link set $WLAN up
 
 echo LINK CHANNEL
 ##################################################################################
