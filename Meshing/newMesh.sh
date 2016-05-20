@@ -94,8 +94,13 @@ ip link set $BAT up
 sleep $SLEEP
 
 #batctl o
-batctl gw_mode client
+batctl gw_mode $MODE
 #avahi-autoipd --no-drop-root bat0 &
 #dhclient -v $BAT &	#DA MODIFICARE
 batctl o
 ##################################################################################
+
+### SETTAGGIO DHCP IN BASE A $MODE DI BATMAN
+## IF CLIENT ....
+
+## ELSE .....
