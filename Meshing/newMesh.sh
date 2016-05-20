@@ -2,20 +2,19 @@
 
 #set -o verbose  # solo per debug
 
-
+DIR_CONF=Conf_Mesh
 echo CFG file
 # "source" di un file config (parametri di avvio)
 CFG=$(hostname).cfg
 if
- test -f $CFG
+ test -f $DIR_CONF/$CFG
 then
- . $(dirname $0)/$CFG
+ . $(dirname $0)/$DIR_CONF/$CFG
  echo $CFG config used
 else
- . $(dirname $0)/mesh.cfg
+ . $(dirname $0)/$DIR_CONF/mesh.cfg
  echo Default mesh.cfg used
 fi
-
 
 #### modprobe IF moduli kernel non vengono caricati al boot
 #### Controllare con "sudo batctl -v"
