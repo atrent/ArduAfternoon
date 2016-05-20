@@ -16,8 +16,6 @@ else
  echo Default mesh.cfg used
 fi
 
-exit 0
-
 #### modprobe IF moduli kernel non vengono caricati al boot
 #### Controllare con "sudo batctl -v"
 #### modprobe batman-adv
