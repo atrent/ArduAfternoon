@@ -16,6 +16,30 @@ Architecture
 
 
 
+========== NEW RELEASE
+## The architecture:
+
+The base which we start from is our Teglia machine.
+For this project the only addons required were an usb hub in which we plugged two wi-fi dongle.
+
+##
+The project we would like to apply for the RomeMakerFaire is called StalkDuino, a little machine that
+uses arduino to control the hardware. BORING!
+The interesting part of this is that the machine is used to spot the wi-fi signal emitter. SO 70ish, meh?
+“To take it back from the future” we have developed a system that can allow the machine to know the 
+spatial location so it doesn't go on a circle, this is granted by two wi-fi receivers that 
+show the signal intensity on each side of the machine.
+We hope this project might interest the public and we'd like to interact with them 
+via a function called "Stalking", that allows the machine to follow a person as long as 
+he enables the wi-fi hotspot on their smartphone.
+This project has been developed by a group of student and a professor (survived the students) 
+from the University of Milan.
+
+
+
+
+
+
 
 Ciao Andrea,
    questa mattina abbiamo scritto questa presentazione (in tono simpatico).
