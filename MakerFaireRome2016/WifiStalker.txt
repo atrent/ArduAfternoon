@@ -12,3 +12,32 @@ Since the beginning of our group (ArduinoAfternoon) meeting in 2011 we devised a
 
 Architecture
 ============
+
+
+
+
+
+Ciao Andrea,
+   questa mattina abbiamo scritto questa presentazione (in tono simpatico).
+   Pensi sia adeguato o dovrebbe essere scritta formalmente?
+   Partendo da questi spunti:
+     -Ricerca wi-fi
+     -ricerca la fonte con maggiore intensita
+     -cerca, per primi, quelli senza passw?
+     -Si salva le ricerche effettuate, cosi' da avere uno “storico” e, in base a questo, cambiare la ricerca
+     -localizzazione spaziale
+     -Se qualcuno attiva hotspot del telefono, una lasagna lo inseguira'
+
+   Siamo riusciti a scrivere questo:
+       The project we would like to apply for the RomeMakerFaire is a little machine that uses arduino to control the hardware. BORING
+       The interesting part of this is that the machine is used to spot the wi-fi signal emitter. SO 70ish, meh?
+       “To take it back from the future” we have developed a system that can allow the machine to know the spatial location so it doesn't go on a circle.
+       We think this project might interest the public and interact with them via a function STALKING, Allowing the machine to follow them as long as they enable the wi-fi hotspot on their smartphone.
+       The project has been developed by a group of student and a professor (survived the students) from the University of Milan
+
+
+A presto,
+
+Ruben e Alberto
+
+
