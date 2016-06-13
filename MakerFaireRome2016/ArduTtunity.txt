@@ -1,0 +1,14 @@
+------------------------------------------------
+ArduTtunity: a simulated remote (Martian?) rover
+------------------------------------------------
+
+
+Introduction
+============
+
+Since the beginning of our group (ArduinoAfternoon) meeting in 2011 we devised a way to *reuse* our hardware in many projects so that 
+
+
+
+Architecture
+============
