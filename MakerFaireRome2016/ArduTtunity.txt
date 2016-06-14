@@ -2,13 +2,28 @@
 ArduTtunity: a simulated remote (Martian?) rover
 ------------------------------------------------
 
-
 Introduction
 ============
 
-Since the beginning of our group (ArduinoAfternoon) meeting in 2011 we devised a way to *reuse* our hardware in many projects so that 
+Since the beginning of our group (ArduinoAfternoon) meetings in 2011 we devised a way to *reuse* our hardware in many projects so that we could spare on hardware buying. When we started with a robot-like device (the RFID based pub "waiter") we devised a simple set of pieces as a "base" for many subsequent projects.
+Our general base architecture is composed by:
+- arduino uno/mega stacked with...
+- NUY stacked with...
+- motor shield connected to...
+- two DC motors + rubber wheels powered by...
+- a sealed acid 12V DC rechargeable battery regulated by...
+- a trimmable power regulator
+Then there are some optional peripherals for the diverse usage contexts:
+- USB hub connected to the NUY (the wifi onboard the NUY can be used as a control channel)
+- webcam connected to the hub (i.e., to the NUY)
+- wifi dongles connected to the hub (i.e., to the NUY)
+- solar panel to recharge battery
+- USB flash drive (e.g., to have an overlay filesystem beyond the limited openwrt on the NUY)
 
+All contained in the omnipresent, robust, "stainless steel", full of drilled holes, student battered baking pan!
+(see photo)
 
 
 Architecture
 ============
+

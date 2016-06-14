@@ -1,0 +1,20 @@
+----------------------
+Interactive LightSaber
+----------------------
+
+An RGB LED strip LightSaber gamification.
+
+What happens when you combine:
+- a WS2801 LED strip, folded to form a three faceted prism inside a plexiglas tube
+- some home electrical tubing
+- an Arduino YUN
+- an (optional) accelerometer
+
+You get an animated and interactive LightSaber!
+
+The Arduino part of the YUN drives the LED strip at low level, defining effects such as "rainbow", "ping impulse", "balancer", "spiral", "ion cannon", etc.
+While the Linux part of the YUN manages the interaction (via web, REST, MQTT, etc.) with other devices, via wifi to let other devices (smartphones, tablets, PCs) connect to the LightSaber.
+Software (bash and python scripts) in the YUN activates effects reacting to "situations", i.e., the number of devices can be represented as "rings" on the saber, any new connections can trigger an "impulse" and so on.
+Scripts can be "played with" (modified, combined) to create new interactive and social games.
+
+(see photo)
