@@ -1,0 +1,5 @@
+I was born in Milan in 1993 and I graduated in Science at G.B.Vico High School.
+I'm currently attending a Computer Science degree at the University of Milan.
+Other than Information Technology, I'm particularly interested in cinema, comics and posters.
+I've enjoyed to participating in ArduinoAfternoon meetings taught by Andrea Trentini and with this group we attended the project
+Arduitter and LightSaber at the Rimini Mini Maker Faire last Novermber 2015.

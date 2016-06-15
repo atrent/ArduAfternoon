@@ -1,5 +1,5 @@
 --------------------------------
-WifiStalker: a wifi dowser robot
+StalkDuino: a wifi dowser robot
 --------------------------------
 
 Introduction
@@ -35,76 +35,15 @@ The architecture was used in:
 Architecture
 ============
 
-
-- scopo (search for wifi /wifitropic robot/ or stalk cellphone function)
-
-- how to do it: triangulation of wifi signal
-
-- compute heading and distance
-
-- move
-
-========== NEW RELEASE
-## The architecture:
-
 The base which we start from is our Teglia machine.
 For this project the only addons required were an usb hub in which we plugged two wi-fi dongles.
 
-##
+
+
 The project we would like to apply for the RomeMakerFaire is called StalkDuino.
-
 A StalkDuino is a "wifitropic" robot: i.e., it tries to follow the strongest wifi signal it senses.
-
 The pursue of a signal is accomplished by triangulation: using two separate wifi dongles,
 the StalkDuino can measure the strength and relative position of any wifi signal it senses and
 it can compute the actual direction of movement to go towards the signal source.
-
 The funny behaviour that can be implemented is the "cellphone stalking", i.e., like a faithful dog,
 the StalkDuino can stay on a "virtual leash" to his owner (or whoever generates the strongest signal).
-
-...
-
-The interesting part of this is that the machine is used to spot the wi-fi signal emitter. SO 70ish, meh?
-“To take it back from the future” we have developed a system that can allow the machine to know the 
-spatial location so it doesn't go on a circle, this is granted by two wi-fi receivers that 
-show the signal intensity on each side of the machine.
-We hope this project might interest the public and we'd like to interact with them 
-via a function called "Stalking", that allows the machine to follow a person as long as 
-he enables the wi-fi hotspot on their smartphone.
-This project has been developed by a group of student and a professor (who survived the students) 
-from the University of Milan.
-
-
-
-
-
-
-
-Ciao Andrea,
-   questa mattina abbiamo scritto questa presentazione (in tono simpatico).
-   Pensi sia adeguato o dovrebbe essere scritta formalmente?
-   Partendo da questi spunti:
-     -Ricerca wi-fi
-     -ricerca la fonte con maggiore intensita
-     -cerca, per primi, quelli senza passw? [indipendentemente, tanto non deve agganciare il segnale, solo trovarlo]
-     -Si salva le ricerche effettuate, cosi' da avere uno “storico” e, in base a questo, cambiare la ricerca
-     -localizzazione spaziale
-     -Se qualcuno attiva hotspot del telefono, una lasagna lo inseguira' [insegue i nuovi segnali]
-
-
-
-OLD{
-
-   Siamo riusciti a scrivere questo:
-       The project we would like to apply for the RomeMakerFaire is a little machine that uses arduino to control the hardware. BORING
-       The interesting part of this is that the machine is used to spot the wi-fi signal emitter. SO 70ish, meh?
-       “To take it back from the future” we have developed a system that can allow the machine to know the spatial location so it doesn't go on a circle.
-       We think this project might interest the public and interact with them via a function STALKING, Allowing the machine to follow them as long as they enable the wi-fi hotspot on their smartphone.
-       The project has been developed by a group of student and a professor (survived the students) from the University of Milan
-}
-
-A presto,
-
-Ruben e Alberto
-
-
