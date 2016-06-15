@@ -1,2 +1,5 @@
-I'm a computer science student intrested in 3D printing, videogames and bicicles.
+I was born in Milan 1992, graduate in computer science at Marie Curie high school.
+Now I'm attending computer science degree course at the University of Milano, 
+apart from information technology I'm particularly intrested in 3D printing, videogames and bicicles.
+From a year I partecipate the ArduinoAfternoon meeting. With this group last November we attended the Rimini mini Maker faire. 
 
