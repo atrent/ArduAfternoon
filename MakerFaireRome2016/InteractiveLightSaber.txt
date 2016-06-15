@@ -18,3 +18,6 @@ Software (bash and python scripts) in the YUN activates effects reacting to "sit
 Scripts can be "played with" (modified, combined) to create new interactive and social games.
 
 (see photo)
+
+
+http://atrent.it/doku.php/divertissements:lightsaber

@@ -19,11 +19,20 @@ Then there are some optional peripherals for the diverse usage contexts:
 - wifi dongles connected to the hub (i.e., to the NUY)
 - solar panel to recharge battery
 - USB flash drive (e.g., to have an overlay filesystem beyond the limited openwrt on the NUY)
+- RFID reader
+- ...
 
 All contained in the omnipresent, robust, "stainless steel", full of drilled holes, student battered baking pan!
+
+The architecture was used in:
+- ArduCameriere (RFID based pub waiter)
+- ArduGuardia (wiki driven home security robot)
+- ArduiTter (twitter guided wanderer)
+
 (see photo)
 
 
 Architecture
 ============
 
+After the Arduitter (a twitter driven robot) we decided to improve our project to create a simulation of a remote planets rover
