@@ -1,0 +1,9 @@
+=== Idea
+Utilizzare una piattaforma web(arduino) per inserire del testo (x caratteri)
+Il testo verrà "spawnato" su una matrice LED, in formato ASCII.
+Di default pattern sulla matrice LED.
+
+=== Cosa serve?
+Network
+LED
+Web Server (URL - arduino) ## memo webserver esempi arduino
