@@ -35,4 +35,9 @@ The architecture was used in:
 Architecture
 ============
 
-After the Arduitter (a twitter driven robot) we decided to improve our project to create a simulation of a remote planets rover
+After the Arduitter (a twitter driven robot) we decided to improve our project to create a simulation of a remote planets rover (maybe influenced by "The Martian"?).
+We already had all the main components, we just added the solar panel: at the moment it's not enough to fully recharge the battery, we need to improve.
+
+The software that runs on the NUY accepts "action plans" (route + actions such as "take snapshot") via wifi (the NUY works as an access point), but to simulate the DSN (NASA's Deep Space Network) the plans are executed with a programmable delay and the feedback data is sent after the same delay.
+
+The effect is that in the "control room" you have to plan carefully all the actions since there is no way to interact in realtime with the rover.
