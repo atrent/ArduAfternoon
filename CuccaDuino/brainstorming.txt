@@ -3,7 +3,16 @@ Utilizzare una piattaforma web(arduino) per inserire del testo (x caratteri)
 Il testo verrà "spawnato" su una matrice LED, in formato ASCII.
 Di default pattern sulla matrice LED.
 
+=== Architettura
+
+usando lo scheduler per avere piu' attivita':
+- gestione web server
+- display della stringa ricevuta dal client
+- display orologio binario?
+- display "matrix" (pioggia)
+- display temperatura?
+
 === Cosa serve?
-Network
-LED
+Network (shield)
+LED matrix
 Web Server (URL - arduino) ## memo webserver esempi arduino
