@@ -1,12 +1,39 @@
-//We always have to include the library
-#include "LedControl.h"
+	// (lettura seriale)
+	
+	// interazione webclient
+		// rispondere ad un url (via HTTP GET)
+		// facciamo una wiki page che permette di compilare un form che poi scatena la GET
+		// preparare QR code della pagina wiki
 
-#define NUMDISPLAYS 4
+	// display carattere corrente (3 PIN)
 
+	// ( random pattern )
+
+	// display testo human-leggibile
+
+	// read sensori (PIR, ultrasuono, infrarosso, microfono, termometro-igrometro)
+	// Temperatura, umidita e ora/data (tutto in binario) quando in stand-by
+	// LED in serie (normali)
+
+	// "esci" status da qualche parte
+
+	// modulo rete (4 PIN)
+
+	// TODO: includere rete
+
+#define NUMDISPLAYS    8
+#define LEDS_PER_DISPLAY    8
+
+#define DELAY    10
+
+////////////////////////////////
+// globals
 int car=0;
-int rigacorrente=-1;
-int currentDisplay=0;
+int current=-1;
+////////////////////////////////
 
+
+////////////////////////////////
 /*
  Now we need a LedControl to work with.
  ***** These pin numbers will probably not work with your hardware *****
@@ -15,13 +42,71 @@ int currentDisplay=0;
  pin 10 is connected to LOAD
  We have only a single MAX72XX.
  */
+#include "LedControl.h"
 LedControl lc=LedControl(12,11,10,NUMDISPLAYS);
 
-/* we always wait a bit between updates of the display */
-unsigned long delaytime=100;
+#include <TaskScheduler.h>
+Scheduler runner;
+
+
+// Callback methods prototypes
+void readserial_callback();
+void web_callback();
+void readtemp_callback();
+void showstatus_callback();
+void showtext_callback();
+void animateleds_callback();
+
+//Tasks
+/**
+Task readserial(..., TASK_FOREVER, &readserial_callback);
+Task web(..., TASK_FOREVER, &web_callback);
+Task readtemp(..., TASK_FOREVER, &readtemp_callback);
+Task showstatus(..., TASK_FOREVER, &showstatus_callback);
+Task showtext(..., TASK_FOREVER, &showtext_callback);
+Task animateleds(..., TASK_FOREVER, &animateleds_callback);
+*/
+
+/**
+ legge da seriale e ... (non sappiamo ancora)
+*/
+void readserial_callback() {
+	// ...
+}
+
+// TODO: DA DIVIDERE ???????
+/** vede se c'e' client, lo gestisce e setta lo "stato"
+*/
+void web_callback() {
+	// ...
+}
+/** Mette a display quello che viene scritto
+*/
+void showtext_callback(){
+	// ...
+}
+
+
+/** legge temperatura, ora, data, umidita'  e aggiorna lo "stato"
+*/
+void readtemp_callback(){
+	// ...
+}
+
+/** Legge lo "stato" e lo spara su display
+*/
+void showstatus_callback(){
+	// ...
+}
+
+/** Animazione con dei LED
+*/
+void animateleds_callback(){
+	// ...
+}
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     /*
      The MAX72XX is in power-saving mode on startup,
      we have to do a wakeup call
@@ -33,188 +118,86 @@ void setup() {
         /* and clear the display */
         lc.clearDisplay(d);
     }
+    
+    runner.init();
+    Serial.println("Initialized scheduler");
+
+//    runner.addTask(t1);
+    Serial.println("added t1");
+
+//    runner.addTask(t2);
+    Serial.println("added t2");
+    
+//    runner.addTask(t3);
+    Serial.println("added t3");
+
+//    t1.enable();
+    Serial.println("Enabled t1");
+  //  t2.enable();
+    Serial.println("Enabled t2");
+  //  t3.enable();
+    Serial.println("Enabled t3");
+
 }
 
 /*
- This method will display the characters for the
- word "Arduino" one after the other on the matrix.
- (you need at least 5x7 leds to see the whole chars)
- */
-void writeArduinoOnMatrix() {
-    /* here is the data for the characters */
-    byte a[5]= {B01111110,B10001000,B10001000,B10001000,B01111110};
-    byte r[5]= {B00111110,B00010000,B00100000,B00100000,B00010000};
-    byte d[5]= {B00011100,B00100010,B00100010,B00010010,B11111110};
-    byte u[5]= {B00111100,B00000010,B00000010,B00000100,B00111110};
-    byte i[5]= {B00000000,B00100010,B10111110,B00000010,B00000000};
-    byte n[5]= {B00111110,B00010000,B00100000,B00100000,B00011110};
-    byte o[5]= {B00011100,B00100010,B00100010,B00100010,B00011100};
-
-    /* now display them one by one with a small delay */
-    lc.setRow(0,0,a[0]);
-    lc.setRow(0,1,a[1]);
-    lc.setRow(0,2,a[2]);
-    lc.setRow(0,3,a[3]);
-    lc.setRow(0,4,a[4]);
-    delay(delaytime);
-    lc.setRow(0,0,r[0]);
-    lc.setRow(0,1,r[1]);
-    lc.setRow(0,2,r[2]);
-    lc.setRow(0,3,r[3]);
-    lc.setRow(0,4,r[4]);
-    delay(delaytime);
-    lc.setRow(0,0,d[0]);
-    lc.setRow(0,1,d[1]);
-    lc.setRow(0,2,d[2]);
-    lc.setRow(0,3,d[3]);
-    lc.setRow(0,4,d[4]);
-    delay(delaytime);
-    lc.setRow(0,0,u[0]);
-    lc.setRow(0,1,u[1]);
-    lc.setRow(0,2,u[2]);
-    lc.setRow(0,3,u[3]);
-    lc.setRow(0,4,u[4]);
-    delay(delaytime);
-    lc.setRow(0,0,i[0]);
-    lc.setRow(0,1,i[1]);
-    lc.setRow(0,2,i[2]);
-    lc.setRow(0,3,i[3]);
-    lc.setRow(0,4,i[4]);
-    delay(delaytime);
-    lc.setRow(0,0,n[0]);
-    lc.setRow(0,1,n[1]);
-    lc.setRow(0,2,n[2]);
-    lc.setRow(0,3,n[3]);
-    lc.setRow(0,4,n[4]);
-    delay(delaytime);
-    lc.setRow(0,0,o[0]);
-    lc.setRow(0,1,o[1]);
-    lc.setRow(0,2,o[2]);
-    lc.setRow(0,3,o[3]);
-    lc.setRow(0,4,o[4]);
-    delay(delaytime);
-    lc.setRow(0,0,0);
-    lc.setRow(0,1,0);
-    lc.setRow(0,2,0);
-    lc.setRow(0,3,0);
-    lc.setRow(0,4,0);
-    delay(delaytime);
-}
-
-/*
-  This function lights up a some Leds in a row.
- The pattern will be repeated on every row.
- The pattern will blink along with the row-number.
- row number 4 (index==3) will blink 4 times etc.
- */
-void rows() {
-    for(int row=0; row<8; row++) {
-        delay(delaytime);
-        lc.setRow(0,row,B10100000);
-        delay(delaytime);
-        lc.setRow(0,row,(byte)0);
-        for(int i=0; i<row; i++) {
-            delay(delaytime);
-            lc.setRow(0,row,B10100000);
-            delay(delaytime);
-            lc.setRow(0,row,(byte)0);
-        }
-    }
-}
-
-/*
-  This function lights up a some Leds in a column.
- The pattern will be repeated on every column.
- The pattern will blink along with the column-number.
- column number 4 (index==3) will blink 4 times etc.
- */
-void columns() {
-    for(int col=0; col<8; col++) {
-        delay(delaytime);
-        lc.setColumn(0,col,B10100000);
-        delay(delaytime);
-        lc.setColumn(0,col,(byte)0);
-        for(int i=0; i<col; i++) {
-            delay(delaytime);
-            lc.setColumn(0,col,B10100000);
-            delay(delaytime);
-            lc.setColumn(0,col,(byte)0);
-        }
-    }
-}
-
-/*
- This function will light up every Led on the matrix.
- The led will blink along with the row-number.
- row number 4 (index==3) will blink 4 times etc.
- */
-void single() {
-    for(int row=0; row<8; row++) {
-        for(int col=0; col<8; col++) {
-            delay(delaytime);
-            lc.setLed(0,row,col,true);
-            delay(delaytime);
-            for(int i=0; i<col; i++) {
-                lc.setLed(0,row,col,false);
-                delay(delaytime);
-                lc.setLed(0,row,col,true);
-                delay(delaytime);
-            }
-        }
-    }
-}
-
-
+// Memo esistenza setLed
 
 void pixel(int d) {
     for(int row=0; row<8; row++) {
         for(int col=0; col<8; col++) {
-            delay(delaytime);
+            delay(DELAY);
             lc.setLed(d,row,col,true);
         }
     }
 }
+*/
 
+/**
+	enlightens the 'position' position (with ASCII, in binary)
+*/
+void enlighten(int position, char car) {
 
-void column(int display, int riga,char car) {
-	// check limiti	
-	lc.setColumn(display,7-riga,0);
-	delay(delaytime);
-	lc.setColumn(display,7-riga,car);
+    int display=position/NUMDISPLAYS;
+    int internal_position=(LEDS_PER_DISPLAY-1)-(position%NUMDISPLAYS);
+
+    // check limiti
+
+/*
+    Serial.print("display: ");
+    Serial.print(display);
+    Serial.print(", ");
+    Serial.print("internal_position: ");
+    Serial.print(internal_position);
+    Serial.print(", ");
+    Serial.print("char: ");
+    Serial.println(car);
+    */
+
+    // decidere altri effetti?
+    lc.setColumn(display,internal_position,0);
+    delay(DELAY);
+    lc.setColumn(display,internal_position,car);
 }
 
 void loop() {
-    //writeArduinoOnMatrix();
-    //rows();
-    //columns();
-    //single();
-    //Serial.println(lc.getDeviceCount());
+    //runner.execute(); // questo sara' l'unica voce del loop
 
-	/*
-    for(int dis=0; dis<lc.getDeviceCount(); dis++) {
-        pixel(dis);
-		delay(500);
-		lc.clearDisplay(dis);
+
+    //Serial.print("position: ");
+    //Serial.println(current);
+
+    // memo: serial buffer 64 bytes
+    if(Serial.available()>0) {
+        car=Serial.read();
+        current++;
+
+        if(current>=NUMDISPLAYS*LEDS_PER_DISPLAY) {
+            current=0;
+        }
     }
-    */
-
-    Serial.print("display: ");
-    Serial.println(currentDisplay);
     
-    Serial.print("riga/colonna: ");
-    Serial.println(rigacorrente);
+    enlighten(current,car);
     
-    if(Serial.available()>0){
-		 car=Serial.read();
-		 rigacorrente++;
-	 }
-
-    currentDisplay=rigacorrente/8;
-
-    column(currentDisplay,rigacorrente%8,car);
-
-	if(rigacorrente>=NUMDISPLAYS*8)rigacorrente=0;
-
-	delay(500);    
-
+    //delay(DELAY);
 }
