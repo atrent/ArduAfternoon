@@ -1,17 +1,25 @@
-// (lettura seriale)
+/*
+ * ci sono Task:
+ * - senza stato (ogni volta che eseguono disegnano qualcosa ex novo dove serve, senza ridisegnare alcunche' di precedente)
+ * - con stato (ogni volta che eseguono disegnano il nuovo ma anche ripristinano la vecchia "memoria video")
+ */
 
-// interazione webclient
+// DONE lettura seriale
+
+// DONE interazione webclient
 // rispondere ad un url (via HTTP GET)
-// facciamo una wiki page che permette di compilare un form che poi scatena la GET
-// preparare QR code della pagina wiki
+// TODO facciamo una wiki page che permette di compilare un form che poi scatena la GET
+// TODO preparare QR code della pagina wiki
 
-// display carattere corrente (3 PIN)
+// provare: wget -O - 192.168.90.23/ciao
+
+// TODO LCD display carattere corrente (3 PIN)
 
 // ( random pattern )
 
-// display testo human-leggibile
+// TODO display testo human-leggibile
 
-// read sensori (PIR, ultrasuono, infrarosso, microfono, termometro-igrometro)
+// TODO read sensori (PIR, ultrasuono, infrarosso, microfono, termometro-igrometro)
 // Temperatura, umidita e ora/data (tutto in binario) quando in stand-by
 // LED in serie (normali)
 
@@ -36,6 +44,8 @@ const char url[] = "www.unimi.it";
 
 #define DELAY    5
 
+#define ANTENNA    A0
+
 ////////////////////////////////
 // globals
 //int car=0;
@@ -57,27 +67,47 @@ LedControl lc=LedControl(7,6,5,NUMDISPLAYS);
 #include <TaskScheduler.h>
 Scheduler runner;
 
+// "cardiogramma"
+short cursor=0;
 
-// Callback methods prototypes
+////////////////////////////////////////
+// Task callback methods prototypes
 void readSerial_callback();
 void readTime_callback();
 //void readtemp_callback();
 //void showstatus_callback();
 void readTextFromSocketClient_callback();
 void animateLeds_callback();
+void cardio_callback();
 
-//Tasks
+////////////////////////////////////////
+// Tasks
 Task readSerial(100, TASK_FOREVER, &readSerial_callback);
 Task animateLeds(30000, TASK_FOREVER, &animateLeds_callback);
-Task readTime(10000, TASK_FOREVER, &readTime_callback);
+Task readTime(5000, TASK_FOREVER, &readTime_callback);
 Task readTextFromSocketClient(500, TASK_FOREVER, &readTextFromSocketClient_callback);
+Task cardio(50, TASK_FOREVER, &cardio_callback);
 /*
 Task readtemp(..., TASK_FOREVER, &readtemp_callback);
 Task showstatus(..., TASK_FOREVER, &showstatus_callback);
 */
 
+/** per non sfondare coordinate */
+short X(short x) {
+    if(x>TOTLEDS) return 0;
+    return x;
+}
+
+/** ribalta Y
+ */
+short Y(short y) {
+    if(y>LEDS_PER_DISPLAY) return 0;
+    return y;
+}
+
+
 /**
- legge da seriale e ... (non sappiamo ancora)
+ legge da seriale e ... (butta fuori il binario)
 */
 void readSerial_callback() {
     short pos=0;
@@ -93,6 +123,20 @@ void readSerial_callback() {
         enlighten(pos,r);    // sara' da togliere se no ci rompe le scatole qando facciamo animazioni varie
         pos++;
     }
+}
+
+/**
+ cardio saltellante
+*/
+void cardio_callback() {
+	/*
+    Serial.print(F("Sin:"));
+    Serial.println(i);
+    Serial.print(F("Pos:"));
+    Serial.println(posizionecardio);
+    */
+    enlighten(cursor,Y(analogRead(ANTENNA)/(1024/8)));
+    cursor=X(++cursor);
 }
 
 // TODO: DA DIVIDERE ???????
@@ -244,6 +288,9 @@ void clearDisplays() {
 void setup() {
     // serial
     Serial.begin(115200);
+    
+    // pins
+    pinMode(ANTENNA,INPUT);
 
     // rete
     Ethernet.begin(mac);
@@ -252,57 +299,43 @@ void setup() {
     Serial.println(Ethernet.localIP());
     delay(1000);
 
+    // pulisce leds
     clearDisplays();
 
-    // RUNNER TASK
+    // attiva runner
     runner.init();
     Serial.println(F("Initialized scheduler"));
 
+    // da seriale a led
     runner.addTask(readSerial);
     Serial.println(F("added readSerial task"));
-
-    runner.addTask(readTime);
-    Serial.println(F("added readTime"));
-
-//    runner.addTask(readtemp);
-//    Serial.println(F("added readtemp"));
-
-//    runner.addTask(showstatus);
-//    Serial.println(F("added showstatus"));
-
-    runner.addTask(readTextFromSocketClient);
-    Serial.println(F("added readTextFromSocketClient"));
-
-    /*
-        runner.addTask(animateLeds);
-        Serial.println(F("added animateLeds"));
-    */
-
-////// ENABLE TASK
-
     readSerial.enable();
     Serial.println(F("enabled readSerial task"));
 
-    animateLeds.enable();
-    Serial.println(F("enabled animateLeds"));
-
+    // legge time e visualizza
+    runner.addTask(readTime);
+    Serial.println(F("added readTime"));
     readTime.enable();
     Serial.println(F("enabled readTime"));
 
+    runner.addTask(cardio);
+    Serial.println(F("added cardio"));
+    cardio.enable();
+    Serial.println(F("enabled readTime"));
+
+    // da socket (GET) a leds
+    runner.addTask(readTextFromSocketClient);
+    Serial.println(F("added readTextFromSocketClient"));
     readTextFromSocketClient.enable();
     Serial.println(F("enabled readTextFromSocketClient"));
 
+    // animate leds
     /*
-
-      //  readtemp.enable();
-        Serial.println(F("enabled readtemp"));
-
-      //  showstatus.enable();
-        Serial.println(F("enabled showstatus"));
-
-
+    runner.addTask(animateLeds);
+    Serial.println(F("added animateLeds"));
+    animateLeds.enable();
+    Serial.println(F("enabled animateLeds"));
     */
-
 }
 
 /*

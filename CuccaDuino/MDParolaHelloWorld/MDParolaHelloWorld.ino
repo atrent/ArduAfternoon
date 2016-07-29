@@ -11,7 +11,7 @@
 // Define the number of devices we have in the chain and the hardware interface
 // NOTE: These pin numbers will probably not work with your hardware and may 
 // need to be adapted
-#define	MAX_DEVICES	8
+#define	MAX_DEVICES	1
 #define	CLK_PIN		6
 #define	DATA_PIN		7
 #define	CS_PIN		5
@@ -25,7 +25,7 @@ void setup()
 {
 	Serial.begin(9600);
   P.begin();
-  P.displayText("Hello", LEFT, 100, 50, PRINT, NO_EFFECT);
+  P.displayText("1", LEFT, 10, 5, PRINT, NO_EFFECT);
 }
 
 void loop()
