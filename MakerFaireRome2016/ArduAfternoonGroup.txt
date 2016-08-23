@@ -1,0 +1,3 @@
+A group of students ad teachers at Computer Science department of the Milan University.
+We gather once a week to study, experiment, hack, play with Arduino, embedded devices, IoT, hardware, etc.
+Just for fun and LEARN.

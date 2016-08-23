@@ -1,0 +1,11 @@
+(atrent: sono in attesa dei dettagli sullo stand, per ora mi han detto solo che sono 8 m^2)
+
+Progettini demo
+- spada laser (la rimetto in wifi così diventa "interagibile")
+- arduitter (riconfigurare il tutto)
+- The Internet (realizzarla in toto, ma è facile)
+- specchietto allodole (finire i comportamenti e inscatolarlo)
+
+Materiali
+- qr codes
+- depliant/poster da appendere
