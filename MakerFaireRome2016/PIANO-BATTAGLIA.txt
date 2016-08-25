@@ -9,3 +9,18 @@ Progettini demo
 Materiali
 - qr codes
 - depliant/poster da appendere
+
+
+Architettura dello stand
+ Farei una cosa il piu' possibile lineare, mettiamo su un router nostro (arduafternoon, c'e' gia') che linkiamo al wifi della faire, cosi' abbiamo un sistema che funziona sia in dipartimento che allo stand senza modifiche, schema:
+ 
+ RouterWifiMakerFaireClient<---eth--->RouterArduAfternoon
+                                           / | \
+                                            wifi
+                                          /  |  \
+                                         /   |   \
+										/    |    Specchietto
+									   /     |
+									  /      Spada
+									 /
+									 TheInternet
