@@ -5,6 +5,8 @@ Progettini demo
 - arduitter (riconfigurare il tutto)
 - The Internet (realizzarla in toto, ma è facile)
 - specchietto allodole (finire i comportamenti e inscatolarlo)
+- barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
+- music player semi steampunk di atrent (da finire)
 
 Materiali
 - qr codes
