@@ -1,17 +1,53 @@
 (atrent: sono in attesa dei dettagli sullo stand, per ora mi han detto solo che sono 8 m^2)
 
 Progettini demo
-- spada laser (la rimetto in wifi così diventa "interagibile")
-- arduitter (riconfigurare il tutto)
-- The Internet (realizzarla in toto, ma è facile)
-- specchietto allodole (finire i comportamenti e inscatolarlo)
-- barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
-- music player semi steampunk di atrent (da finire)
+1) spada laser (la rimetto in wifi così diventa "interagibile")
+	- Da finire
+	- scegliere tipo animazione LED (obbligo suggerimenti!)
+	- spadaHotSpot -> per ogni utente collegato si accende un led
+	- Pulse & Accensione
+
+2) arduitter (riconfigurare il tutto)
+	- Rimettere in piedi il pivot su ATRENT
+	- Rimontare
+	- Controllare Attivazione account twitter (DONE)
+
+3) The Internet (realizzarla in toto, ma è facile)
+	- cercare Case (DONE)
+	- LED RGB
+	- Farlo da 0
+		> http://www.internetlivestats.com/
+		> traffico dati porno (e in subordine su youtube)
+
+4) specchietto allodole (finire i comportamenti e inscatolarlo)
+	- creare mini webpage (sicura)
+	- Periodi Task ???
+	- Task da far girare
+		> ReadSerial
+		> ReadFromSocket	(DONE)
+		> ExCardio - Sensore di Pressione (con resistenza)
+		!(Barra LED)
+			> Time (solo connesso alla rete)
+	NOTA:
+		> ReadFromSocket	(DONE)
+		Quando sara' installato in dipartimento, avra' un ip pubblico!!
+		quindi non servira' il pivot sul file
+		ALTRIMENTI
+		Guardare immagine schema_allodole.jpg
+
+5) barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
+	- Pronta (chiedere a Brianza)
+	- Decidere animazione LED (9 RGB) [ORARIO e ...]
+
+6) music player semi steampunk di atrent (da finire)
+
 
 Materiali
 - qr codes
 - depliant/poster da appendere
-
+- 2 Router (ArduAfternoon, X)
+- cavetteria varia
+- prolunghe/ciabatte
 
 Architettura dello stand
  Farei una cosa il piu' possibile lineare, mettiamo su un router nostro (arduafternoon, c'e' gia') che linkiamo al wifi della faire, cosi' abbiamo un sistema che funziona sia in dipartimento che allo stand senza modifiche, schema:
@@ -26,3 +62,6 @@ Architettura dello stand
 									  /      Spada
 									 /
 									 TheInternet
+
+
+
