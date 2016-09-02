@@ -98,10 +98,10 @@ short X(short x) {
     return x;
 }
 
-/** ribalta Y
+/** gestione overflow Y
  */
 short Y(short y) {
-    if(y>LEDS_PER_DISPLAY) return 0;
+    if(y>pow(2,LEDS_PER_DISPLAY)) return 0;
     return y;
 }
 
@@ -129,13 +129,14 @@ void readSerial_callback() {
  cardio saltellante
 */
 void cardio_callback() {
-	/*
+	int letto=analogRead(ANTENNA)/4;
+
     Serial.print(F("Sin:"));
-    Serial.println(i);
-    Serial.print(F("Pos:"));
-    Serial.println(posizionecardio);
-    */
-    enlighten(cursor,Y(analogRead(ANTENNA)/(1024/8)));
+    Serial.print(letto);
+    Serial.print(F(" - Pos:"));
+    Serial.println(cursor);
+
+    enlighten(cursor,Y(letto));
     cursor=X(++cursor);
 }
 
@@ -321,7 +322,7 @@ void setup() {
     runner.addTask(cardio);
     Serial.println(F("added cardio"));
     cardio.enable();
-    Serial.println(F("enabled readTime"));
+    Serial.println(F("enabled cardio"));
 
     // da socket (GET) a leds
     runner.addTask(readTextFromSocketClient);
