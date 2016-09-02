@@ -42,7 +42,7 @@ const char url[] = "www.unimi.it";
 #define LEDS_PER_DISPLAY    8
 #define TOTLEDS    NUMDISPLAYS*LEDS_PER_DISPLAY
 
-#define DELAY    5
+#define DELAY    10
 
 #define ANTENNA    A0
 
@@ -98,11 +98,21 @@ short X(short x) {
     return x;
 }
 
-/** gestione overflow Y
- */
-short Y(short y) {
-    if(y>pow(2,LEDS_PER_DISPLAY)) return 0;
-    return y;
+short arrotondaPotenza2(int v) {
+//v--;
+v |= v >> 1;
+v |= v >> 2;
+v |= v >> 4;
+v |= v >> 8;
+//v |= v >> 16;
+
+//if (v == -1){
+//	v++;
+//}
+
+//...    if(y>pow(2,LEDS_PER_DISPLAY)) return 0;
+
+    return v;
 }
 
 
@@ -129,14 +139,14 @@ void readSerial_callback() {
  cardio saltellante
 */
 void cardio_callback() {
-	int letto=analogRead(ANTENNA)/4;
+	int letto=arrotondaPotenza2(analogRead(ANTENNA)/8);
 
     Serial.print(F("Sin:"));
     Serial.print(letto);
     Serial.print(F(" - Pos:"));
     Serial.println(cursor);
 
-    enlighten(cursor,Y(letto));
+    enlighten(cursor,letto);
     cursor=X(++cursor);
 }
 
@@ -314,10 +324,12 @@ void setup() {
     Serial.println(F("enabled readSerial task"));
 
     // legge time e visualizza
+    /*
     runner.addTask(readTime);
     Serial.println(F("added readTime"));
     readTime.enable();
     Serial.println(F("enabled readTime"));
+    */
 
     runner.addTask(cardio);
     Serial.println(F("added cardio"));
