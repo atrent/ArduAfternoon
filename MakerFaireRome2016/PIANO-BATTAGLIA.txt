@@ -1,6 +1,7 @@
 (atrent: sono in attesa dei dettagli sullo stand, per ora mi han detto solo che sono 8 m^2)
 
 Progettini demo
+
 1) spada laser (la rimetto in wifi così diventa "interagibile")
 	- Da finire
 	- scegliere tipo animazione LED (obbligo suggerimenti!)
@@ -41,6 +42,7 @@ Progettini demo
 
 6) music player semi steampunk di atrent (da finire)
 
+7) (se riesco a finirla) ventola termostatica con comunicazione MQTT
 
 Materiali
 - qr codes
@@ -48,18 +50,24 @@ Materiali
 - 2 Router (ArduAfternoon, X)
 - cavetteria varia
 - prolunghe/ciabatte
+- monitor lcd
+- tastiere?
+- switch
+- arduini/raspberry/chip/etc da mostrare
+- scatole trasparenti (IKEA)
+- meccanismi antifurto (kensington, rete plastica?)
 
 Architettura dello stand
  Farei una cosa il piu' possibile lineare, mettiamo su un router nostro (arduafternoon, c'e' gia') che linkiamo al wifi della faire, cosi' abbiamo un sistema che funziona sia in dipartimento che allo stand senza modifiche, schema:
  
  RouterWifiMakerFaireClient<---eth--->RouterArduAfternoon
                                            / | \
-                                            wifi
+                                         wifi/eth
                                           /  |  \
                                          /   |   \
 										/    |    Specchietto
 									   /     |
-									  /      Spada
+									  /      Spada (forse avulsa dalla rete)
 									 /
 									 TheInternet
 
