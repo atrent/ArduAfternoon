@@ -40,7 +40,7 @@ Progettini demo
 	- Pronta (chiedere a Brianza)
 	- Decidere animazione LED (9 RGB) [ORARIO e ...]
 
-6) music player semi steampunk di atrent (da finire)
+6) music player semi steampunk di atrent (DONE!!! https://youtu.be/Ds6l_vJS-P8), c'e' solo da scegliere un po' di musica...
 
 7) (se riesco a finirla) ventola termostatica con comunicazione MQTT
 
