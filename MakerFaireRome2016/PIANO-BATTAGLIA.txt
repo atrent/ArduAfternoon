@@ -21,6 +21,7 @@ Progettini demo
 		> traffico dati porno (e in subordine su youtube)
 
 4) specchietto allodole (finire i comportamenti e inscatolarlo)
+	- [senza bisogno di tunnel strani] mettiamo un tablet/pc nella stessa rete arduafternoon e lasciamo che gli utenti interagiscano da li'
 	- creare mini webpage (sicura)
 	- Periodi Task ???
 	- Task da far girare
@@ -42,7 +43,7 @@ Progettini demo
 
 6) music player semi steampunk di atrent (DONE!!! https://youtu.be/Ds6l_vJS-P8), c'e' solo da scegliere un po' di musica...
 
-7) (se riesco a finirla) ventola termostatica con comunicazione MQTT
+7) ventola termostatica con comunicazione MQTT (DONE, la versione con pannello in legno)
 
 Materiali
 - qr codes
