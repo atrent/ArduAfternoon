@@ -2,25 +2,29 @@
 
 Progettini demo
 
-1) spada laser (la rimetto in wifi così diventa "interagibile")
+1) [HW OK, SW DA FARE] Spada laser (la rimetto in wifi così diventa "interagibile")
 	- Da finire
 	- scegliere tipo animazione LED (obbligo suggerimenti!)
 	- spadaHotSpot -> per ogni utente collegato si accende un led
 	- Pulse & Accensione
+	- ESP8266 (PRONTO)
 
-2) arduitter (riconfigurare il tutto)
+2) [TUTTO DA FARE] Arduitter (riconfigurare il tutto)
 	- Rimettere in piedi il pivot su ATRENT
 	- Rimontare
 	- Controllare Attivazione account twitter (DONE)
 
-3) The Internet (realizzarla in toto, ma è facile)
+3) [HW OK, SW QUASI PRONTO] The Internet (realizzarla in toto, ma è facile)
+	- ESP8266 (PRONTO)
 	- cercare Case (DONE)
-	- LED RGB
+	- LED RGB	   (DONE)
 	- Farlo da 0
 		> http://www.internetlivestats.com/
 		> traffico dati porno (e in subordine su youtube)
+		> TIME ?
+	- TODO MONTAGGIO FISICO
 
-4) specchietto allodole (finire i comportamenti e inscatolarlo)
+4) [HW OK, SW QUASI PRONTO] Specchietto allodole
 	- [senza bisogno di tunnel strani] mettiamo un tablet/pc nella stessa rete arduafternoon e lasciamo che gli utenti interagiscano da li'
 	- creare mini webpage (sicura)
 	- Periodi Task ???
@@ -37,13 +41,13 @@ Progettini demo
 		ALTRIMENTI
 		Guardare immagine schema_allodole.jpg
 
-5) barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
+5) [HW OK, PENSARE SW] Barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
 	- Pronta (chiedere a Brianza)
 	- Decidere animazione LED (9 RGB) [ORARIO e ...]
 
-6) music player semi steampunk di atrent (DONE!!! https://youtu.be/Ds6l_vJS-P8), c'e' solo da scegliere un po' di musica...
+6) [PRONTO!!!] Music player semi steampunk di atrent (DONE!!! https://youtu.be/Ds6l_vJS-P8), c'e' solo da scegliere un po' di musica...
 
-7) ventola termostatica con comunicazione MQTT (DONE, la versione con pannello in legno)
+7) [QUASI PRONTA!!!] Ventola termostatica con comunicazione MQTT (DONE, la versione con pannello in legno)
 
 Materiali
 - qr codes
