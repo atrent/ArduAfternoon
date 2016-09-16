@@ -80,7 +80,15 @@ LedControl lc=LedControl(7,6,5,NUMDISPLAYS);
 Scheduler runner;
 
 // "cardiogramma"
-short cursor=0;
+//short cursor=0;
+
+// cylon
+short cylon=0;
+// direzione incremento
+short dir_incr=1;
+
+// SECONDI
+short secondi = 0;
 
 ////////////////////////////////////////
 // Task callback methods prototypes
@@ -90,15 +98,19 @@ void readTime_callback();
 //void showstatus_callback();
 void readTextFromSocketClient_callback();
 void animateLeds_callback();
-void cardio_callback();
+//void lancettasec_callback();
+void cylon_callback();
+void clearDisplays();
 
 ////////////////////////////////////////
 // Tasks
-Task readSerial(100, TASK_FOREVER, &readSerial_callback);
+Task readSerial(1000, TASK_FOREVER, &readSerial_callback);
 Task animateLeds(30000, TASK_FOREVER, &animateLeds_callback);
 Task readTime(5000, TASK_FOREVER, &readTime_callback);
-Task readTextFromSocketClient(500, TASK_FOREVER, &readTextFromSocketClient_callback);
-Task cardio(50, TASK_FOREVER, &cardio_callback);
+Task readTextFromSocketClient(2000, TASK_FOREVER, &readTextFromSocketClient_callback);
+//Task lancettasec(50, TASK_FOREVER, &lancettasec_callback);
+Task cylonTask(100, TASK_FOREVER, &cylon_callback);
+Task clearTask(60000, TASK_FOREVER, &clearDisplays);
 /*
 Task readtemp(..., TASK_FOREVER, &readtemp_callback);
 Task showstatus(..., TASK_FOREVER, &showstatus_callback);
@@ -112,10 +124,10 @@ short X(short x) {
 
 short arrotondaPotenza2(int v) {
 //v--;
-v |= v >> 1;
-v |= v >> 2;
-v |= v >> 4;
-v |= v >> 8;
+	v |= v >> 1;
+	v |= v >> 2;
+	v |= v >> 4;
+	v |= v >> 8;
 //v |= v >> 16;
 
 //if (v == -1){
@@ -147,9 +159,9 @@ void readSerial_callback() {
     }
 }
 
-/**
+/*
  cardio saltellante
-*/
+
 void cardio_callback() {
 	int letto=arrotondaPotenza2(analogRead(ANTENNA)/8);
 
@@ -161,6 +173,7 @@ void cardio_callback() {
     enlighten(cursor,letto);
     cursor=X(++cursor);
 }
+*/
 
 // TODO: DA DIVIDERE ???????
 /** vede se c'e' client, lo gestisce e setta lo "stato"
@@ -168,7 +181,7 @@ void cardio_callback() {
 void readTime_callback() {
     // if you get a connection, report back via serial:
     if (client.connect(url, 80)) {
-        clearDisplays();
+//        clearDisplays();
         Serial.println(F("connected"));
         // Make a HTTP request:
         client.println(F("GET / HTTP/1.1"));
@@ -184,7 +197,12 @@ void readTime_callback() {
 
     delay(100);
 
-    int nl=0,sp=0,pos=0;
+    int nl=0,sp=0,caratt=0,pos=0;
+
+	// per acquisire secondi
+	char sec[2];
+	int i=0;
+
 
     //Serial.println(currentForClock);
 
@@ -192,21 +210,42 @@ void readTime_callback() {
         char c = client.read();
 
 
+		// NUMERO LINEE
         if(c=='\n') nl++;
+		// NUMERO SPAZI
         if(c==' ') sp++;
+        // NUMERO CARATTERE :
+        if(c==':') caratt++;
 
-        if(nl==1 && sp>6 && sp<8 && c!=' ') {
-            enlighten(pos++,c);
+        if(nl==1 && sp>6 && sp<8 && c!=' ' && c!=':' && caratt==3) {
+			//leds[0] = CHSV(255,100,100);
+			sec[i++] = c;
+			if (i>1) break;
+			
+//            enlighten(pos++,c);
             //if(currentForClock >= TOTLEDS) currentForClock=0;
-            Serial.print(c);
+            //Serial.print(c);
         }
 
         if(nl==2) break;
 
     }
     client.stop();
+    
+    secondi = atoi(sec);
+    enlighten(secondi,255);
+    Serial.println(secondi);
 }
 
+void cylon_callback(){
+	leds[cylon] = CRGB::Black;
+	FastLED.show();
+	
+	move_cylon();
+	
+	leds[cylon] = CHSV(20+secondi*3,255,100);
+	FastLED.show();
+}
 
 
 
@@ -266,7 +305,10 @@ void readTextFromSocketClient_callback() {
             client.stop();
             Serial.println(F("client disconnected"));
         }
+		delay(5000);
+		clearDisplays();
     }
+    
 }
 
 
@@ -329,26 +371,26 @@ void setup() {
     runner.init();
     Serial.println(F("Initialized scheduler"));
 
+	// Cylon
+	runner.addTask(cylonTask);
+    Serial.println(F("added cylon task"));
+    cylonTask.enable();
+    Serial.println(F("enabled cylon task"));
+
+
     // da seriale a led
     runner.addTask(readSerial);
     Serial.println(F("added readSerial task"));
     readSerial.enable();
     Serial.println(F("enabled readSerial task"));
 
+
+
     // legge time e visualizza
-    /*
     runner.addTask(readTime);
     Serial.println(F("added readTime"));
     readTime.enable();
     Serial.println(F("enabled readTime"));
-    */
-
-/*
-    runner.addTask(cardio);
-    Serial.println(F("added cardio"));
-    cardio.enable();
-    Serial.println(F("enabled cardio"));
-*/
 
     // da socket (GET) a leds
     runner.addTask(readTextFromSocketClient);
@@ -356,13 +398,26 @@ void setup() {
     readTextFromSocketClient.enable();
     Serial.println(F("enabled readTextFromSocketClient"));
 
+	// spegne tutti i led dopo 60 Sec
+    runner.addTask(clearTask);
+    Serial.println(F("added clearTask"));
+    clearTask.enable();
+    Serial.println(F("enabled clearTask"));
+	
+
+
+/*
+    runner.addTask(cardio);
+    Serial.println(F("added cardio"));
+    cardio.enable();
+    Serial.println(F("enabled cardio"));
+
     // animate leds
-    /*
     runner.addTask(animateLeds);
     Serial.println(F("added animateLeds"));
     animateLeds.enable();
     Serial.println(F("enabled animateLeds"));
-    */
+*/
     
 	FastLED.addLeds<WS2801, DATA_PIN, CLOCK_PIN, BGR>(leds, NUM_LEDS);
 }
@@ -415,15 +470,26 @@ void enlighten(String str) {
     }
 }
 
+void move_cylon(){
+	cylon = cylon + dir_incr;
+	if(cylon == NUM_LEDS-1 || cylon < 0){
+		dir_incr = dir_incr * (-1);
+	}
+}
+
 void loop() {
     runner.execute(); // questo sara' l'unica voce del loop
 
+/*
 	leds[0] = CHSV(255,100,100); 
-   leds[1] = CRGB(0,255,0);
-   leds[2] = CRGB(0, 0, 255);
-   leds[3] = CRGB(100,100,100);
-   leds[4] = CRGB(255,255,255);
-   FastLED.show();
+	leds[1] = CRGB(0,255,0);
+	leds[2] = CRGB(0, 0, 255);
+	leds[3] = CRGB(100,100,100);
+	leds[4] = CRGB(255,255,255);
+
+	FastLED.show();
+*/
+
     //Serial.print("position: ");
     //Serial.println(current);
 
