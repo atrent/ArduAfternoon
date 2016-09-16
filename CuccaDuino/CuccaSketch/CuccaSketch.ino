@@ -343,10 +343,12 @@ void setup() {
     Serial.println(F("enabled readTime"));
     */
 
+/*
     runner.addTask(cardio);
     Serial.println(F("added cardio"));
     cardio.enable();
     Serial.println(F("enabled cardio"));
+*/
 
     // da socket (GET) a leds
     runner.addTask(readTextFromSocketClient);
