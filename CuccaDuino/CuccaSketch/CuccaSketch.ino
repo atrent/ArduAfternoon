@@ -179,6 +179,9 @@ void cardio_callback() {
 /** vede se c'e' client, lo gestisce e setta lo "stato"
 */
 void readTime_callback() {
+	
+	long ms = millis();
+	
     // if you get a connection, report back via serial:
     if (client.connect(url, 80)) {
 //        clearDisplays();
@@ -232,9 +235,15 @@ void readTime_callback() {
     }
     client.stop();
     
+    ms = millis() - ms;
+    
     secondi = atoi(sec);
+    if (ms%2==0){
+		secondi++;	
+	}
+    
     enlighten(secondi,255);
-    Serial.println(secondi);
+    Serial.println(ms%1180);
 }
 
 void cylon_callback(){
