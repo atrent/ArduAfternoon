@@ -32,6 +32,9 @@
 //#include <MD_Parola_lib.h>
 #include <SPI.h>
 #include <Ethernet.h>
+// LED
+#include "FastLED.h"
+
 EthernetServer server(80);
 EthernetClient client;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x22, 0xD7 };
@@ -45,6 +48,15 @@ const char url[] = "www.unimi.it";
 #define DELAY    10
 
 #define ANTENNA    A0
+
+// Data pin that led data will be written out over
+#define DATA_PIN 2
+// Clock pin only needed for SPI based chipsets when not using hardware SPI
+#define CLOCK_PIN 3
+
+// NUM LED
+#define NUM_LEDS 8
+CRGB leds[NUM_LEDS];
 
 ////////////////////////////////
 // globals
@@ -349,6 +361,8 @@ void setup() {
     animateLeds.enable();
     Serial.println(F("enabled animateLeds"));
     */
+    
+	FastLED.addLeds<WS2801, DATA_PIN, CLOCK_PIN, BGR>(leds, NUM_LEDS);
 }
 
 /*
@@ -402,6 +416,12 @@ void enlighten(String str) {
 void loop() {
     runner.execute(); // questo sara' l'unica voce del loop
 
+	leds[0] = CHSV(255,100,100); 
+   leds[1] = CRGB(0,255,0);
+   leds[2] = CRGB(0, 0, 255);
+   leds[3] = CRGB(100,100,100);
+   leds[4] = CRGB(255,255,255);
+   FastLED.show();
     //Serial.print("position: ");
     //Serial.println(current);
 
