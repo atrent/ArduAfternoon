@@ -42,7 +42,7 @@ Progettini demo
 		ALTRIMENTI
 		Guardare immagine schema_allodole.jpg
 
-5) [HW OK, PENSARE SW] Barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
+5) [HW OK, SW ok rabdowifi] Barra led rgb + pir (ESP8266, da Brianza), pensare a cosa mettergli dentro
 	- Pronta (chiedere a Brianza)
 	- Decidere animazione LED (9 RGB) [ORARIO e ...]
 
