@@ -1,5 +1,7 @@
 (atrent: sono in attesa dei dettagli sullo stand, per ora mi han detto solo che sono 8 m^2)
 
+TODO: pagine wiki per ogni progettino o pagina globale makerfaire coi link ai repo?
+
 Progettini demo
 
 1) [HW OK, SW DA FARE] Spada laser (la rimetto in wifi così diventa "interagibile")
