@@ -1,3 +1,14 @@
+/**
+ * ========================== IMPORTANTE ==========================
+ * ====														   ====
+ * ==== ATTENZIONE CHE L'ACCOPPIATA DROPBEAR E				   ====
+ * ==== ServerAliveInterval DI sshd_config (LOCALE)			   ====
+ * ==== FA FALLIRE L'OTA									   ====
+ * ================================================================
+ * 
+ */
+
+
 #include <Bridge.h>
 #include <YunServer.h>
 #include <YunClient.h>
@@ -271,7 +282,9 @@ void play(){}
  */
 
 
+// http://192.168.90.22/arduino/LED/23
 
+//TODO: Migliorare parsing
 
 void process(YunClient client) {
     // read the command
@@ -311,18 +324,20 @@ void process(YunClient client) {
     }
 
     if (command == F("LED")) {
-        blink();
+        blink(client,param);
     }
 
 }
 
-void blink(){
+void blink(BridgeClient br, int test){
 	for(int i=0;i<10;i++){
 		digitalWrite(LED_BUILTIN, HIGH);
 		delay(100);
 		digitalWrite(LED_BUILTIN, LOW);
 		delay(100);
 	}
+	client.println(F("V1.2 applying..."));
+	writeStatus();
 }
 
 
