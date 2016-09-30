@@ -1,10 +1,13 @@
 /**
- * ========================== IMPORTANTE ==========================
- * ====														   ====
- * ==== ATTENZIONE CHE L'ACCOPPIATA DROPBEAR E				   ====
- * ==== ServerAliveInterval DI sshd_config (LOCALE)			   ====
- * ==== FA FALLIRE L'OTA									   ====
- * ================================================================
+ * ======================================== IMPORTANTE ==============================================
+ * ====																							 ====
+ * ==== ATTENZIONE CHE L'ACCOPPIATA DROPBEAR E				   									 ====
+ * ==== ServerAliveInterval DI sshd_config (LOCALE)												 ====
+ * ==== FA FALLIRE L'OTA																		 ====
+ * ==== link esempio errore:								   									 ====
+ * ==== http://www.geeetech.com/forum/viewtopic.php?p=32939&sid=695ae9eb0f4c91a5594fcb2605db996b ====
+ * ====																							 ====
+ * ==================================================================================================
  * 
  */
 
