@@ -21,8 +21,10 @@
 
 // Listen to the default port 5555, the Yún webserver
 // will forward there all the HTTP requests you send
-YunServer server;
-YunClient client;
+//YunServer server;
+//YunClient client;
+BridgeServer server;
+BridgeClient client;
 
 
 // status
@@ -35,6 +37,8 @@ int brakeB = BRAKE;
 int directionB = FORWARD;
 
 void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+
     pinMode(12, OUTPUT); //direction
     pinMode(9, OUTPUT); //Brake
     pinMode(3, OUTPUT); //speed
@@ -302,19 +306,24 @@ void process(YunClient client) {
         rotateLeft(client,param);
     }
 
-    if (command == "rotateright") {
+    if (command == F("rotateright")) {
         rotateRight(client,param);
+    }
+
+    if (command == F("LED")) {
+        blink();
     }
 
 }
 
-/*
 void blink(){
-    digitalWrite(13, HIGH);
-    delay(200);
-    digitalWrite(13, LOW);
+	for(int i=0;i<10;i++){
+		digitalWrite(LED_BUILTIN, HIGH);
+		delay(100);
+		digitalWrite(LED_BUILTIN, LOW);
+		delay(100);
+	}
 }
-*/
 
 
 /*
