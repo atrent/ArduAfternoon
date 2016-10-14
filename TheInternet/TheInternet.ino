@@ -6,8 +6,15 @@
 // led ws2801
 
 // Credenziali WiFi
-char ssid[] = "ArduinoAfternoon";
-char pass[] = "lavagnamit";
+
+//char ssid[] = "ArduinoAfternoon";
+//char pass[] = "lavagnamit";
+
+char ssid[] = "GuestMFR16";
+
+//char ssid[] = "fastweb-rm-cpe-bblaf-1";
+//char pass[] = "bbstoccolma";
+
 //int status = WL_IDLE_STATUS;
 WiFiClient client;
 
@@ -45,7 +52,9 @@ unsigned long min=UPPERBOUND, max=0;
 #define MINREPEAT 5
 #define MAXREPEAT 40
 
-#define DELAYHOSTS 3000
+#define DELAYHOSTS 500
+
+#define DELAYFLASH 100
 
 // This function sets up the ledsand tells the controller about them
 void setup() {
@@ -60,13 +69,15 @@ void setup() {
     leds[0]=CRGB::Red;
     FastLED.show();
 
-    connectWifi();
+    //connectWifi();
 
 }
 
 // This function runs over and over, and is where you do the magic to light
 // your leds.
 void loop() {
+
+    flashAll(DELAYFLASH,CRGB::White);
 
     for(int count=0; count<NUM_LEDS; count++)
     {
@@ -97,6 +108,19 @@ void loop() {
     //digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
 
     //delay(1000);
+}
+
+
+void flashAll(int del,CRGB color) {
+    for(int pos=0; pos<NUM_LEDS; pos++) {
+        CRGB saved=leds[pos];
+        leds[pos]=color;
+        FastLED.show();
+        delay(del);
+        leds[pos]=saved;
+        FastLED.show();
+    }
+
 }
 
 void flashLed(short pos, int time) {
@@ -146,8 +170,11 @@ void connectWifi() {
     //while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
+
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-    WiFi.begin(ssid, pass);
+    WiFi.begin(ssid);
+    //WiFi.begin(ssid, pass);
+
     //Serial.println(status);
     //printWifiStatus();
 
