@@ -38,7 +38,7 @@
 EthernetServer server(80);
 EthernetClient client;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x22, 0xD7 };
-const char url[] = "www.unimi.it";
+const char url[] = "192.168.1.1";
 
 ////////////////////////////////
 #define NUMDISPLAYS    8
@@ -110,7 +110,7 @@ Task readTime(5000, TASK_FOREVER, &readTime_callback);
 Task readTextFromSocketClient(2000, TASK_FOREVER, &readTextFromSocketClient_callback);
 //Task lancettasec(50, TASK_FOREVER, &lancettasec_callback);
 Task cylonTask(100, TASK_FOREVER, &cylon_callback);
-Task clearTask(60000, TASK_FOREVER, &clearDisplays);
+Task clearTask(180000, TASK_FOREVER, &clearDisplays);
 /*
 Task readtemp(..., TASK_FOREVER, &readtemp_callback);
 Task showstatus(..., TASK_FOREVER, &showstatus_callback);
@@ -242,8 +242,19 @@ void readTime_callback() {
 		secondi++;	
 	}
     
-    enlighten(secondi,255);
+    //enlighten(secondi,secondi);
+    animate(secondi,secondi);
     Serial.println(ms%1180);
+}
+
+
+void animate(int pos, int final){
+	for(int i=255;i>final;i-=10){
+		enlighten(pos,0);
+		//delay(5);
+		enlighten(pos,i);
+	}
+	enlighten(pos,final);
 }
 
 void cylon_callback(){

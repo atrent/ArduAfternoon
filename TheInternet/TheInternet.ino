@@ -69,8 +69,7 @@ void setup() {
     leds[0]=CRGB::Red;
     FastLED.show();
 
-    //connectWifi();
-
+    connectWifi();
 }
 
 // This function runs over and over, and is where you do the magic to light
