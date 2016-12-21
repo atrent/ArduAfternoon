@@ -9,7 +9,7 @@
 -- Video
 -- Posizione GPS
 -- Audio
--- Accellerometria
+-- Accelerometria
 
 == Correlazione tra i vari dati raccolti
 (Scegliere se usare R o Python [con pandas])
