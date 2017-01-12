@@ -14,6 +14,10 @@
 == Correlazione tra i vari dati raccolti
 (Scegliere se usare R o Python [con pandas])
 
-== Sync per salvare i file
-
 == Accensione/Spegnimento (in maniera sicura) con la macchina
+==== montare FS con il sync
+
+== Chiavetta USB
+===== Script sincronizzazione e spegnimento (rsync sorted, inotify, automount)
+
+== Verifica sensing alimentazione/i
