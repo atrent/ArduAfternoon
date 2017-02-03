@@ -1,0 +1,17 @@
+readSerial che stampa in binario
+	every 1000
+
+readTime (attenzione che bisogna settare url) e visualizza i secondi
+	every 5000
+
+readTextFromSocketClient (stringa da rete)
+	every 2000
+
+cylonTask striscia led
+	every 100
+
+clearTask ogni 60 sec clear
+	every 180000
+
+cardioTask
+	every 100
