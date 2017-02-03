@@ -55,9 +55,11 @@ void setup() {
 
 void loop() {
 
-if (Serial.available() > 0) calibration();  // enter calibration mode
+//if (Serial.available() > 0) calibration();  // enter calibration mode
 
 SR04_1Servo.write(SR04Servo1_Pos);     // tell servo to go to position in variable 'pos'
+//SR04_1Servo.write(95);
+
 unsigned int us = SR04_1.ping();       // Send ping, get ping time in microseconds (us)
 /*Serial.print("Ping: ");
 Serial.print(us);                      // DEBUG echo uS via serial terminal
@@ -82,7 +84,7 @@ SR04Servo1_Pos = SR04Servo1_Pos + SR04Servo1_Step;
 delay(300);
 if (SR04Servo1_Pos <= SR04_1ServoRightLimit || SR04Servo1_Pos >= SR04_1ServoLeftLimit) {
   SR04Servo1_Step = -SR04Servo1_Step;       // switch servo direction
-if (Serial.available() > 0) calibration();  // enter calibration mode
+//if (Serial.available() > 0) calibration();  // enter calibration mode
 }
   
 
@@ -131,6 +133,7 @@ unsigned int maxScreenRange() {
   return min(XCENTER,YCENTER) ;
 }
 
+/*
 void calibration() {
 while (Serial.available()>0) SerialInData = Serial.read(); // empty buffer
 Serial.print("CALIBRATION:  1-Servo, 2-Sens. Range, 9-Exit  Value? : ");
@@ -148,11 +151,11 @@ switch (SerialInData) { // which calibration?
       Serial.print("Center Value:  ");
       Serial.println(SR04_1ServoCent);
       SR04_1Servo.write(SR04_1ServoCent); }
-      while (Serial.available>0) SerialInData=Serial.read();
+      while (Serial.available()>0) SerialInData=Serial.read();
       Serial.print("done, press Enter to recalibrate");
       while (Serial.available()==0) delay(10); // wait for input
       SerialInData=Serial.read();
-      calibrate();
+      //calibrate();
       break;
       case '2':
       Serial.print("Left limit Val:  ");
@@ -178,7 +181,7 @@ switch (SerialInData) { // which calibration?
     break;    
   } 
 }
-
+*/
 
 
 
