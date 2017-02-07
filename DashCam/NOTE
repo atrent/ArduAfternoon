@@ -19,5 +19,12 @@
 
 == Chiavetta USB
 ===== Script sincronizzazione e spegnimento (rsync sorted, inotify, automount)
+/*
+USBMOUNT
+	- guardare pumount
+	- zcat /usr/share/doc/usbmount/README.gz | less
+	- aggiornare .conf
+*/
+
 
 == Verifica sensing alimentazione/i
