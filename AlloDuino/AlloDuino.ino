@@ -38,7 +38,7 @@
 EthernetServer server(80);
 EthernetClient client;
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0D, 0x22, 0xD7 };
-const char url[] = "192.168.1.1";
+//const char url[] = "192.168.1.1"; //per prendere orario
 
 ////////////////////////////////
 #define NUMMATRIX    4
