@@ -6,6 +6,9 @@ HARDWARE NOTES:
 */
 
 
+#include <Arduino.h>
+
+
 #include <NewPing.h>      // Timer2
 #include <Servo.h>        // Timer1 hw servo 
 
@@ -25,20 +28,25 @@ Servo SR04_1Servo;        // create servo object to control a servo
 NewPing SR04_1(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);     // NewPing setup of pins and maximum distance.
 
 
-int          SR04Servo1_Step = -9;         // variable to store/change SR04_1 servo step and direction
+int dirChange=0;
+int          SR04Servo1_Step = -5;         // variable to store/change SR04_1 servo step and direction
 unsigned int SR04_1ServoLeftLimit = 140;  // variable to CALIBRATE sweep angle
-unsigned int SR04_1ServoRightLimit = 50;  // variable to CALIBRATE sweep angle
+unsigned int SR04_1ServoRightLimit = 30;  // variable to CALIBRATE sweep angle
 unsigned int SR04Servo1_Pos = SR04_1ServoLeftLimit;         // variable to store the servo position
 //boolean      SR04_1SweepDone;           // variable to remember if a HALF sweep cicle is done
-const unsigned int TERMWIDTH = 60 ;
-const unsigned int TERMHEIGHT = 20 ;
+
+const unsigned int TERMWIDTH = 150 ;
+const unsigned int TERMHEIGHT = 50 ;
 const unsigned int XCENTER = TERMWIDTH / 2 ;
 const unsigned int YCENTER = TERMHEIGHT ;
 
 const boolean DEBUG = false;
+const boolean DEBUGVAL = false;
+const char CURSOR = '+';
 
-boolean Calibrate = false ;
-unsigned int SerialInData ;
+
+//boolean Calibrate = false ;
+//unsigned int SerialInData ;
 
 void setup() {
 
@@ -46,57 +54,84 @@ void setup() {
     SR04_1Servo.attach(SR04_1ServoPin);     // initialize SR04 sensor1 servo driver
     pinMode(LED_BUILTIN,OUTPUT);            // initialize arduino internal LED port
 
-    /*pinMode(RGBLedRedPin,OUTPUT);
+    /*
+    pinMode(RGBLedRedPin,OUTPUT);
       pinMode(RGBLedGreenPin,OUTPUT);         // RGB led
       Displ7Seg1.shutdown(0,false);      // Displ7seg1 initialization
       Displ7Seg1.setIntensity(0,8);       // Set the brightness to a medium values
       Displ7Seg1.clearDisplay(0);         // and clear the display
       SR04_1Servo.write(SR04Servo1_Pos);   // tell servo driver to go in position
-    */
+      */
+    clearScreen();
 }
 
 void loop() {
-
-//if (Serial.available() > 0) calibration();  // enter calibration mode
+    //if (Serial.available() > 0) calibration();  // enter calibration mode
 
     SR04_1Servo.write(SR04Servo1_Pos);     // tell servo to go to position in variable 'pos'
-//SR04_1Servo.write(95);
 
-    unsigned int us = SR04_1.ping();       // Send ping, get ping time in microseconds (us)
-    /*Serial.print("Ping: ");
-    Serial.print(us);                      // DEBUG echo uS via serial terminal
-    Serial.println("us");
-    Serial.println(SR04Servo1_Pos); */
-//Serial.println(plot(SR04Servo1_Pos,1));
+    //SR04_1Servo.write(95);
+
+    unsigned int us=SR04_1.ping();       // Send ping, get ping time in microseconds (us)
+    float toBplotted=sqrt(us);
+    //int toBplotted=map(us,0,10000,0,TERMHEIGHT);
+
+    //plot_ncurses(SR04Servo1_Pos,30);Serial.print(toBplotted);
+    plot_ncurses(SR04Servo1_Pos,toBplotted);
+
+    cursorAt(0,TERMHEIGHT);
+    Serial.print("ping=");
+    Serial.print(us);
+    Serial.print("us, angolo=");
+    Serial.print(SR04Servo1_Pos);
+    Serial.print(", toBplotted=");
+    Serial.print(toBplotted);
+    Serial.print("     ");
+
+    //Serial.println(plot(SR04Servo1_Pos,1));
     //Serial.println("***************");
 
 
-    for (int ang=0; ang<180; ang+=10) {
-        plot(ang,20);
-        /*
-        Serial.print("angolo=");
-        Serial.print(ang);
-        Serial.print(",");
-        Serial.print(base(ang,10));
-        Serial.print(",");
-        Serial.print(altezza(ang,10));
-        */
+    /*
+    for (int ang=0; ang<=180; ang+=5) {
+        plot(ang,30);
+
+        //Serial.print("angolo=");
+        //Serial.print(ang);
+        //Serial.print(", base=");
+        //Serial.print(base(ang,10));
+        //Serial.print(", altezza=");
+        //Serial.print(altezza(ang,10));
+        //Serial.println();
+
+        //Serial.print(", altezza=");
+        //Serial.print(altezza(ang,10));
+        //Serial.println();
+
         //plot(ang,maxScreenRange());
 
-        delay(500);
+        delay(200);
     }
-
-    /*
-        SR04Servo1_Pos = SR04Servo1_Pos + SR04Servo1_Step;
-        delay(300);
-        if (SR04Servo1_Pos <= SR04_1ServoRightLimit || SR04Servo1_Pos >= SR04_1ServoLeftLimit) {
-            SR04Servo1_Step = -SR04Servo1_Step;       // switch servo direction
-    //if (Serial.available() > 0) calibration();  // enter calibration mode
-        }
     */
+
+    SR04Servo1_Pos = SR04Servo1_Pos + SR04Servo1_Step;
+    delay(250);
+    if (SR04Servo1_Pos <= SR04_1ServoRightLimit || SR04Servo1_Pos >= SR04_1ServoLeftLimit) {
+        SR04Servo1_Step = -SR04Servo1_Step;       // switch servo direction
+        dirChange++;
+        //if (Serial.available() > 0) calibration();  // enter calibration mode
+
+        // clear screen, every 5 dirchanges
+        if(dirChange%5==0)clearScreen();
+    }
 
 }     // main loop brace!!
 
+
+void clearScreen() {
+    Serial.write(27);
+    Serial.write("[2J");
+}
 
 void plot(int angolo, int distanza) {
     if(DEBUG) plotDebug(angolo,distanza);
@@ -104,15 +139,34 @@ void plot(int angolo, int distanza) {
         plot_ncurses(angolo,distanza);
 }
 
+void cursorAt(int x, int y) {
+    if(x>TERMWIDTH) x=TERMWIDTH;
+    if(x<0) x=0;
 
-void plot_ncurses(int angolo, int distanza) {
+    if(y>TERMHEIGHT) y=TERMHEIGHT;
+    if(y<0) y=0;
+
     Serial.write(27);
     Serial.write('[');
-    Serial.print(base(angolo,distanza));
+    Serial.print(y);
     Serial.write(';');
-    Serial.print(altezza(angolo,distanza));
+    Serial.print(x);
     Serial.write('H');
-    Serial.write('x');
+}
+
+void plot_ncurses(int angolo, int distanza) {
+    if(distanza==0) return;
+
+    cursorAt(base(angolo,distanza),altezza(angolo,distanza));
+
+    if(DEBUGVAL) {
+        Serial.print(angolo);
+        Serial.print(",");
+        Serial.print(distanza);
+    }
+    else {
+        Serial.print(CURSOR);
+    }
 }
 
 void plotDebug(int angolo, int distanza) {
