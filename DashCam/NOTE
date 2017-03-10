@@ -28,3 +28,23 @@ USBMOUNT
 
 
 == Verifica sensing alimentazione/i
+
+##############################
+### PROCEDIMENTO BLUETOOTH ###
+##############################
+1) bluetoothctl
+2) power on
+3) scan on
+4) discoverable on
+5) agent KeyboardOnly
+6) pair XX:XX:XX:XX:XX:XX
+	-> PIN: 1234
+
+LINK UTILI:
+- https://stackoverflow.com/questions/34709583/bluetoothctl-set-passkey
+- https://bbs.archlinux.org/viewtopic.php?id=174239
+
+
+
+
+
