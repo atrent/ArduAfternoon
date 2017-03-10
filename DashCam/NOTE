@@ -5,11 +5,14 @@
 - capire se C.H.I.P. si interfaccia con OBD(On-Board Diagnostics)
 
 === DATI DA RACCOGLIERE
--- Dati OBD (Velocità, temperatura, etc)
--- Video
--- Posizione GPS
+-- Dati OBD (Velocità, temperatura, etc) [obdgpslogger -s ....]
+-- Video [motion]
+-- Posizione GPS [vedi sopra...]
 -- Audio
--- Accelerometria
+-- Accelerometria [???]
+
+== Eliminare TIMEOUT su WRITE del disco
+-- montare root e tutto -> PARAMETRO: sync
 
 == Correlazione tra i vari dati raccolti
 (Scegliere se usare R o Python [con pandas])
