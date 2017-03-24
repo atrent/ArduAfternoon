@@ -5,21 +5,19 @@ HARDWARE NOTES:
  Timer2 tone(), NewPing
 */
 
-
 #include <Arduino.h>
-
 
 #include <NewPing.h>      // Timer2
 #include <Servo.h>        // Timer1 hw servo 
 
-
 #define TRIGGER_PIN  7    // arduino trigger pin 12 ultrasonic sensor.
 #define ECHO_PIN     6    // arduino echo    pin 11 ultrasonic sensor.
-#define MAX_DISTANCE 100  // Maximum distance to measure.
+#define MAX_DISTANCE 300  // Maximum distance to measure.
 // Maximum sensor distance is rated at 400-500cm.
 #define SR04_1ServoPin 9  // SR04 sensor1 servo pin
 #define RGBLedRedPin 2
 #define RGBLedGreenPin 3
+#define SWEEPDELAY 100
 
 //LedControl Displ7Seg1=LedControl(12,11,10,1); // 12-Data, 11-CLK, 10-Load, 1-1module
 Servo SR04_1Servo;        // create servo object to control a servo
@@ -29,14 +27,14 @@ NewPing SR04_1(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);     // NewPing setup of pin
 
 
 int dirChange=0;
-int          SR04Servo1_Step = -5;         // variable to store/change SR04_1 servo step and direction
+int          SR04Servo1_Step = -1;         // variable to store/change SR04_1 servo step and direction
 unsigned int SR04_1ServoLeftLimit = 140;  // variable to CALIBRATE sweep angle
-unsigned int SR04_1ServoRightLimit = 30;  // variable to CALIBRATE sweep angle
+unsigned int SR04_1ServoRightLimit = 40;  // variable to CALIBRATE sweep angle
 unsigned int SR04Servo1_Pos = SR04_1ServoLeftLimit;         // variable to store the servo position
 //boolean      SR04_1SweepDone;           // variable to remember if a HALF sweep cicle is done
 
-const unsigned int TERMWIDTH = 150 ;
-const unsigned int TERMHEIGHT = 50 ;
+const unsigned int TERMWIDTH = 200 ;
+const unsigned int TERMHEIGHT = 60 ;
 const unsigned int XCENTER = TERMWIDTH / 2 ;
 const unsigned int YCENTER = TERMHEIGHT ;
 
@@ -65,24 +63,61 @@ void setup() {
     clearScreen();
 }
 
+// tentativo con multilettura e media
+/*
+float avgPing(){
+	float avg;
+	for(int readCount=0;readCount<3;readCount++){
+		avg=SR04_1.ping();       // Send ping, get ping time in microseconds (us)
+		delay(10);
+		avg+=SR04_1.ping();
+		avg=avg/2;
+	}
+    return sqrt(avg);
+    //int toBplotted=map(us,0,10000,0,TERMHEIGHT);
+}
+*/
+
+
 void loop() {
+	if(Serial.available()){
+		char command=Serial.read();
+		switch(command){
+			case 'm': // motor off
+			...
+			break;
+			case 'M': // motor on
+			...
+			break;
+			case 'c': // set to middle
+			...
+			break;
+		}
+	}
+
     //if (Serial.available() > 0) calibration();  // enter calibration mode
 
-    SR04_1Servo.write(SR04Servo1_Pos);     // tell servo to go to position in variable 'pos'
+    //SR04_1Servo.write(SR04Servo1_Pos);     // tell servo to go to position in variable 'pos'
+    //delay(SWEEPDELAY);
 
     //SR04_1Servo.write(95);
-
-    unsigned int us=SR04_1.ping();       // Send ping, get ping time in microseconds (us)
-    float toBplotted=sqrt(us);
-    //int toBplotted=map(us,0,10000,0,TERMHEIGHT);
+    
+    //int toBplotted=sqrt(SR04_1.ping());
+    int toBplotted=map(sqrt(SR04_1.ping()),0,100,0,TERMHEIGHT-5);
 
     //plot_ncurses(SR04Servo1_Pos,30);Serial.print(toBplotted);
-    plot_ncurses(SR04Servo1_Pos,toBplotted);
+    plot_ncurses(SR04Servo1_Pos,toBplotted,CURSOR);
+
+	// riferimento
+    plot_ncurses(SR04Servo1_Pos,TERMHEIGHT-10,'.');
 
     cursorAt(0,TERMHEIGHT);
+    /*
     Serial.print("ping=");
     Serial.print(us);
     Serial.print("us, angolo=");
+    */
+    Serial.print("angolo=");
     Serial.print(SR04Servo1_Pos);
     Serial.print(", toBplotted=");
     Serial.print(toBplotted);
@@ -115,15 +150,23 @@ void loop() {
     */
 
     SR04Servo1_Pos = SR04Servo1_Pos + SR04Servo1_Step;
-    delay(250);
+    delay(SWEEPDELAY);
+    
+    if (SR04Servo1_Pos <= SR04_1ServoRightLimit ) {
+		SR04Servo1_Pos = SR04_1ServoLeftLimit;
+		clearScreen();
+	}
+
+    /*
     if (SR04Servo1_Pos <= SR04_1ServoRightLimit || SR04Servo1_Pos >= SR04_1ServoLeftLimit) {
         SR04Servo1_Step = -SR04Servo1_Step;       // switch servo direction
         dirChange++;
         //if (Serial.available() > 0) calibration();  // enter calibration mode
 
-        // clear screen, every 5 dirchanges
-        if(dirChange%5==0)clearScreen();
+        // clear screen, every 2 dirchanges
+        if(dirChange%2==0)clearScreen();
     }
+    */
 
 }     // main loop brace!!
 
@@ -136,16 +179,18 @@ void clearScreen() {
 void plot(int angolo, int distanza) {
     if(DEBUG) plotDebug(angolo,distanza);
     else
-        plot_ncurses(angolo,distanza);
+        plot_ncurses(angolo,distanza,CURSOR);
 }
 
 void cursorAt(int x, int y) {
+
+    // check sbordo
     if(x>TERMWIDTH) x=TERMWIDTH;
     if(x<0) x=0;
-
     if(y>TERMHEIGHT) y=TERMHEIGHT;
     if(y<0) y=0;
 
+    // invio codici term
     Serial.write(27);
     Serial.write('[');
     Serial.print(y);
@@ -154,18 +199,20 @@ void cursorAt(int x, int y) {
     Serial.write('H');
 }
 
-void plot_ncurses(int angolo, int distanza) {
+void plot_ncurses(int angolo, int distanza,char cursor) {
     if(distanza==0) return;
 
     cursorAt(base(angolo,distanza),altezza(angolo,distanza));
 
     if(DEBUGVAL) {
+        Serial.print("(");
         Serial.print(angolo);
         Serial.print(",");
         Serial.print(distanza);
+        Serial.print(")");
     }
     else {
-        Serial.print(CURSOR);
+        Serial.print(cursor);
     }
 }
 
