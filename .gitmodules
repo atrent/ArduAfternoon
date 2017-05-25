@@ -1,0 +1,3 @@
+[submodule "WemosDeauther/esp8266_deauther"]
+	path = WemosDeauther/esp8266_deauther
+	url = https://github.com/spacehuhn/esp8266_deauther.git
