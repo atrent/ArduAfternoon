@@ -27,6 +27,10 @@ USBMOUNT
 	- guardare pumount
 	- zcat /usr/share/doc/usbmount/README.gz | less
 	- aggiornare .conf
+
+Link da vedere per lanciare script dopo mount -> udev 
+https://askubuntu.com/questions/284224/autorun-a-script-after-i-plugged-or-unplugged-a-usb-device
+https://askubuntu.com/questions/25071/how-to-run-a-script-when-a-specific-flash-drive-is-mounted
 */
 
 
