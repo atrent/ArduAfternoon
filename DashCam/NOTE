@@ -41,6 +41,13 @@ https://wiki.debian.org/it/udev
 == SCRIPT ESTERNI
 https://askubuntu.com/questions/673618/udev-doesnt-run-bash-script-as-run-argument
 https://unix.stackexchange.com/questions/111593/allow-non-root-user-to-read-write-dev-files
+==== CON ARGOMENTI
+https://serverfault.com/questions/556213/how-can-i-inform-a-script-called-from-a-udev-rule-of-the-device-that-triggered-t
+https://stackoverflow.com/questions/13699241/passing-arguments-to-shell-script-from-udev-rules-file
+
+##### Guida bellissima
+http://bernaerts.dyndns.org/linux/75-debian/54-debian-udev-backup
+http://www.weather-watch.com/smf/index.php?topic=39257.0
 */
 
 
