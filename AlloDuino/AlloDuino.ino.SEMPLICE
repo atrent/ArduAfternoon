@@ -1,0 +1,276 @@
+////////////////////////////////
+#include <SPI.h>
+
+////////////////////////////////
+#define NUMMATRIX    1
+#define LEDS_PER_MATRIX    8
+#define TOTLEDS_MATRIX    NUMMATRIX*LEDS_PER_MATRIX
+#define DELAY    500
+#define STEP_ANIMATE 50
+
+////////////////////////////////
+/*
+  Now we need a LedControl to work with.
+ ***** These pin numbers will probably not work with your hardware *****
+  pin 7 is connected to the DataIn
+  pin 6 is connected to the CLK
+  pin 5 is connected to LOAD
+  We have only a single MAX72XX.
+*/
+#include "LedControl.h"
+LedControl lc = LedControl(7, 6, 5, NUMMATRIX);
+
+// ex "cardiogramma", ora posizione per time
+short cursor = 0;
+
+// SECONDI
+short secondi = 0;
+
+/** per non sfondare coordinate */
+short X(short x) {
+    if (x > TOTLEDS_MATRIX) return 0;
+    return x;
+}
+
+short arrotondaPotenza2(int v) {
+    //v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    //v |= v >> 16;
+
+    //if (v == -1){
+    //	v++;
+    //}
+
+    //...    if(y>pow(2,LEDS_PER_DISPLAY)) return 0;
+
+    return v;
+}
+
+
+/**
+  legge da seriale e ... (butta fuori il binario)
+*/
+void readSerial_callback() {
+    short pos = 0;
+    // memo: serial buffer 64 bytes
+    while (Serial.available() > 0) {
+        char r = Serial.read();
+
+        /*
+                if(current>=NUMDISPLAYS*LEDS_PER_DISPLAY) {
+                    current=0;
+                }
+        */
+        enlighten(pos, r);   // sara' da togliere se no ci rompe le scatole qando facciamo animazioni varie
+        pos++;
+    }
+    if(pos>0)	delay(2000);
+}
+
+
+/* cardio saltellante
+void cardio_callback() {
+  int letto = arrotondaPotenza2(analogRead(ANTENNA) / 8);
+
+  Serial.print(F("Sin:"));
+  Serial.print(letto);
+  Serial.print(F(" - Pos:"));
+  Serial.println(cursor);
+
+  enlighten(cursor, letto);
+  cursor = X(++cursor);
+}
+*/
+
+
+/*
+void readTimeFromHTTP_callback() {
+  long ms = millis();
+  // if you get a connection, report back via serial:
+  if (client.connect(url, 80)) {
+    //        clearDisplays();
+    Serial.println(F("connected"));
+    // Make a HTTP request:
+    client.println(F("GET / HTTP/1.1"));
+    client.println(F("Host: pippo.com"));
+    client.println(F("Connection: close"));
+    client.println();
+    client.println();
+  }
+  else {
+    // if you didn't get a connection to the server:
+    Serial.println(F("connection failed"));
+  }
+  delay(100);
+  int nl = 0, sp = 0, caratt = 0, pos = 0;
+  // per acquisire secondi
+  char sec[2];
+  int i = 0;
+  //Serial.println(currentForClock);
+  while (client.available()) {
+    char c = client.read();
+    // NUMERO LINEE
+    if (c == '\n') nl++;
+    // NUMERO SPAZI
+    if (c == ' ') sp++;
+    // NUMERO CARATTERE :
+    if (c == ':') caratt++;
+    if (nl == 1 && sp > 6 && sp < 8 && c != ' ' && c != ':' && caratt == 3) {
+      //leds[0] = CHSV(255,100,100);
+      sec[i++] = c;
+      if (i > 1) break;
+      //            enlighten(pos++,c);
+      //if(currentForClock >= TOTLEDS_MATRIX) currentForClock=0;
+      //Serial.print(c);
+    }
+    if (nl == 2) break;
+  }
+  client.stop();
+  ms = millis() - ms;
+  secondi = atoi(sec);
+  if (ms % 2 == 0) {
+    secondi++;
+  }
+  //enlighten(secondi,secondi);
+  animate(secondi/2, secondi*4);
+  Serial.println(ms % 1180);
+}
+*/
+
+
+void animate(int pos, int final) {
+    for (int i = 255; i > final; i -= STEP_ANIMATE) {
+        enlighten(pos, 0);
+        //delay(5);
+        enlighten(pos, i);
+    }
+    enlighten(pos, final);
+}
+
+
+
+
+/** legge temperatura, ora, data, umidita'  e aggiorna lo "stato"
+  void readtemp_callback() {
+    // ...
+  }
+*/
+
+/** Legge lo "stato" e lo spara su display
+  void showstatus_callback() {
+    // ...
+  }
+*/
+
+/** Animazione con dei LED
+  TODO: pensare ad animazione piu' intelligente
+void animateLeds_callback() {
+  //animazione ad cazzum
+  for (int i = 0; i < TOTLEDS_MATRIX; i++) {
+    enlighten(i, 8 * sin(i));
+  }
+  clearDisplays();
+}
+*/
+
+
+void clearDisplays() {
+    /*
+      The MAX72XX is in power-saving mode on startup,
+      we have to do a wakeup call
+    */
+    for (int d = 0; d < NUMMATRIX; d++) {
+        lc.shutdown(d, false);
+        /* Set the brightness to a medium values */
+        lc.setIntensity(d, 8);
+        /* and clear the display */
+        lc.clearDisplay(d);
+    }
+}
+
+void setup() {
+    // serial
+    Serial.begin(115200);
+
+    // pulisce leds
+    clearDisplays();
+
+}
+
+/*
+  // Memo esistenza setLed
+
+  void pixel(int d) {
+    for(int row=0; row<8; row++) {
+        for(int col=0; col<8; col++) {
+            delay(DELAY);
+            lc.setLed(d,row,col,true);
+        }
+    }
+  }
+*/
+
+/**
+	enlightens the 'position' position (with ASCII, in binary)
+*/
+void enlighten(int position, char car) {
+    int display = position / LEDS_PER_MATRIX;
+    int internal_position = (LEDS_PER_MATRIX - 1) - (position % LEDS_PER_MATRIX);
+
+    // TODO check limiti
+
+    /*  Serial.print("display: ");
+        Serial.print(display);
+        Serial.print(", ");
+        Serial.print("internal_position: ");
+        Serial.print(internal_position);
+        Serial.print(", ");
+        Serial.print("char: ");
+        Serial.println(car);    */
+
+    // decidere altri effetti?
+    //lc.setColumn(display, internal_position, 0);
+    //delay(DELAY);
+    lc.setColumn(display, internal_position, car);
+}
+
+/**
+	enlightens the 'position' position (with ASCII, in binary)
+*/
+void enlighten(String str) {
+    clearDisplays();
+    for (int pos = 0; pos < (str.length()); pos++) {
+        enlighten(pos, str.charAt(pos));
+    }
+}
+
+
+void loop() {
+    long milli = (millis())%255;
+    int dove= milli%8;
+    //enlighten(dove,milli);
+    animate(dove, milli);
+    /*
+    if(cursor >= TOTLEDS_MATRIX) {
+        cursor=0;
+    }
+    */
+
+    /*
+    enlighten(0,255);
+    enlighten(8,255);
+    enlighten(16,255);
+    enlighten(24,255);
+    enlighten(31,255);
+    */
+
+    /*
+    Serial.print(cursor);
+    Serial.print(",");
+    Serial.println(secondi);
+    */
+    delay(DELAY);
+}
