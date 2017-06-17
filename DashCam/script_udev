@@ -1,0 +1,12 @@
+#!/bin/bash
+
+MNT_POINT=/mnt/storage
+
+if [ ! -d $MNT_POINT ]
+then
+    mkdir $MNT_POINT
+fi
+fsck -faV /dev/"$1"
+mount -t auto /dev/"$1" $MNT_POINT -o rw,umask=0022,sync
+
+nohup /bin/bash /usr/bin/motion -n &
