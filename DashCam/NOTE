@@ -50,6 +50,10 @@ http://bernaerts.dyndns.org/linux/75-debian/54-debian-udev-backup
 http://www.weather-watch.com/smf/index.php?topic=39257.0
 */
 
+== (IN OpenWRT)
+https://wiki.openwrt.org/doc/techref/procd
+https://wiki.openwrt.org/doc/techref/hotplug
+
 
 == Verifica sensing alimentazione/i
 
@@ -67,8 +71,6 @@ http://www.weather-watch.com/smf/index.php?topic=39257.0
 LINK UTILI:
 - https://stackoverflow.com/questions/34709583/bluetoothctl-set-passkey
 - https://bbs.archlinux.org/viewtopic.php?id=174239
-
-
 
 
 
