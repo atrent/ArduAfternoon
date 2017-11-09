@@ -1,0 +1,83 @@
+﻿27/10/2017
+IDEE PER PROGETTI 2017:
+
+
+ATrent
+
+Crowd remote TV
+Auditing televisivo / contromisure anti pubblicita', via telecomando TV
+-spettatori attivi segnalano loro attivita
+-spettatori passivi hanno accesso alle statistiche / hanno servizi
+-si appoggia su infrastruttura Cloud, server MOPTT
+
+Controller termovalvole bluetooth caloriferi
+Gestione riscaldamento domestico
+
+Hack della bici
+Eseguire un reverse del protocollo che Ofo, Mobike ed altri servizi usano via BTLE.
+
+--------------------------------------------------------------------------------------------
+
+Elio
+
+Cingolato radiocomandato con armamento anti gatto ecc
+munito di ricevente RF ASK, deve almeno:
+-mediante joystick governare progressivamente i motori (1 per cingolo)
+-mediante joystic governare (on-off) torretta - zenith e azimuth + compressore per sparare
+-mediante bottoni su telecomando fare on off luci
+successivamente puo':
+-tentare guida automatica anti ostacoli ed altre funzioni automatiche da definirsi
+-governo via wifi, magari da UART di IP camera
+
+Sistema irrigazione piante tavolo/appartamento
+Gia' parzialmente realizzato ma semi distrutto, esteticamente carino
+basato sulla misura di tempo, luce, effettiva umidita' della terra e temperatura
+-controlla le micro pompe dell'acqua
+-controlla il livello acqua da serbatoio scorta (switch meccanici o sensore ultrasuoni)
+-avente display lcd e led ad indicare stato presente ed operazioni che stanno per essere fatte
+-opzionalmente, in comunicazione via ethernet o UART con un server che informa e ricevi istruzioni (per controllo remoto)
+-opzionalmente, comanda apertura/chiusura elettrovalvola per riempire serbatoio scorta
+-opzionalmente, controlla on/off luci su piante
+
+Centrale termoelettrica a peltier
+Gia' parzialmente realizzata (in buona parte, manca affidabile sez. calda), e' alimentata a cera di candele o carbonella di legna.
+Il sistema deve:
+-gestire origine alimentazione elettrica, da linea esterna a cella
+-verificare tensione uscita cella e circuito alimentazione DC-DC dalla cella
+-verificare temperature sezioni calda-fredda, rappresentando via UART e/o LCD
+-eccetera, da provare
+
+Sistema controllo centrale termica domestica
+-deve controllare 1 centralina full authority di controllo del bruciatore a gas, 2 pompe acqua calda / termosifoni
+-deve ricevere stato da termostato in appartamento, temperature e stato alimentazione degli attuatori (per diagnosticare guasti ai rele'), stato bruciatore (se effettivamente acceso o in blocco)
+-avente display lcd/7seg e qualche led di stato
+-avente tastiera di controllo, per settare parametri funzionamento
+-opzionalmente: -secondo processore watchdog -controllo remoto via ethernet
+
+Sistema monitoraggio gas ambiente
+-rileva da diversi sensori gas novici/tossici, logga, visualizza, ...?
+
+Sistema monitoraggio stato acquedotto privato
+-deve misurare (col sensore ultrasuoni) il livello acqua in due cisterne, una collegata all'altra, dislocate dove non c'e' energia elettrica (batterie e/o solare richieste)
+-deve misurare con flussometro a turbina (sensore hall ad impulsi da contare) portata acqua immissione ALMENO nella cisterna primaria
+-le due unita' presso le due cisterne devono usare apparato radio, per iniziare semplice radio ASK, per trasmettere periodicamente stato di livello ed immissione acqua nelle stesse, una terza unita' deve ricevere i dati, mostrandoli su LCD e trasmetterli a pc via UART (x logging)
+-opzionalmente:	 -l'impianto di valle deve controllare almeno 1 elettrovalvola mediante 			  classico rele'
+			 -l'impianto di valle deve ricevere istruzioni via radio
+
+--------------------------------------------------------------------------------------------
+
+Matteo      
+
+Sistema controllo energetico domotico
+Applicazione di domotica
+
+--------------------------------------------------------------------------------------------
+
+Mauro
+
+Joypad bluetooth
+
+
+
+
+--------------------------------------------------------------------------------------------
