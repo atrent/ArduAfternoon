@@ -32,6 +32,9 @@ Link da vedere per lanciare script dopo mount -> udev
 https://askubuntu.com/questions/284224/autorun-a-script-after-i-plugged-or-unplugged-a-usb-device
 https://askubuntu.com/questions/25071/how-to-run-a-script-when-a-specific-flash-drive-is-mounted
 
+#############################
+###   PROCEDIMENTO UDEV   ###
+#############################
 == LIST UDEV RULES
 https://unix.stackexchange.com/questions/182309/list-all-udev-rules-e-g-for-a-device
 == UDEV
@@ -55,7 +58,17 @@ https://wiki.openwrt.org/doc/techref/procd
 https://wiki.openwrt.org/doc/techref/hotplug
 
 
+######################
+###  ALTRE BOARDS  ###
+######################
+=== BEAGLEBONE
+https://www.digikey.com/en/maker/blogs/how-to-setup-wifi-on-the-beaglebone-black-wireless/f6452fa17bd24347a59f306355ebfef8
+
+
+
+
 == Verifica sensing alimentazione/i
+
 
 ##############################
 ### PROCEDIMENTO BLUETOOTH ###
