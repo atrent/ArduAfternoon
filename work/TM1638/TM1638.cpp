@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "TM1638.h"
 #include "string.h"
+#include "portConfig.h"
 
 TM1638::TM1638(byte dataPin, byte clockPin, byte strobePin, boolean activateDisplay, byte intensity)
 	: TM16XX(dataPin, clockPin, strobePin, 8, activateDisplay, intensity)
@@ -119,13 +120,13 @@ byte TM1638::getButtons(void)
 {
   byte keys = 0;
 //  digitalWrite(strobePin, LOW);
-  PORTB=PORTB&(~strobePin);  // strobe pin forced LOW
+  PORT=PORT&(~strobePin);  // strobe pin forced LOW
   send(0x42);
   for (int i = 0; i < 4; i++) {
     keys |= receive() << i;
   }
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;  // strobe pin forced HIGH
+  PORT=PORT|strobePin;  // strobe pin forced HIGH
   return keys;
 }
 

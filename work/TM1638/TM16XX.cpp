@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "TM16XX.h"
 #include "string.h"
+#include "portConfig.h"
 
 TM16XX::TM16XX(byte dataPin, byte clockPin, byte strobePin, byte displays, boolean activateDisplay,
 	byte intensity)
@@ -34,32 +35,32 @@ TM16XX::TM16XX(byte dataPin, byte clockPin, byte strobePin, byte displays, boole
   this->displays = displays;
 
 //  pinMode(dataPin, OUTPUT);
-  DDRB=DDRB|dataPin;  // data pin forced HI
+  DDR=DDR|dataPin;  // data pin forced HI
 
 //  pinMode(clockPin, OUTPUT);
-  DDRB=DDRB|clockPin;  // data pin forced HI
+  DDR=DDR|clockPin;  // data pin forced HI
 
 //  pinMode(strobePin, OUTPUT);
-  DDRB=DDRB|strobePin;  // strobe pin forced HI
+  DDR=DDR|strobePin;  // strobe pin forced HI
 
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;
+  PORT=PORT|strobePin;
 
 //  digitalWrite(clockPin, HIGH);
-  PORTB=PORTB|clockPin;
+  PORT=PORT|clockPin;
 
   sendCommand(0x40);
   sendCommand(0x80 | (activateDisplay ? 8 : 0) | min(7, intensity));
 
 //  digitalWrite(strobePin, LOW);
-  PORTB=PORTB&(~strobePin);
+  PORT=PORT&(~strobePin);
 
   send(0xC0);
   for (int i = 0; i < 16; i++) {
     send(0x00);
   }
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;
+  PORT=PORT|strobePin;
 }
 
 void TM16XX::setupDisplay(boolean active, byte intensity)
@@ -68,13 +69,13 @@ void TM16XX::setupDisplay(boolean active, byte intensity)
 
   // necessary for the TM1640
 //  digitalWrite(strobePin, LOW);
-  PORTB=PORTB&(~strobePin);
+  PORT=PORT&(~strobePin);
 //  digitalWrite(clockPin, LOW);
-  PORTB=PORTB&(~clockPin);
+  PORT=PORT&(~clockPin);
 //  digitalWrite(clockPin, HIGH);
-  PORTB=PORTB|clockPin;
+  PORT=PORT|clockPin;
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;
+  PORT=PORT|strobePin;
 }
 
 void TM16XX::setDisplayDigit(byte digit, byte pos, boolean dot, const byte numberFont[])
@@ -137,21 +138,21 @@ void TM16XX::setDisplayToString(const String string, const word dots, const byte
 void TM16XX::sendCommand(byte cmd)
 {
 //  digitalWrite(strobePin, LOW);
-  PORTB=PORTB&(~strobePin);
+  PORT=PORT&(~strobePin);
   send(cmd);
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;
+  PORT=PORT|strobePin;
 }
 
 void TM16XX::sendData(byte address, byte data)
 {
   sendCommand(0x44);
 //  digitalWrite(strobePin, LOW);
-  PORTB=PORTB&(~strobePin);
+  PORT=PORT&(~strobePin);
   send(0xC0 | address);
   send(data);
 //  digitalWrite(strobePin, HIGH);
-  PORTB=PORTB|strobePin;
+  PORT=PORT|strobePin;
 
 }
 
@@ -159,16 +160,16 @@ void TM16XX::send(byte data)
 {
   for (int i = 0; i < 8; i++) {
 //    digitalWrite(clockPin, LOW);
-    PORTB=PORTB&(~clockPin);
+    PORT=PORT&(~clockPin);
 
 //    digitalWrite(dataPin, data & 1 ? HIGH : LOW);   @@@@@ ???
 
-  if (data & 1) PORTB=PORTB|dataPin;
-  else          PORTB=PORTB&(~dataPin);
+  if (data & 1) PORT=PORT|dataPin;
+  else          PORT=PORT&(~dataPin);
 
     data >>= 1;
 //    digitalWrite(clockPin, HIGH);
-    PORTB=PORTB|clockPin;
+    PORT=PORT|clockPin;
   }
 }
 
@@ -178,31 +179,31 @@ byte TM16XX::receive()
 
   // Pull-up on
 //  pinMode(dataPin, INPUT);
-  DDRB=DDRB&(~dataPin);  // data pin forced LOW, INPUT
+  DDR=DDR&(~dataPin);  // data pin forced LOW, INPUT
 
 //  digitalWrite(dataPin, HIGH);
-  PORTB=PORTB|dataPin;
+  PORT=PORT|dataPin;
 
   for (int i = 0; i < 8; i++) {
     temp >>= 1;
 
 //    digitalWrite(clockPin, LOW);
-    PORTB=PORTB&(~clockPin);
+    PORT=PORT&(~clockPin);
 
 //    if (digitalRead(dataPin)) {
-    if (PINB==(PINB&dataPin)) {
+    if (PIN==(PIN&dataPin)) {
       temp |= 0x80;
     }
 
 //    digitalWrite(clockPin, HIGH);
-    PORTB=PORTB|clockPin;
+    PORT=PORT|clockPin;
   }
 
   // Pull-up off
 //  pinMode(dataPin, OUTPUT);
-  DDRB=DDRB|dataPin;
+  DDR=DDR|dataPin;
 //  digitalWrite(dataPin, LOW);
-  PORTB=PORTB&(~dataPin);
+  PORT=PORT&(~dataPin);
 
   return temp;
 }
