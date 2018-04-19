@@ -1,0 +1,22 @@
+// display drive per digit number and dots
+// must write entire space for dots to lighton
+
+void DisplNum (unsigned int valueToDispl, byte initPos, byte dots) {
+    byte digitNum=4;
+    unsigned int div=pow(10,digitNum-1);
+    bool isLZ=true;  // last num is a zero
+    for (byte i=digitNum;i>0;i--) {
+      byte digitBuf=(valueToDispl/div)%10; // MSN first
+      div=div/10;
+      byte digitPos=initPos+digitNum-i;
+      byte dotOn=(dots<<digitPos)&B10000000;  // check the right dot bit
+
+      if (!digitBuf && isLZ) {
+        ldk1.clearDisplayDigit(digitPos,dotOn); // pos,dot
+      }
+      else {
+        isLZ=false;
+        ldk1.setDisplayDigit(digitBuf,digitPos,dotOn); // digit,pos,dot
+      }
+    }
+}

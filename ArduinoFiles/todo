@@ -1,0 +1,66 @@
+- bindump [OK, printf "16i 2o FF p" | dc]
+
+- Tiny85 core supporto; [OK] riordinare e ri-testare, serve mkfile unico..
+			[OK] test librerie aggiuntive..
+			scoperto: makefile position sensitive!! >.<
+			[OK] test clock 1MHz, settando lfuse
+			[GUAI] test clock 128KHz, at85 brikkato!
+			[GUAI] blink sembra non ok, cambiati fuses non assieme flash!
+			[OK] T13A con sketch isp, softSPI, ok anche a 250baud!
+			test: condensatore su reset/GND uno
+			test: si consulta microcore docs, programmers.txt...
+			fare: costruzione HVP, done.
+			fare: prova codice hvp, preprocessato ardubuilder [OK]
+			fare: debrick, [OK] !
+			fare: montato hvp come shield
+			[GUAI] partiti due 328p (UNO) con su codice hvp di Jeff Keyzer
+			[OK]: elettrico shield , no cto GND/VCC
+			[OK] hvp montato provato su t85, debrick fatto
+
+
+*** TODO *************************************************
+
+- organizzare git, sincronizzare work environ.
+- pushare dir con files .git di altro repo!?
+- files cpp/h multipli con makefile
+- PROGMEM e funzioni di "recupero" dati flash
+- ritentare fclock < MHz Tiny
+- includere MicroCore AT13 in Makefile repo
+
+**********************************************************
+
+
+- problema differenza short vs. byte !! [OK] byte mangia meno, short forse
+					     si auto-trimma?
+
+
+** PROVE EFFICENZA LIBRERIE/FUNZIONI ecc **
+
+--  blink, TaskScheduler, dWrite:
+Device: attiny85
+
+Program:    1622 bytes (19.8% Full)
+(.text + .data + .bootloader)
+
+Data:         54 bytes (10.5% Full)
+(.data + .bss + .noinit)
+
+
+-- blink, TaskScheduler, dpa:
+Device: attiny85
+
+Program:    1412 bytes (17.2% Full)
+(.text + .data + .bootloader)
+
+Data:         54 bytes (10.5% Full)
+(.data + .bss + .noinit)
+
+
+-- fade up/dn millis dpa
+Device: attiny85
+
+Program:     716 bytes (8.7% Full)
+(.text + .data + .bootloader)
+
+Data:         33 bytes (6.4% Full)
+(.data + .bss + .noinit)

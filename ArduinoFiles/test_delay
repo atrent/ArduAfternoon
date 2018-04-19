@@ -1,0 +1,33 @@
+#include <Arduino.h>
+
+
+const int led	=  13;    // LED connected to digital pin 13
+const int ledOn = 30;
+const int ledOff = 2000;
+bool ledStat = true;
+
+
+void setup() {
+  pinMode(led, OUTPUT);
+  }
+
+
+void loop() {
+  ledStat=!ledStat;
+  digitalWrite(led, ledStat);
+  if (ledStat) {
+    delay(ledOn);
+    }
+    else
+    {
+    delay(ledOff);
+    }
+}
+
+int main(void) {
+    init();
+    setup();
+    for (;;) {
+      loop();
+      }
+}

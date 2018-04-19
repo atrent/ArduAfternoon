@@ -1,56 +1,63 @@
-	## Makefile Arduino AVR ##
-	##########################
 
+	## Makefile Arduino AVR ##
+	##########################  Commented and tested by M.Huntin'
+	##########################			    Rev 0.1b
+
+## Arduino Make file. Refer to  https://github.com/sudar/Arduino-Makefile
 ## read Arduino.mk for more config options
 
 
-MY_HOME			= /mnt/mael_home/elio
+## PLEASE NOTE :
+
+## UNCOMMENT "Arduino.mk", line 861, "Determine ARDUINO_LIBS automatically"
+## to enable automatic user lib finding. Each user library dir should be
+## named exactly as the "#include .h" file and should be placed in the
+## ARDUINO_DIR/libraries or in the USER_LIB_PATH
+
+## You must have the GNU-GCC tools in your shell $PATH, ex:
+## ${ARDUINO_DIR}/hardware/tools/avr/bin/
+
+## If you wanna use avrdude directly (it's easy), you should:
+##   - read the man page in ./hardware/tools/avr/share/man/man1/
+##   - copy the ./hardware/tools/avr/etc/avrdude.conf in the project dir
+
+## Change "MY_HOME" and "MY_WKDIR" to the right path
+
+## Put a copy of this Makefile in the project dir, and type "make help".
+## The command make compiles, build and link,
+## the command make upload flash the MCU too.
 
 
-### For ATTinyCore
-#**grep attinyx5 ~/Arduino/hardware/ATTinyCore/avr/boards.txt**
 
-ARDUINO_DIR		= ${MY_HOME}/bin/arduino-1.8.5
-#ARDUINO_CORE_PATH	= ${ARDUINO_DIR}/hardware/ATTinyCore/avr/cores/tiny
-#BOARDS_TXT	        = ${ARDUINO_DIR}/hardware/ATTinyCore/avr/boards.txt
+MY_HOME			= $HOME
+MY_WKDIR		= ${HOME}/Arduino
 
+ARDUINO_DIR		= ${MY_WKDIR}/arduino-1.8.5
+
+# We must indicate alternative core path FIRST, if using it
 #ALTERNATE_CORE          = ATTinyCore
-#ALTERNATE_CORE_PATH     = ${MY_HOME}/arduino_afternoon/arduino/cores/ATTinyCore/avr
-USER_LIB_PATH		= ${MY_HOME}/arduino_afternoon/arduino/libraries
+#ALTERNATE_CORE_PATH     = ${MY_HOME}/Arduino/cores/ATTinyCore/avr
 
-#ARDUINO_VAR_PATH	= ${ARDUINO_DIR}/hardware/ ..
-#ARDUINO_PLATFORM_LIB_PATH = ${ARDUINO_DIR}/hardware/ ..
-#ARDUINO_LIB_PATH	= ${ARDUINO_DIR}/hardware/ATTinyCore/avr/libraries
+USER_LIB_PATH		= ${MY_WKDIR}/libraries
 
-#BOARD_TAG               = attinyx5
-#BOARD_SUB               = 85
-#F_CPU                   = 128000L
-
-ARDMK_DIR		= ${MY_HOME}/arduino_afternoon/arduino/Arduino-Makefile_sudar
+ARDMK_DIR		= ${MY_WKDIR}/Arduino-Makefile_sudar
 include                 ${ARDMK_DIR}/Arduino.mk
 AVR_TOOLS_DIR		= ${ARDUINO_DIR}/hardware/tools/avr
 
 #BOARDS_TXT		= ${ARDUINO_DIR}/hardware/arduino/avr/boards.txt
-#ARDUINO_LIB_PATH	= ${MY_HOME}/arduino_afternoon/arduino/libraries
+#ARDUINO_LIB_PATH	= ${ARDUINO_DIR}/libraries
 #ARDUINO_PLATFORM_LIB_PATH = ${ARDUINO_DIR}/hardware/arduino/avr/libraries
-#ARDUINO_SKETCHBOOK	= ${MY_HOME}/arduino_afternoon/arduino
-
-#OBJDIR			=
+#ARDUINO_SKETCHBOOK	= ${MY_WKDIR}/arduino_afternoon
 
 
 
-# ISP..
+
+# ARDUINO ISP
+# use "avrdude -c avrisp .." NOT "-c arduinoISP"
 
 ISP_PROG                = avrisp
 ISP_PORT                = /dev/ttyACM0
 AVRDUDE_ISP_BAUDRATE    = 19200
-
-#ISP_LOCK_FUSE_PRE      = 0x3f
-#ISP_LOCK_FUSE_POST     = 0xcf
-#ISP_HIGH_FUSE          = 0xdf
-#ISP_LOW_FUSE           = 0xff
-#ISP_EXT_FUSE           = 0x01
-#ISP_EEPROM             = 0
 
 
 # --- UNO the beautifulll!!
@@ -61,23 +68,12 @@ F_CPU			= 16000000L
 DEVICE_PATH             = /dev/ttyACM0
 
 
-
-# Arduino Make file. Refer to https://github.com/sudar/Arduino-Makefile
-
-
-### CFLAGS_STD
-### Set the C standard to be used during compilation. Documentation \ (https://github.com/WeAreLeka/Arduino-Makefile/blob/std-flags/arduino-mk-vars.md#cflags_std)
-#CFLAGS_STD        = -std=gnu11
-
-### CXXFLAGS_STD
-### Set the C++ standard to be used during compilation. Documentation \ (https://github.com/WeAreLeka/Arduino-Makefile/blob/std-flags/arduino-mk-vars.md#cxxflags_std)
-#CXXFLAGS_STD      = -std=gnu++11
-
-### CXXFLAGS
-### Flags you might want to set for debugging purpose. Comment to stop.
-#CXXFLAGS         += -pedantic -Wall -Wextra
-
-
+# --- ATTinyCore example
+#BOARD_TAG               = attinyx5
+#BOARD_SUB               = 85
+#F_CPU                   = 8000000L
+#
+# boards info: grep attinyx5 ~/Arduino/hardware/ATTinyCore/avr/boards.txt**
 
 
 # --- leonardo (or pro micro w/leo bootloader)
@@ -227,3 +223,18 @@ DEVICE_PATH             = /dev/ttyACM0
 # ALTERNATE_CORE    = tiny2
 # ARDUINO_VAR_PATH  = ~/sketchbook/hardware/tiny2/cores/tiny
 # ARDUINO_CORE_PATH = ~/sketchbook/hardware/tiny2/cores/tiny
+
+
+## AVR-GCC FLAGS (TESTING)
+
+### CFLAGS_STD
+### Set the C standard to be used during compilation. Documentation \ (https://github.com/WeAreLeka/Arduino-Makefile/blob/std-flags/arduino-mk-vars.md#cflags_std)
+#CFLAGS_STD        = -std=gnu11
+
+### CXXFLAGS_STD
+### Set the C++ standard to be used during compilation. Documentation \ (https://github.com/WeAreLeka/Arduino-Makefile/blob/std-flags/arduino-mk-vars.md#cxxflags_std)
+#CXXFLAGS_STD      = -std=gnu++11
+
+### CXXFLAGS
+### Flags you might want to set for debugging purpose. Comment to stop.
+#CXXFLAGS         += -pedantic -Wall -Wextra
