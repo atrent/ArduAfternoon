@@ -1,3 +1,25 @@
+Matt Huntin' - quaderno Appunti
+------------------------------ . o O 0 p o . .  . 
+
+
+
+
+*** TODO *************************************************
+
+- GIT :
+	-organizzare work environ., anche in locale!! 
+	-token/pwd auth client verso github/lab
+- pushare subdir dir con files .git di altro repo!?
+- files cpp/h multipli con makefile
+- PROGMEM e funzioni di "recupero" dati flash
+- ritentare fclock < MHz Tiny
+- includere MicroCore AT13 in Makefile repo
+
+**********************************************************
+
+
+
+
 - bindump [OK, printf "16i 2o FF p" | dc]
 
 - Tiny85 core supporto; [OK] riordinare e ri-testare, serve mkfile unico..
@@ -18,16 +40,6 @@
 			[OK] hvp montato provato su t85, debrick fatto
 
 
-*** TODO *************************************************
-
-- organizzare git, sincronizzare work environ.
-- pushare dir con files .git di altro repo!?
-- files cpp/h multipli con makefile
-- PROGMEM e funzioni di "recupero" dati flash
-- ritentare fclock < MHz Tiny
-- includere MicroCore AT13 in Makefile repo
-
-**********************************************************
 
 
 - problema differenza short vs. byte !! [OK] byte mangia meno, short forse

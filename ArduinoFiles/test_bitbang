@@ -1,0 +1,64 @@
+#include <Arduino.h>
+
+const short LED	= B00100000;    // LED connected to digital pin 13
+unsigned long pwmTime;
+unsigned long lastToggle;
+unsigned int th = 100;
+unsigned int t = 1000;  // 1000us pwmTimebase
+int pwmStep = 100;
+//scheduler
+unsigned long time;
+unsigned long lastThGen;
+const long thGenInterv = 200000;
+
+
+void setup() {
+DDRB |= LED;  // pin 13 set to output
+}
+
+
+// generate a th val per iteration
+void ThGenerate() {
+  if ((th==t) || (th==0)) {
+  pwmStep=-pwmStep;
+  th=th+pwmStep;
+  return; }
+  if ((th!=t) && (th!=0))
+  th=th+pwmStep;
+  }
+
+// toggle LED
+void ToggleTask() {
+  pwmTime = micros();
+  unsigned int tl = t-th;
+  bool state = (PORTB & LED);
+  if ( !state && pwmTime-lastToggle>tl ) {
+    PORTB = PORTB | LED;
+    lastToggle=micros();
+    }
+  if ( state && pwmTime-lastToggle>th ) {
+    PORTB = PORTB ^ LED;
+    lastToggle=micros();
+    }
+  }
+
+
+void loop() {
+  time=micros();
+
+  if ((time-lastThGen) >thGenInterv) {
+    ThGenerate();
+    lastThGen=micros();
+    }
+
+  ToggleTask();
+}
+
+
+int main(void) {
+    init();
+    setup();
+    for (;;) {
+      loop();
+      }
+}

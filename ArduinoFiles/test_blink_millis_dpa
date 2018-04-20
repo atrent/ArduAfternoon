@@ -1,0 +1,42 @@
+#include <Arduino.h>
+
+const short led	= B00100000;    // LED connected to digital pin 13
+const int ledOn = 30;
+const int ledOff = 2000;
+unsigned long time;
+unsigned long ledLastToggle;
+
+
+void setup() {
+  DDRB = DDRB | led;  // pin 13 set to output
+  }
+
+void ledTask() {
+  time = millis();
+  if ( (PORTB & led) && (time-ledLastToggle >= ledOn) ) {
+    PORTB = PORTB ^ led;
+    ledLastToggle=millis();
+    }
+  if ( !(PORTB & led) && (time-ledLastToggle >= ledOff) ) {
+    PORTB = PORTB ^ led;
+    ledLastToggle=millis();
+    }
+  }
+
+void loop() {
+
+ledTask();
+
+}
+
+
+
+/*
+int main(void) {
+    init();
+    setup();
+    for (;;) {
+      loop();
+      }
+}
+*/

@@ -1,0 +1,80 @@
+#include <Arduino.h>
+
+const short LED	= B00000010;    // LED connected to digital pin PB1
+unsigned long pwmTime;
+unsigned long lastToggle;
+unsigned int t = 1000;  // 1000us pwmTimebase
+unsigned int th = 100;
+short nStep = 10;
+int pwmStep;
+bool ledState = 1;
+//scheduler
+unsigned long time;
+unsigned long lastLedTask;
+const long LEDTASKINTV = 200000; //us
+long ledTaskDelay=0;
+
+
+void setup() {
+  DDRB = DDRB | LED;  // pin PB1 set to output
+  PORTB=PORTB|LED;
+  pwmStep = t/nStep;
+}
+
+void updateTh() {
+  if ((th==t) || (th==0)) {
+    pwmStep=-pwmStep;
+    th=th+pwmStep;
+    }
+    else if ((th!=t) && (th!=0)) {
+    th=th+pwmStep;
+    lastLedTask=micros();
+    }
+}
+
+
+void toggleLed() {
+  if (!ledState) {
+    PORTB = PORTB | LED;
+    ledState = 1;
+    lastToggle=time;
+    return;
+    }
+  if (ledState) {
+    PORTB = PORTB ^ LED;
+    ledState = 0;
+    lastToggle=pwmTime;
+    return;
+    }
+}
+
+void loop() {
+  time=micros();
+  if ((time-lastLedTask) >LEDTASKINTV)
+    updateTh();
+
+  unsigned int tl=t-th;
+
+  pwmTime=time;
+  if (ledState) {
+    ledTaskDelay = (pwmTime-lastToggle)-th;
+    if (ledTaskDelay >0)
+      toggleLed();
+  }
+  if (!ledState) {
+    ledTaskDelay = (pwmTime-lastToggle)-tl;
+    if (ledTaskDelay >0)
+      toggleLed();
+  }
+
+} //loop brace!
+
+
+int main(void) {
+    init();
+    setup();
+    for (;;) {
+      loop();
+      }
+}
+

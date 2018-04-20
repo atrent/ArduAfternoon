@@ -37,6 +37,8 @@ ARDUINO_DIR		= ${MY_WKDIR}/arduino-1.8.5
 # We must indicate alternative core path FIRST, if using it
 #ALTERNATE_CORE          = ATTinyCore
 #ALTERNATE_CORE_PATH     = ${MY_HOME}/Arduino/cores/ATTinyCore/avr
+#
+# see  https://github.com/SpenceKonde/ATTinyCore
 
 USER_LIB_PATH		= ${MY_WKDIR}/libraries
 

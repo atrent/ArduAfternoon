@@ -1,0 +1,56 @@
+#include <Arduino.h>
+#include <TaskScheduler.h>
+
+
+const int LED	=  B00000010;    // LED connected to digital pin 13
+const int ledOn = 30;
+const int ledOff = 2000;
+bool ledStat = true;
+
+Scheduler sched;
+
+//callback
+void LedTask();
+
+//tasks
+Task t1Led(ledOff, TASK_FOREVER, &LedTask);
+
+
+
+void setup() {
+  DDRB=DDRB|LED;
+  PORTB=PORTB|LED;
+//  pinMode(LED, OUTPUT);
+  sched.init();
+  sched.addTask(t1Led);
+  t1Led.enable();
+  }
+
+
+void LedTask() {
+  PORTB=PORTB^LED;
+  ledStat=!ledStat;
+//  digitalWrite(LED, ledStat);
+  if (ledStat) {
+    t1Led.setInterval(ledOn);
+    }
+    else
+    {
+    t1Led.setInterval(ledOff);
+    }
+  }
+
+
+void loop() {
+sched.execute();
+}
+
+/*
+int main(void) {
+    init();
+    setup();
+    for (;;) {
+      loop();
+      }
+}
+*/
