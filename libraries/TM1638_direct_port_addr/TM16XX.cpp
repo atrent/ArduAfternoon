@@ -190,9 +190,11 @@ byte TM16XX::receive()
 //    digitalWrite(clockPin, LOW);
     PORT=PORT&(~clockPin);
 
+
 //    if (digitalRead(dataPin)) {
-    if (PIN==(PIN&dataPin)) {
-      temp |= 0x80;
+    delayMicroseconds(3);  // wait for pin discharge
+    if (PIN&dataPin) {
+      temp |= 0x80;      // B100000000
     }
 
 //    digitalWrite(clockPin, HIGH);

@@ -1,3 +1,3 @@
-#define PORT PORTB
-#define DDR DDRB
-#define PIN PINB
+#define PORT PORTC
+#define DDR DDRC
+#define PIN PINC

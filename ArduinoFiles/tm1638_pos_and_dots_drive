@@ -1,6 +1,5 @@
-// display drive per digit number and dots
-// must write entire space for dots to lighton
-
+// display drive per digit - must write entire space for dots to lighton
+// @@@ try arbitrary position, not 0 or 4, with valueToDispl byte?
 void DisplNum (unsigned int valueToDispl, byte initPos, byte dots) {
     byte digitNum=4;
     unsigned int div=pow(10,digitNum-1);
@@ -12,7 +11,10 @@ void DisplNum (unsigned int valueToDispl, byte initPos, byte dots) {
       byte dotOn=(dots<<digitPos)&B10000000;  // check the right dot bit
 
       if (!digitBuf && isLZ) {
-        ldk1.clearDisplayDigit(digitPos,dotOn); // pos,dot
+	if (!digitBuf && digitPos==initPos+3)
+          ldk1.setDisplayDigit(0,digitPos,dotOn); // digit,pos,dot
+	else
+          ldk1.clearDisplayDigit(digitPos,dotOn); // pos,dot
       }
       else {
         isLZ=false;
@@ -20,3 +22,4 @@ void DisplNum (unsigned int valueToDispl, byte initPos, byte dots) {
       }
     }
 }
+

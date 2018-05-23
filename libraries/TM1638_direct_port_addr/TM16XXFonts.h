@@ -67,7 +67,7 @@ const byte ERROR_DATA[] = {
 // definition for the displayable ASCII chars
 const byte FONT_DEFAULT[] = {
   0b00000000, // (32)  <space>
-  0b10000110, // (33)	!
+  0b10000010, // (33)	!
   0b00100010, // (34)	"
   0b01111110, // (35)	#
   0b01101101, // (36)	$

@@ -7,20 +7,27 @@ Matt Huntin' - quaderno Appunti
 *** TODO *************************************************
 
 - GIT :
-	-organizzare work environ., anche in locale!! 
-	-token/pwd auth client verso github/lab
+	-stampare doku /!\
+	-token/pwd auth client verso github/lab, provare gpg/ssh
 - pushare subdir dir con files .git di altro repo!?
-- files cpp/h multipli con makefile
+- files cpp/h multipli con makefile [OK funziona], ulteriori prove..
 - PROGMEM e funzioni di "recupero" dati flash
-- ritentare fclock < MHz Tiny
+- ritentare fclock < MHz 328/Tiny
 - includere MicroCore AT13 in Makefile repo
+- ESP8266 makefile e core
+- STM32 makefile e core
+
 
 **********************************************************
 
 
 
+*** PROVE MAKEFILES / CORES ******
 
-- bindump [OK, printf "16i 2o FF p" | dc]
+- MAKEFILE sudar : -non trova librerie aggiuntive di avr-libc??
+
+- Mega2560; [sembra OK] compilazione e toolchain
+			provare clock interni e corrispondenze pin
 
 - Tiny85 core supporto; [OK] riordinare e ri-testare, serve mkfile unico..
 			[OK] test librerie aggiuntive..
@@ -37,16 +44,21 @@ Matt Huntin' - quaderno Appunti
 			fare: montato hvp come shield
 			[GUAI] partiti due 328p (UNO) con su codice hvp di Jeff Keyzer
 			[OK]: elettrico shield , no cto GND/VCC
-			[OK] hvp montato provato su t85, debrick fatto
+			[OK] HVP montato provato su t85, debrick fatto
 
+
+************************
 
 
 
 - problema differenza short vs. byte !! [OK] byte mangia meno, short forse
-					     si auto-trimma?
+									     si auto-trimma?
 
 
-** PROVE EFFICENZA LIBRERIE/FUNZIONI ecc **
+
+
+
+*** PROVE EFFICENZA LIBRERIE/FUNZIONI ecc ***
 
 --  blink, TaskScheduler, dWrite:
 Device: attiny85
@@ -76,3 +88,97 @@ Program:     716 bytes (8.7% Full)
 
 Data:         33 bytes (6.4% Full)
 (.data + .bss + .noinit)
+
+
+
+
+
+
+
+
+-- NEWS HISTORY: --
+
+[2018-03-17 11:13:59] Matt Huntin >>> news: il makefile del pkg 
+arduino-mk è in /usr/share/arduino ..
+[2018-03-17 14:12:30] Matt Huntin >>> news: errori multipli da make. ci 
+sono TRE make file, non capisco come specificare il sorgente da 
+compilare evidentemente. comunque quello del pacchetto arduino-mk non 
+accetta piu di un .ino, non so se c sn piu file come si può fare.
+[2018-03-17 15:30:10] Matt Huntin >>> news: compila un blink, dice che 
+il bin (1k) è piu grande che la flash dell'uno. e scrive proprio 
+"uno"..
+[2018-03-17 15:40:37] Matt Huntin >>> news: sembra ke nel makefile sia 
+ok il percorso al file boards.txt, che riporta un bel 32256 alla riga 
+uno.upload.maximum_size   ......
+[2018-03-17 18:06:00] Matt Huntin >>> news: a seconda della "versione" 
+di makefile chiaramente cambiano i nomi delle stesse variabili, tipo 
+USER_LIBS diventa USER_LIB_PATH .....
+[2018-03-17 20:55:57] Matt Huntin >>> news: risolti quasi tutti i 
+problemi, compila senza far casino e i files restano quasi ordinati. un 
+make upload e fa tt lui.
+[2018-03-18 13:21:06] Matt Huntin >>> news: abbiamo provato un makefile 
+sia con la "toolchain" pachettizzata da devuan ( provato da me ieri 
+ok), sia lo stesso makefile piu aggiornato, cercando di farlo andare 
+bene x la toolchain del tar di arduino nuovo, piu aggiornata.
+[2018-03-18 14:12:12] Matt Huntin >>> news: le pecorelle guardino 
+github.com/sudar/arduino-makefile, se lo clonate è utile guardare 
+negli esempi [webpage]
+[2018-03-18 20:00:56] Matt Huntin >>> news: sto riprovando a far andare 
+il makefile qui sopra con arduino 1.8.5.
+[2018-03-18 20:15:39] Matt Huntin >>> news: appenaRIUSCITO -->ora make 
+usa librerie e toolchain di arduino 1.8.5,  serve fare 1 po d pulitura 
+ma sembra ok.
+[2018-03-18 20:51:26] Matt Huntin >>> news: appena RISOLTO, nn serve 
+specificare path a file .h, tutto sembra normale, provato ad includere 
+lib daa due path diversi
+[2018-03-21 19:54:03] Matt Huntin >>> news: il preprocessore del codice 
+(credo) non riordina bene le funzioni. in pratica si comporta come 
+bash, prima vuole le funzioni poi le chiamate alle funzioni.  La 
+faccenda x me nn è assolutamente un problema, xò se capita lo sketch 
+di un altro, o un esempio addio....
+[2018-03-22 22:05:19] Matt Huntin >>> news: scoperta funzione di 
+editing condiviso su meet.jit.so
+[2018-03-22 23:35:15] Matt Huntin >>> news: tentato senza successo di 
+far funzionare github.com/arduino/arduino-preprocessor . script di 
+installazione si blocca dopo chiamata a clang. nn trova file 
+type_traits.h   buonanotte a tt [webpage]
+[2018-03-23 21:00:47] Matt Huntin >>> news: in corso testing 
+preprocessore "arduino-builder". Fatto script di "pilotaggio" del 
+suddetto, sembra tt ok..
+[2018-03-23 22:24:24] Matt Huntin >>> news: sembra tt ok. ogni esempio 
+arduinico è preprocessato e risulta appetibile da avr-g++.  la 
+squadra, armata di picconi e badili, script e manuali, si apre un varco 
+verso la luce..
+[2018-03-25 11:09:29] Matt Huntin >>> news: provato avrdude. Col giusto 
+file di configurazione diventa uno scherzo recuperare info su un mcu 
+(anche usando un UNO come isp), configurare i fuses byte (x settare 
+oscillatori, vettore di reset, ecc), leggere   un'area o l'intera 
+flash, confrontarne il contenuto con quello di un file (tipo l'hex che 
+arduino-builder o il makefile di sudar fanno produrre a g++). La 
+squadra, appoggiati i badili , sta valutando se pilotare avrdude 
+direttamente dallo scriptino che controlla arduino-builder (universale, 
+veloce, ok x ogni tipo di codice inico o classico)... seguiranno altre 
+prove x valutare meglio la soluzione piu flessibile.
+[2018-04-05 16:40:29] Matt Huntin >>> news: mi metto ordunque a fare 
+test makefile sudar cn tinycore
+[2018-04-06 21:31:54] Matt Huntin >>> news: ripresi in mano i badili, 
+la squadra, al lume delle lanterne, colpo dopo colpo si fa strada verso 
+la fine del tunnel. Manca di inchiodare le travi di rinforzo alla 
+galleria, ma attualmente:
+[2018-04-08 21:02:40] Matt Huntin >>> news: confermato ok il supporto 
+lib esterne x il tiny85. provato con taskscheduler. Probabilmente ogni 
+lib che usa funz in arduino.h è ok, a meno ke nn sia scritta apposta.  
+fatte poche prove riuscite coi fuses,  seguiranno prove di timing 
+usando varie conf d clock interno.
+[2018-04-12 19:31:50] Matt Huntin >>> news:
+[2018-04-12 20:24:10] Matt Huntin >>> news: montato il tutto su shield 
+apposito. si procede all'aperitivo..
+[2018-04-14 17:00:54] Matt Huntin >>> news:
+[2018-04-14 21:54:25] Matt Huntin >>> news:
+[2018-04-19 19:31:49] Matt Huntin >>> NEWS:  mi accingo ora a caricare 
+makefile con annesse istruzioni nei commenti sul repo: 
+https://github.com/atrent/ArduAfternoon. Si veda "branch?" 
+"ArduinoFiles". Makefile era troppo riduttivo... [webpage]
+
+
+
